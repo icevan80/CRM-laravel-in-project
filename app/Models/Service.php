@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Builder;
 class Service extends Model
 {
 
+    protected $perPage = 10;
+
 //    protected $hidden = [
 //        'id',
 //        'category_id',
