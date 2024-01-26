@@ -36,7 +36,8 @@ class CustomerServicesView extends Component
 
     public function render()
     {
-        $query = Service::query();
+        // $query = Service::query();
+		$query = Service::orderByPrice($this->sortByPrice); 
 
         if ($this->search) {
             $query->where(function ($subquery) {
@@ -53,7 +54,7 @@ class CustomerServicesView extends Component
         // Determine whether to show category names in the URL or not
         $showCategoryNames = count($this->categoryFilter) <= 3;
 
-        $this->services = $query->orderBy($this->sortByPrice)->paginate(10);
+        $this->services = $query->paginate(10);
 
         return view('livewire.customer-services-view', [
             'services' => $this->services,
