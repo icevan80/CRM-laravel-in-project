@@ -4,6 +4,9 @@ namespace App\Http\Livewire;
 
 use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
+use App\Models\Location;
+use App\Models\Service;
+use App\Models\TimeSlot;
 use Carbon\Carbon;
 use Livewire\Component;
 
@@ -11,6 +14,9 @@ class ManageAppointments extends Component
 {
 
     private $appointments;
+
+    private $services;
+    private $locations;
 
     public $search;
 
@@ -22,7 +28,7 @@ class ManageAppointments extends Component
 
     public $confirmingAppointmentAdd;
 
-    public $confirmAppointmentCancellation  = false;
+    public $confirmAppointmentCancellation = false;
     public $confirmingAppointmentCancellation = false;
     public $confirmingAppointmentCreate = false;
     public $confirmingAppointmentSelect = false;
@@ -31,8 +37,12 @@ class ManageAppointments extends Component
 
     private $timeNow;
     public $selectedDay;
-    public $selectedTime;
     public $selectedAppointment;
+
+    public $selectedCreateDay;
+    public $selectedCreateService;
+    public $selectedCreateLocation;
+    public $selectedCreateTime;
 
     public $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
 
@@ -43,17 +53,19 @@ class ManageAppointments extends Component
 
     ];
 
-    public function mount($userId = null, $selectFilter = 'upcoming') {
+    public function mount($userId = null, $selectFilter = 'upcoming')
+    {
 
-       if (auth()->user()->role->name == "Customer") {
+        if (auth()->user()->role->name == "Customer") {
             $this->userId = auth()->user()->id;
         } else if (auth()->user()->role->name == ("Employee" || "Admin")) {
-           $this->userId = $userId;
+            $this->userId = $userId;
         }
         $selectFilter ? $this->selectFilter = $selectFilter : $this->selectFilter = 'upcoming';
 
         $this->timeNow = Carbon::now();
-        $this->selectedDay = Carbon::today()->toDateString();
+        $this->selectedDay = Carbon::today()->format('Y-m-d');
+
 
     }
 
@@ -115,11 +127,30 @@ class ManageAppointments extends Component
             ->paginate(10);
 //        dd($this->appointments);
 
+        if ($this->services == null) {
+            $this->services = Service::all();
+        }
+
+        if ($this->locations == null) {
+            $this->locations = Location::all();
+        }
+
         return view('livewire.manage-appointments', [
             'appointments' => $this->appointments,
+            'services' => $this->services,
+            'locations' => $this->locations,
         ]);
     }
 
+
+    private function getServicesList() {
+        $services = Service::all();
+        if ($services->isNull()) {
+            $this->services = [];
+        } else {
+            $this->services = $services;
+        }
+    }
 
 
 
@@ -127,26 +158,28 @@ class ManageAppointments extends Component
 //        $this->appointment = $appointment;
 //        $this->confirmingAppointmentAdd= true;
 //    }
-    public function confirmAppointmentCancellation() {
+    public function confirmAppointmentCancellation()
+    {
         $this->confirmingAppointmentCancellation = true;
     }
 
-   public function saveAppointment() {
-    //    $this->validate();
+    public function saveAppointment()
+    {
+        //    $this->validate();
 
-       if (isset($this->appointment->id)) {
-           $this->appointment->save();
-       } else {
-           Appointment::create(
-               [
-                   'name' => $this->appointment['name'],
-               ]
-           );
-       }
+        if (isset($this->appointment->id)) {
+            $this->appointment->save();
+        } else {
+            Appointment::create(
+                [
+                    'name' => $this->appointment['name'],
+                ]
+            );
+        }
 
-       $this->confirmingAppointmentAdd = false;
-       $this->appointment = null;
-   }
+        $this->confirmingAppointmentAdd = false;
+        $this->appointment = null;
+    }
 
     public function cancelAppointment(Appointment $appointment)
     {
@@ -164,19 +197,25 @@ class ManageAppointments extends Component
         }
     }
 
-   public function confirmAppointmentAdd() {
-       $this->confirmingAppointmentAdd = true;
-   }
+    public function confirmAppointmentAdd()
+    {
+//        $this->getServicesList();
+        $this->confirmingAppointmentAdd = true;
+    }
 
-    public function setSelectedAppointment(Appointment $appointment) {
+    public function setSelectedAppointment(Appointment $appointment)
+    {
         $this->selectedAppointment = $appointment;
         $this->confirmingAppointmentSelect = true;
     }
 
     public function confirmAppointmentCreate(
-        String $time
-        ) {
-        $this->selectedTime = Carbon::create($time);
+        string $time
+    )
+    {
+        $carbonTime = Carbon::create($time);
+        $this->selectedCreateDay = $carbonTime->toDateString();
+        $this->selectedCreateTime = $carbonTime->toTimeString();
         $this->confirmingAppointmentCreate = true;
     }
 }
