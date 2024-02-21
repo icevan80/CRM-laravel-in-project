@@ -24,8 +24,15 @@ class ManageAppointments extends Component
 
     public $confirmAppointmentCancellation  = false;
     public $confirmingAppointmentCancellation = false;
+    public $confirmingAppointmentCreate = false;
+    public $confirmingAppointmentSelect = false;
+
+    // public
 
     private $timeNow;
+    public $selectedDay;
+    public $selectedTime;
+    public $selectedAppointment;
 
     public $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
 
@@ -46,6 +53,8 @@ class ManageAppointments extends Component
         $selectFilter ? $this->selectFilter = $selectFilter : $this->selectFilter = 'upcoming';
 
         $this->timeNow = Carbon::now();
+        $this->selectedDay = Carbon::today()->toDateString();
+
     }
 
     public function render()
@@ -93,7 +102,7 @@ class ManageAppointments extends Component
             $query->whereDate('date', '<', Carbon::today())->where('status', 1);
 
         } else if ($this->selectFilter === 'upcoming') {
-            $query->whereDate('date', '>=', Carbon::today())->where('status', 1);
+            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay))->where('status', 1);
 
         } else if ($this->selectFilter === 'cancelled') {
             $query->where('status', 0);
@@ -122,22 +131,22 @@ class ManageAppointments extends Component
         $this->confirmingAppointmentCancellation = true;
     }
 
-//    public function saveAppointment() {
-//        $this->validate();
-//
-//        if (isset($this->appointment->id)) {
-//            $this->appointment->save();
-//        } else {
-//            Appointment::create(
-//                [
-//                    'name' => $this->appointment['name'],
-//                ]
-//            );
-//        }
-//
-//        $this->confirmingAppointmentAdd = false;
-//        $this->appointment = null;
-//    }
+   public function saveAppointment() {
+    //    $this->validate();
+
+       if (isset($this->appointment->id)) {
+           $this->appointment->save();
+       } else {
+           Appointment::create(
+               [
+                   'name' => $this->appointment['name'],
+               ]
+           );
+       }
+
+       $this->confirmingAppointmentAdd = false;
+       $this->appointment = null;
+   }
 
     public function cancelAppointment(Appointment $appointment)
     {
@@ -155,8 +164,19 @@ class ManageAppointments extends Component
         }
     }
 
-//    public function confirmAppointmentAdd() {
-//        $this->confirmingAppointmentAdd = true;
-//    }
+   public function confirmAppointmentAdd() {
+       $this->confirmingAppointmentAdd = true;
+   }
 
+    public function setSelectedAppointment(Appointment $appointment) {
+        $this->selectedAppointment = $appointment;
+        $this->confirmingAppointmentSelect = true;
+    }
+
+    public function confirmAppointmentCreate(
+        String $time
+        ) {
+        $this->selectedTime = Carbon::create($time);
+        $this->confirmingAppointmentCreate = true;
+    }
 }
