@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
+use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Service;
 use App\Models\TimeSlot;
@@ -217,5 +218,23 @@ class ManageAppointments extends Component
         $this->selectedCreateDay = $carbonTime->toDateString();
         $this->selectedCreateTime = $carbonTime->toTimeString();
         $this->confirmingAppointmentCreate = true;
+    }
+
+    public function createAppointment() {
+        $cart =auth()->user()->cart()->create();
+//        $cart
+        return response()->json(Appointment::create([
+//            'appointment_code' => Carbon::now()->timestamp(),
+            'cart_id' => $cart,
+            'user_id' => $this,
+            'service_id' => $this->selectedCreateService,
+            'date' => $this->selectedCreateDay,
+            'time_slot_id' => 0,
+            'start_time' => $this->selectedCreateTime,
+            'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->isoFormat('HH:mm'),
+            'location_id' => $this->selectedCreateLocation,
+            'total' => $this->selectedCreateService,
+            'status' => true,
+        ]), 201);
     }
 }

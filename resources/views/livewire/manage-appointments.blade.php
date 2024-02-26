@@ -230,9 +230,6 @@
             </x-slot>
             <x-slot name="content">
                 @if($selectedCreateTime != null)
-                    <div>
-                        <h1>{{ $selectedCreateTime }}</h1>
-                    </div>
                     <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateService">
@@ -240,25 +237,32 @@
                             <option value="{{$service}}">{{$service->name}}</option>
                         @endforeach
                     </select>
+
                     <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
                     <input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
                            wire:model="selectedCreateDay"
                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                            max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
                     <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
-                    <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
-                            wire:model="selectedCreateTime">
-                        @for ($i = today()->setDateFrom($selectedDay)->hour(8); $i <= today()->setDateFrom($selectedDay)->hour(20); $i->addMinutes(15))
-                            <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                        @endfor
-                    </select>
+                    <div class="time-block">
+                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="selectedCreateTime">
+                            @for ($i = today()->setDateFrom($selectedDay)->hour(8); $i <= today()->setDateFrom($selectedDay)->hour(20); $i->addMinutes(15))
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+                        <p class="block text-center text-sm font-medium text-gray-700">
+                            - {{ today()->setTimeFrom($selectedCreateTime)->addMinutes(60)->isoFormat('HH:mm') }}</p>
+                    </div>
                     <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
-                    <select id="location" class="border text-gray-900  border-gray-300 rounded-lg"
-                            wire:model="$selectedCreateLocation">
+                    <select id="location"
+                            class="border text-gray-900  border-gray-300 rounded-lg"
+                            wire:model="selectedCreateLocation">
                         @foreach ($locations as $location)
                             <option value="{{$location}}">{{$location->name}} - {{$location->address}}</option>
                         @endforeach
                     </select>
+
 
                     {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
                     {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
@@ -283,6 +287,7 @@
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
                     </x-secondary-button>
+                    <x-button wire:click="createAppointment">Create</x-button>
                 </div>
 
             </x-slot>
@@ -374,5 +379,13 @@
     .empty-spot:hover p {
         display: block;
         cursor: pointer;
+    }
+
+    .time-block {
+        display: flex;
+    }
+
+    .time-block p {
+        margin: auto 16px;
     }
 </style>
