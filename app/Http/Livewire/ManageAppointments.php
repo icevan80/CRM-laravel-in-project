@@ -47,11 +47,14 @@ class ManageAppointments extends Component
 
     public $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
 
-    private $userId;
+    public $userId;
 
     protected $rules = [
 //        "appointment.name" => "required|string|max:255",
-
+        'selectedCreateService' => 'required',
+        'selectedCreateLocation' => 'required',
+        'selectedCreateDay' => 'required|string',
+        'selectedCreateTime' => 'required|string',
     ];
 
     public function mount($userId = null, $selectFilter = 'upcoming')
@@ -72,6 +75,8 @@ class ManageAppointments extends Component
 
     public function render()
     {
+
+
         $query = Appointment::with('timeSlot', 'user', 'service', 'location');
         if ($this->search) {
             $query->where(function ($subQuery) {
@@ -130,6 +135,7 @@ class ManageAppointments extends Component
 
         if ($this->services == null) {
             $this->services = Service::all();
+//            $this->selectedCreateService = $this->services[0];
         }
 
         if ($this->locations == null) {
@@ -140,11 +146,13 @@ class ManageAppointments extends Component
             'appointments' => $this->appointments,
             'services' => $this->services,
             'locations' => $this->locations,
+//            'selectedCreateService' => $this->selectedCreateService,
         ]);
     }
 
 
-    private function getServicesList() {
+    private function getServicesList()
+    {
         $services = Service::all();
         if ($services->isNull()) {
             $this->services = [];
@@ -215,26 +223,29 @@ class ManageAppointments extends Component
     )
     {
         $carbonTime = Carbon::create($time);
+//        $this->selectedCreateService = $this->services[0];
         $this->selectedCreateDay = $carbonTime->toDateString();
         $this->selectedCreateTime = $carbonTime->toTimeString();
         $this->confirmingAppointmentCreate = true;
+        $this->render();
     }
 
-    public function createAppointment() {
-        $cart =auth()->user()->cart()->create();
-//        $cart
-        return response()->json(Appointment::create([
-//            'appointment_code' => Carbon::now()->timestamp(),
-            'cart_id' => $cart,
-            'user_id' => $this,
-            'service_id' => $this->selectedCreateService,
+    public function createAppointment(
+        Service $service,
+        Location $location,
+    )
+    {
+        Appointment::create([
+            'cart_id' => 1,
+            'user_id' => auth()->user()->id,
+            'service_id' => $service->id,
             'date' => $this->selectedCreateDay,
-            'time_slot_id' => 0,
+            'time_slot_id' => 1,
             'start_time' => $this->selectedCreateTime,
-            'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->isoFormat('HH:mm'),
-            'location_id' => $this->selectedCreateLocation,
-            'total' => $this->selectedCreateService,
-            'status' => true,
-        ]), 201);
+            'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->toTimeString(),
+            'location_id' => $location->id,
+            'total' => $service->price,
+        ]);
+        $this->confirmingAppointmentCreate = false;
     }
 }

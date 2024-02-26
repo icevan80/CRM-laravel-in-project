@@ -81,10 +81,13 @@
                                 $i->isoFormat('HH : mm') }}</th>
                     @endif
                     @for ($k = $i->copy(); $k < $i->copy()->addWeeks(2); $k->addDay(1))
+                        {{ $hasAppointment = false }}
                         @foreach ($appointments as $appointment)
+
                             @if($appointment->date == $k->toDateString() && ($appointment->start_time <=
                                 $i->toTimeString() && $appointment->end_time > $i->toTimeString()))
                                 @if($appointment->start_time == $i->toTimeString())
+                                    {{$hasAppointment = true}}
                                     <th rowspan="{{ today()->setTimeFromTimeString($appointment->end_time)->diffInHours($appointment->start_time) * 60  / 15 }}"
                                         wire:click="setSelectedAppointment({{ $appointment }})" scope="col"
                                         class="selected-slot text-white bg-pink-600 font-medium border p-2"><p
@@ -95,13 +98,17 @@
                                         <p class="appointment-name-slot">{{
                                         $appointment->service->name }}</p></th>
                                 @endif
-                            @else
-                                <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
-                                    class="empty-spot text-center font-medium border py-2">
-                                    <p>{{ $i->isoFormat('HH : mm') }}</p>
-                                </th>
                             @endif
+
+
                         @endforeach
+                        @if(!$hasAppointment)
+                            <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
+                                class="empty-spot text-center font-medium border py-2">
+                                <p>{{ $i->isoFormat('HH : mm') }}</p>
+                            </th>
+
+                        @endif
                         @if ($appointments->count() == 0)
                             <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
                                 class="empty-spot text-center font-medium border py-2">
@@ -233,10 +240,12 @@
                     <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateService">
+                        <option disabled>Select a service</option>
                         @foreach ($services as $service)
                             <option value="{{$service}}">{{$service->name}}</option>
                         @endforeach
                     </select>
+                    <p>{{ $selectedCreateService }}</p>
 
                     <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
                     <input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
@@ -258,27 +267,12 @@
                     <select id="location"
                             class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateLocation">
+                        <option disabled>Select a location</option>
                         @foreach ($locations as $location)
                             <option value="{{$location}}">{{$location->name}} - {{$location->address}}</option>
                         @endforeach
                     </select>
-
-
-                    {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
-                    {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
-                    {{--                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">--}}
-                    {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
-                    {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
-                    {{--                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">--}}
-                    {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
-                    {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
-                    {{--                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">--}}
-                    {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
-                    {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
-                    {{--                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">--}}
-                    {{--                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>--}}
-                    {{--                    <input type="text" wire:model="appointment.name" id="name"--}}
-                    {{--                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">--}}
+                    <p>{{ $selectedCreateLocation }}</p>
                 @endif
             </x-slot>
             <x-slot name="footer">
@@ -287,7 +281,10 @@
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
                     </x-secondary-button>
-                    <x-button wire:click="createAppointment">Create</x-button>
+                    <x-button
+                        wire:click="createAppointment({{ $selectedCreateService }}, {{ $selectedCreateLocation }}, '{{ $selectedCreateTime }}', '{{ $selectedCreateDay }}')">
+                        Create
+                    </x-button>
                 </div>
 
             </x-slot>
