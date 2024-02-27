@@ -4,12 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
-use App\Models\Cart;
 use App\Models\Location;
 use App\Models\Service;
-use App\Models\TimeSlot;
 use Carbon\Carbon;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
+
 
 class ManageAppointments extends Component
 {
@@ -33,6 +33,8 @@ class ManageAppointments extends Component
     public $confirmingAppointmentCancellation = false;
     public $confirmingAppointmentCreate = false;
     public $confirmingAppointmentSelect = false;
+    public $notificationAppointmentCreated = false;
+    public $notificationAppointmentCreatedError = false;
 
     // public
 
@@ -69,7 +71,6 @@ class ManageAppointments extends Component
 
         $this->timeNow = Carbon::now();
         $this->selectedDay = Carbon::today()->format('Y-m-d');
-
 
     }
 
@@ -120,7 +121,7 @@ class ManageAppointments extends Component
             $query->whereDate('date', '<', Carbon::today())->where('status', 1);
 
         } else if ($this->selectFilter === 'upcoming') {
-            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay))->where('status', 1);
+            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))->where('status', 1);
 
         } else if ($this->selectFilter === 'cancelled') {
             $query->where('status', 0);
@@ -130,22 +131,31 @@ class ManageAppointments extends Component
         $this->appointments = $query
             ->orderBy('date')
             ->orderBy('start_time')
-            ->paginate(10);
+            ->paginate(50);
 //        dd($this->appointments);
 
         if ($this->services == null) {
             $this->services = Service::all();
-//            $this->selectedCreateService = $this->services[0];
+        }
+
+        if ($this->selectedCreateService == null && $this->services != null) {
+            $this->selectedCreateService = $this->services[0];
         }
 
         if ($this->locations == null) {
             $this->locations = Location::all();
         }
 
+        if ($this->selectedCreateLocation == null && $this->locations != null) {
+            $this->selectedCreateLocation = $this->locations[0];
+        }
+
         return view('livewire.manage-appointments', [
             'appointments' => $this->appointments,
             'services' => $this->services,
             'locations' => $this->locations,
+            'selectedCreateService' => $this->selectedCreateService,
+            'selectedCreateLocation' => $this->selectedCreateLocation,
 //            'selectedCreateService' => $this->selectedCreateService,
         ]);
     }
@@ -223,29 +233,46 @@ class ManageAppointments extends Component
     )
     {
         $carbonTime = Carbon::create($time);
-//        $this->selectedCreateService = $this->services[0];
         $this->selectedCreateDay = $carbonTime->toDateString();
         $this->selectedCreateTime = $carbonTime->toTimeString();
         $this->confirmingAppointmentCreate = true;
         $this->render();
     }
 
-    public function createAppointment(
-        Service $service,
-        Location $location,
-    )
+    public function createAppointment()
     {
-        Appointment::create([
-            'cart_id' => 1,
-            'user_id' => auth()->user()->id,
-            'service_id' => $service->id,
-            'date' => $this->selectedCreateDay,
-            'time_slot_id' => 1,
-            'start_time' => $this->selectedCreateTime,
-            'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->toTimeString(),
-            'location_id' => $location->id,
-            'total' => $service->price,
-        ]);
+
+        $is_available = DB::table('appointments')
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($this->selectedCreateDay))
+            ->whereBetween('start_time', [$this->selectedCreateTime, today()->setTimeFrom($this->selectedCreateTime)->addMinutes(59)->toTimeString()]);
+
+        if ($is_available->count() == 0) {
+
+            Appointment::create([
+                'cart_id' => 1,
+                'user_id' => auth()->user()->id,
+                'service_id' => $this->serviceConverter($this->selectedCreateService)->id,
+                'date' => $this->selectedCreateDay,
+                'time_slot_id' => 1,
+                'start_time' => $this->selectedCreateTime,
+                'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->toTimeString(),
+                'location_id' => $this->locationConverter($this->selectedCreateLocation)->id,
+                'total' => $this->serviceConverter($this->selectedCreateService)->price,
+            ]);
+            $this->notificationAppointmentCreated = true;
+        } else {
+            $this->notificationAppointmentCreatedError = true;
+        }
         $this->confirmingAppointmentCreate = false;
+    }
+
+    protected function serviceConverter($service): Service
+    {
+        return $service;
+    }
+
+    protected function locationConverter($location): Location
+    {
+        return $location;
     }
 }

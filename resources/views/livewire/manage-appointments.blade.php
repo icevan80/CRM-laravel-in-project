@@ -62,7 +62,7 @@
             class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
             <tr>
-                <th scope="col" class="pl-6 py-4 text-center font-medium text-gray-900 border p-2">
+                <th scope="col" class=" py-4 text-center font-medium text-gray-900 border p-2">
                     <input type="date" class="border text-gray-900  border-gray-300 rounded-lg"
                            wire:model="selectedDay">
                 </th>
@@ -81,13 +81,10 @@
                                 $i->isoFormat('HH : mm') }}</th>
                     @endif
                     @for ($k = $i->copy(); $k < $i->copy()->addWeeks(2); $k->addDay(1))
-                        {{ $hasAppointment = false }}
-                        @foreach ($appointments as $appointment)
-
+                        @forelse ($appointments as $appointment)
                             @if($appointment->date == $k->toDateString() && ($appointment->start_time <=
                                 $i->toTimeString() && $appointment->end_time > $i->toTimeString()))
                                 @if($appointment->start_time == $i->toTimeString())
-                                    {{$hasAppointment = true}}
                                     <th rowspan="{{ today()->setTimeFromTimeString($appointment->end_time)->diffInHours($appointment->start_time) * 60  / 15 }}"
                                         wire:click="setSelectedAppointment({{ $appointment }})" scope="col"
                                         class="selected-slot text-white bg-pink-600 font-medium border p-2"><p
@@ -98,29 +95,26 @@
                                         <p class="appointment-name-slot">{{
                                         $appointment->service->name }}</p></th>
                                 @endif
+                                @break
                             @endif
-
-
-                        @endforeach
-                        @if(!$hasAppointment)
+                            @if($loop->last)
+                                <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
+                                    class="empty-spot text-center font-medium border py-2">
+                                    <p>{{ $i->isoFormat('HH : mm') }}</p>
+                                </th>
+                            @endif
+                        @empty
                             <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
                                 class="empty-spot text-center font-medium border py-2">
                                 <p>{{ $i->isoFormat('HH : mm') }}</p>
                             </th>
-
-                        @endif
-                        @if ($appointments->count() == 0)
-                            <th wire:click="confirmAppointmentCreate('{{ $k }}')" scope="col"
-                                class="empty-spot text-center font-medium border py-2">
-                                <p>{{ $i->isoFormat('HH : mm') }}</p>
-                            </th>
-                        @endif
+                        @endforelse
                     @endfor
                 </tr>
             @endfor
             </thead>
         </table>
-        <table
+        {{--<table
             class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
             <tr>
@@ -175,10 +169,10 @@
 
                         <td>
                             <div class="flex gap-1 mt-5">
-                                {{-- <x-button wire:click="confirmAppointmentEdit({{ $appointment->id }})"
-                                    wire:loading.attr="disabled">--}}
-                                {{-- {{ __('Edit') }}--}}
-                                {{-- </x-button>--}}
+                                --}}{{-- <x-button wire:click="confirmAppointmentEdit({{ $appointment->id }})"
+                                    wire:loading.attr="disabled">--}}{{--
+                                --}}{{-- {{ __('Edit') }}--}}{{--
+                                --}}{{-- </x-button>--}}{{--
 
                                 @if ($appointment->date >= today())
                                     <x-danger-button
@@ -196,7 +190,7 @@
             @endif
 
             </tbody>
-        </table>
+        </table>--}}
 
 
         <x-dialog-modal wire:model="confirmingAppointmentSelect">
@@ -208,6 +202,7 @@
                     <div>
                         <h1>{{ $selectedAppointment->service->name }}</h1>
                         <h1>{{ $selectedAppointment->date }}</h1>
+                        <h1>{{ $selectedAppointment->start_time }}</h1>
                         <h1>{{ $selectedAppointment->user->name}}</h1>
                         <h1>{{ $selectedAppointment->user->phone_number}}</h1>
                         <h1>{{ $selectedAppointment->user->email}}</h1>
@@ -226,6 +221,42 @@
         </x-dialog-modal>
 
 
+        <x-dialog-modal wire:model="notificationAppointmentCreated">
+            <x-slot name="title">
+                Статус создания
+            </x-slot>
+            <x-slot name="content">
+                <p>Объявление успешно создано</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentCreated', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <x-dialog-modal wire:model="notificationAppointmentCreatedError">
+            <x-slot name="title">
+                Статус создания
+            </x-slot>
+            <x-slot name="content">
+                <p>Объявление не было создано, т.к. этот промежуток времени уже занят</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentCreatedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
         <div class="p-5">
             {{ $appointments->links() }}
         </div>
@@ -240,12 +271,11 @@
                     <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateService">
-                        <option disabled>Select a service</option>
+                        <option selected="selected" disabled value="">Select a service</option>
                         @foreach ($services as $service)
                             <option value="{{$service}}">{{$service->name}}</option>
                         @endforeach
                     </select>
-                    <p>{{ $selectedCreateService }}</p>
 
                     <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
                     <input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
@@ -267,12 +297,11 @@
                     <select id="location"
                             class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateLocation">
-                        <option disabled>Select a location</option>
+                        <option selected="selected" disabled value="">Select a location</option>
                         @foreach ($locations as $location)
                             <option value="{{$location}}">{{$location->name}} - {{$location->address}}</option>
                         @endforeach
                     </select>
-                    <p>{{ $selectedCreateLocation }}</p>
                 @endif
             </x-slot>
             <x-slot name="footer">
@@ -350,17 +379,21 @@
     }
 
     .selected-slot .client-name-slot {
-        margin: auto 0;
+        margin: 16px 0;
     }
 
     .selected-slot .appointment-name-slot {
-        max-height: 40px;
+        max-height: 148px;
         overflow: hidden;
         max-lines: 2;
     }
 
     .selected-slot:hover {
         background-color: red;
+    }
+
+    .empty-spot {
+        height: 37px;
     }
 
     .empty-spot p {
