@@ -7,15 +7,13 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->string('appointment_code')->unique();
-            $table->foreignId('cart_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('creator_id')->constrained('user');
+            $table->foreignId('receiving_id')->constrained('user');
             $table->foreignId('service_id')->constrained();
             $table->date('date');
-            $table->foreignId('time_slot_id')->constrained();
             $table->time('start_time');
             $table->time('end_time');
             $table->foreignId('location_id')->constrained();

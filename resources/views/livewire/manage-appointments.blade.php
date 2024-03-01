@@ -51,13 +51,19 @@
                     </button>
                 </div>
             </div>
-
             <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="selectFilter">
                 <option value="upcoming">Новые</option>
                 <option value="previous">Старые</option>
                 <option value="cancelled">Отменены</option>
             </select>
         </div>
+
+{{--        <livewire:appointments-calendar />--}}
+{{--        <livewire:appointments-calendar--}}
+{{--            year="2019"--}}
+{{--            month="12"--}}
+{{--        />--}}
+        <livewire:appointments-calendar>
         <table
             class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
@@ -91,7 +97,7 @@
                                             class="time-slot">{{
                                         today()->setTimeFromTimeString($appointment->start_time)->isoFormat('HH:mm') }}</p>
                                         <p class="client-name-slot">{{
-                                        $appointment->user->name }}</p>
+                                        $appointment->creator->name }}</p>
                                         <p class="appointment-name-slot">{{
                                         $appointment->service->name }}</p></th>
                                 @endif
@@ -202,10 +208,13 @@
                     <div>
                         <h1>{{ $selectedAppointment->service->name }}</h1>
                         <h1>{{ $selectedAppointment->date }}</h1>
-                        <h1>{{ $selectedAppointment->start_time }}</h1>
-                        <h1>{{ $selectedAppointment->user->name}}</h1>
-                        <h1>{{ $selectedAppointment->user->phone_number}}</h1>
-                        <h1>{{ $selectedAppointment->user->email}}</h1>
+                        <h1>{{ $selectedAppointment->start_time }}</h1><br>
+                        <h1>{{ $selectedAppointment->receiving->name}}</h1>
+                        <h1>{{ $selectedAppointment->receiving->phone_number}}</h1>
+                        <h1>{{ $selectedAppointment->receiving->email}}</h1><br>
+                        <h1>{{ $selectedAppointment->creator->name}}</h1>
+                        <h1>{{ $selectedAppointment->creator->phone_number}}</h1>
+                        <h1>{{ $selectedAppointment->creator->email}}</h1>
                     </div>
                 @endif
             </x-slot>
@@ -372,6 +381,11 @@
         </x-dialog-modal>
     </div>
 </div>
+
+<script>
+    @livewireScripts
+    @livewireCalendarScripts
+</script>
 
 <style>
     .selected-slot p {

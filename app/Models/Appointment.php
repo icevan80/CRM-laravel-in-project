@@ -11,17 +11,15 @@ class Appointment extends Model
 {
     protected $fillable = [
         'appointment_code',
-        'cart_id',
-        'user_id',
+        'creator_id',
+        'receiving_id',
         'service_id',
         'date',
-        'time_slot_id',
         'start_time',
         'end_time',
         'location_id',
         'total',
         'status',
-
     ];
 
     protected $casts = [
@@ -29,7 +27,12 @@ class Appointment extends Model
         'end_time' => 'string',
     ];
 
-    public function user()
+    public function creator()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function receiving()
     {
         return $this->belongsTo(User::class);
     }
@@ -37,16 +40,6 @@ class Appointment extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
-    }
-
-    public function timeSlot()
-    {
-        return $this->belongsTo(TimeSlot::class);
-    }
-
-    public function cart()
-    {
-        return $this->belongsTo(Cart::class);
     }
 
     public function location()

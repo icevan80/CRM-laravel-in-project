@@ -45,7 +45,7 @@ class DaySchedule extends Component
             Appointment::orderBy('start_time', 'asc')
             ->where('date', $this->date->toDateString())
             ->where('status', '!=', 0)
-            ->orderBy('time_slot_id', 'asc')
+            ->orderBy('date', 'asc')
             ->where('status', '!=', 0)
             ->where('location_id', $this->locationId)
             ->with('service', 'timeSlot', 'user')

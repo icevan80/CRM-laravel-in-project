@@ -48,7 +48,7 @@ class AdminDashboardHomeController extends Controller
         $todaysSchedule = Appointment::orderBy('start_time', 'asc')
                 ->where('date', $todayDate)
                 ->where('status', '!=', 0)
-                ->orderBy('time_slot_id', 'asc')
+                ->orderBy('date', 'asc')
                 ->where('status', '!=', 0)
                 ->with('service', 'timeSlot', 'user')
                 ->get();
@@ -56,7 +56,7 @@ class AdminDashboardHomeController extends Controller
         $tommorowsSchedule = Appointment::orderBy('start_time', 'asc')
                 ->where('date', Carbon::today()->addDay()->toDateTime())
                 ->where('status', '!=', 0)
-                ->orderBy('time_slot_id', 'asc')
+                ->orderBy('date', 'asc')
                 ->where('status', '!=', 0)
                 ->with('service', 'timeSlot', 'user')
                 ->get();

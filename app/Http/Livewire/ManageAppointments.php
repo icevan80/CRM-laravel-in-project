@@ -78,7 +78,7 @@ class ManageAppointments extends Component
     {
 
 
-        $query = Appointment::with('timeSlot', 'user', 'service', 'location');
+        $query = Appointment::with('creator', 'receiving', 'service', 'location');
         if ($this->search) {
             $query->where(function ($subQuery) {
                 $subQuery
@@ -88,11 +88,17 @@ class ManageAppointments extends Component
                     ->orWhere('end_time', 'like', '%' . $this->search . '%')
                     ->orWhere('status', 'like', '%' . $this->search . '%')
                     ->orWhere('service_id', 'like', '%' . $this->search . '%')
-                    ->orWhere('time_slot_id', 'like', '%' . $this->search . '%')
+//                    ->orWhere('time_slot_id', 'like', '%' . $this->search . '%')
                     ->orWhere('location_id', 'like', '%' . $this->search . '%');
             });
 
-            $query->orWhereHas('user', function ($userQuery) {
+            $query->orWhereHas('creator', function ($userQuery) {
+                $userQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('phone_number', 'like', '%' . $this->search . '%');
+            });
+
+            $query->orWhereHas('receiving', function ($userQuery) {
                 $userQuery->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('email', 'like', '%' . $this->search . '%')
                     ->orWhere('phone_number', 'like', '%' . $this->search . '%');
@@ -114,7 +120,7 @@ class ManageAppointments extends Component
 
         if ($this->userId) {
 
-            $query->where('user_id', $this->userId);
+            $query->where('creator_id', $this->userId);
         }
 //        dd($this->selectFilter);
         if ($this->selectFilter === 'previous') {
@@ -249,11 +255,10 @@ class ManageAppointments extends Component
         if ($is_available->count() == 0) {
 
             Appointment::create([
-                'cart_id' => 1,
-                'user_id' => auth()->user()->id,
+                'creator_id' => auth()->user()->id,
+                'receiving_id' => auth()->user()->id,
                 'service_id' => $this->serviceConverter($this->selectedCreateService)->id,
                 'date' => $this->selectedCreateDay,
-                'time_slot_id' => 1,
                 'start_time' => $this->selectedCreateTime,
                 'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->toTimeString(),
                 'location_id' => $this->locationConverter($this->selectedCreateLocation)->id,
@@ -274,5 +279,48 @@ class ManageAppointments extends Component
     protected function locationConverter($location): Location
     {
         return $location;
+    }
+
+    #[On('addField')]
+    public function addField($type)
+    {
+        $this->droppedItems[] = $type;
+        Log::info('addField recibió:', ['type' => $type]);
+    }
+
+    #[On('itemDropped')]
+    public function handleItemDropped($type)
+    {
+        $order = Appointment::max('order') + 1;
+        $formField = new Appointment;
+        $formField->type = $type;
+        $formField->order = $order;
+        $formField->save();
+        //$this->appointments = Appointment::all();
+        $this->appointments = Appointment::orderBy('order')->get();
+    }
+
+    public function updateFieldOrder($orderedIds)
+    {
+        foreach ($orderedIds as $item) {
+            $formField = Appointment::find($item['value']);
+            if ($formField) {
+                $formField->order = $item['order'];
+                $formField->save();
+            }
+        }
+
+        $this->appointments = Appointment::orderBy('order')->get();
+    }
+
+    public function delete($id)
+    {
+        $formField = Appointment::find($id);
+        if($formField) {
+            $formField->delete();
+            //$this->appointments = Appointment::all();
+            $this->appointments = Appointment::orderBy('order')->get();
+
+        }
     }
 }
