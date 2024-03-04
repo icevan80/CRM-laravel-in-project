@@ -15,6 +15,8 @@ class ManageAppointments extends Component
 {
 
     private $appointments;
+    private $tableCells = [];
+    private $dateRange = array('now' => null, 'start' => null, 'end' => null);
 
     private $services;
     private $locations;
@@ -40,6 +42,7 @@ class ManageAppointments extends Component
 
     private $timeNow;
     public $selectedDay;
+    public $startDate;
     public $selectedAppointment;
 
     public $selectedCreateDay;
@@ -59,6 +62,11 @@ class ManageAppointments extends Component
         'selectedCreateTime' => 'required|string',
     ];
 
+    protected $casts = [
+        'selectedDay' => 'date:Y-m-d'
+    ];
+
+
     public function mount($userId = null, $selectFilter = 'upcoming')
     {
 
@@ -71,7 +79,22 @@ class ManageAppointments extends Component
 
         $this->timeNow = Carbon::now();
         $this->selectedDay = Carbon::today()->format('Y-m-d');
+    }
 
+    public function generateArray(): array
+    {
+        $this->dateRange['now'] = Carbon::parse($this->selectedDay);
+        $this->dateRange['start'] = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1);
+        $this->dateRange['end'] = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(1);
+        $arrayWeek = array();
+        for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
+            $arrayDay = array();
+            for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
+                $arrayDay[] = ['minutes' => $k->copy(), 'appointment' => null, 'collapse' => false];
+            }
+            $arrayWeek[] = [ 'day' => $i->copy(), 'schedule' => $arrayDay];
+        }
+        return $arrayWeek;
     }
 
     public function render()
@@ -133,12 +156,12 @@ class ManageAppointments extends Component
             $query->where('status', 0);
         }
 
-
         $this->appointments = $query
             ->orderBy('date')
             ->orderBy('start_time')
             ->paginate(50);
 //        dd($this->appointments);
+
 
         if ($this->services == null) {
             $this->services = Service::all();
@@ -156,12 +179,15 @@ class ManageAppointments extends Component
             $this->selectedCreateLocation = $this->locations[0];
         }
 
+        $this->tableCells = $this->generateArray();
+
         return view('livewire.manage-appointments', [
             'appointments' => $this->appointments,
             'services' => $this->services,
             'locations' => $this->locations,
             'selectedCreateService' => $this->selectedCreateService,
             'selectedCreateLocation' => $this->selectedCreateLocation,
+'tableCells' => $this->tableCells,
 //            'selectedCreateService' => $this->selectedCreateService,
         ]);
     }

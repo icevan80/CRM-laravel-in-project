@@ -58,13 +58,53 @@
             </select>
         </div>
 
-{{--        <livewire:appointments-calendar />--}}
-{{--        <livewire:appointments-calendar--}}
-{{--            year="2019"--}}
-{{--            month="12"--}}
-{{--        />--}}
-        <livewire:appointments-calendar>
-        <table
+        <h1>{{ $this->selectedDay  }}</h1>
+        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+            <thead class="bg-gray-50">
+            <tr>
+                <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
+
+{{--                    <input type="date" wire:model="dateRange.now">--}}
+                    <x-input wire:model="selectedDay" type="date"
+                           class="border text-gray-900  border-gray-300 rounded-lg"
+                           value="{{ Carbon\Carbon::parse($selectedDay)->format('Y-m-d') }}"
+                    ></x-input>
+{{--                    <input type="date" wire:model="startDate"--}}
+{{--                           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"--}}
+{{--                           value="{{ Carbon\Carbon::parse($startDate)->format('Y-m-d') }}">--}}
+
+                </th>
+                @foreach($this->tableCells as $cellDay)
+                    <th scope="col"
+                        class="{{$cellDay['day']->toDateString() == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} py-4 text-center font-medium border p-2">{{
+                                $cellDay['day']->isoFormat('MMM. D') }}<br/>{{ $cellDay['day']->isoFormat('ddd') }}</th>
+                @endforeach
+            </tr>
+            </thead>
+            <tbody class="bg-gray-50">
+            @foreach($this->tableCells[0]['schedule'] as $minutes)
+                @if($loop->odd)
+                    <tr>
+                        <th scope="col" rowspan="2" class="pl-6 font-medium text-gray-900 border p-2">{{
+                                $minutes['minutes']->isoFormat('HH : mm') }}</th>
+                        @endif
+                        @foreach($this->tableCells as $cellDay)
+                            @foreach($cellDay['schedule'] as $cellMinute)
+                                @if($cellMinute['minutes']->toTimeString() == $minutes['minutes']->toTimeString())
+                                    <th wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
+                                        scope="col" class="empty-spot text-center font-medium border py-2">
+                                        <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
+                                    </th>
+                                @endif
+                            @endforeach
+                        @endforeach
+                        @if($loop->odd)
+                    </tr>
+                @endif
+            @endforeach
+            </tbody>
+        </table>
+        {{--<table
             class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
             <tr>
@@ -119,7 +159,7 @@
                 </tr>
             @endfor
             </thead>
-        </table>
+        </table>--}}
         {{--<table
             class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
@@ -381,11 +421,6 @@
         </x-dialog-modal>
     </div>
 </div>
-
-<script>
-    @livewireScripts
-    @livewireCalendarScripts
-</script>
 
 <style>
     .selected-slot p {
