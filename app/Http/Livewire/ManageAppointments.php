@@ -81,20 +81,114 @@ class ManageAppointments extends Component
         $this->selectedDay = Carbon::today()->format('Y-m-d');
     }
 
-    public function generateArray(): array
+    public function generateArray($appointments): array
     {
-        $this->dateRange['now'] = Carbon::parse($this->selectedDay);
-        $this->dateRange['start'] = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1);
-        $this->dateRange['end'] = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(1);
         $arrayWeek = array();
+        $elementId = 1;
+        $dayId = 1;
         for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
             $arrayDay = array();
-            for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                $arrayDay[] = ['minutes' => $k->copy(), 'appointment' => null, 'collapse' => false];
+            $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
+            if (count($arrayDayAppointment) > 0) {
+                for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
+                    foreach ($arrayDayAppointment as $appointment) {
+                        $currentStart = $i->copy()->setTimeFrom($appointment['start_time']);
+                        $currentEnd = $i->copy()->setTimeFrom($appointment['end_time'])->subMinute();
+                        if ($currentStart == $k) {
+                            $range = Carbon::parse($appointment['start_time'])->diffInMinutes(Carbon::parse($appointment['end_time'])) / 15;
+                            $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy(), 'appointment' => $appointment, 'collapse' => false, 'range' => $range];
+                            break;
+                        } elseif ($k->between($currentStart, $currentEnd)) {
+                            $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy(), 'appointment' => null, 'collapse' => true];
+                        } else {
+                            $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy(), 'appointment' => null, 'collapse' => false];
+                        }
+                    }
+                }
+            } else {
+                for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
+                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy(), 'appointment' => null, 'collapse' => false];
+                }
             }
-            $arrayWeek[] = [ 'day' => $i->copy(), 'schedule' => $arrayDay];
+            $arrayWeek[] = ['id' => $dayId++, 'day' => $i->copy(), 'schedule' => $arrayDay];
         }
         return $arrayWeek;
+    }
+
+    private function in_array_by_key(mixed $needle, mixed $array, string $key): array
+    {
+        $arrayByNeedle = array();
+
+        foreach ($array as $element) {
+            if ($element[$key] == $needle) {
+                $arrayByNeedle[] = $element;
+            }
+        }
+
+        return $arrayByNeedle;
+    }
+
+    public function generateDateRange(string $date): bool
+    {
+        $result = true;
+        $this->dateRange['now'] = Carbon::parse($this->selectedDay);
+        $startDay = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1);
+
+        if ($this->dateRange['start'] == null || $this->dateRange['start'] != $startDay) {
+            $result = true;
+            $this->dateRange['start'] = $startDay->copy();
+            $this->dateRange['end'] = $startDay->copy()->addWeeks(1);
+        }
+
+        return $result;
+    }
+
+    public function reorder($idFrom, $idTo) {
+//        dd('ABOBA');
+//        dd($orderedIds);
+//        dd($idFrom. $idTo);
+        $dayFrom = array();
+        $dayTo = array();
+        $newDateRange = array('date' => null, 'start_time' => null, 'end_time' => null);
+        foreach ($this->tableCells as $day) {
+            if (count($dayFrom) == 0) {
+                $dayFrom = $this->in_array_by_key($idFrom, $day, 'id');
+            }
+            if (count($dayTo) == 0) {
+                $dayTo = $this->in_array_by_key($idTo, $day, 'id');
+            }
+        }
+        $cellFrom = null;
+        $cellTo = null;
+        foreach ($dayFrom as $slot) {
+            if ($slot['id'] == $idFrom) {
+                $cellFrom = $slot;
+            }
+        }
+
+        foreach ($dayTo as $slot) {
+            if ($slot['id'] == $idTo) {
+                $cellTo = $slot;
+            }
+        }
+        dd($cellFrom.' \n'. $cellTo);
+        if ($cellFrom != null && $cellTo != null) {
+            dd($cellFrom.' \n'. $cellTo);
+
+            $newAppointment = $cellFrom['appointment'];
+            $newAppointment->date = $dayFrom['day']->toDateString();
+            $newAppointment->startTime = $cellTo['minutes']->toTimeString();
+            $newAppointment->endTime = $cellTo['minutes']->addMinutes($cellFrom['range'] * 15)->toTimeString();
+
+            $newAppointment->save();
+
+//            $this->render();
+        }
+
+
+
+
+
     }
 
     public function render()
@@ -179,7 +273,9 @@ class ManageAppointments extends Component
             $this->selectedCreateLocation = $this->locations[0];
         }
 
-        $this->tableCells = $this->generateArray();
+        if ($this->generateDateRange($this->selectedDay)) {
+            $this->tableCells = $this->generateArray($this->appointments);
+        }
 
         return view('livewire.manage-appointments', [
             'appointments' => $this->appointments,
@@ -187,7 +283,7 @@ class ManageAppointments extends Component
             'locations' => $this->locations,
             'selectedCreateService' => $this->selectedCreateService,
             'selectedCreateLocation' => $this->selectedCreateLocation,
-'tableCells' => $this->tableCells,
+            'tableCells' => $this->tableCells,
 //            'selectedCreateService' => $this->selectedCreateService,
         ]);
     }
@@ -342,7 +438,7 @@ class ManageAppointments extends Component
     public function delete($id)
     {
         $formField = Appointment::find($id);
-        if($formField) {
+        if ($formField) {
             $formField->delete();
             //$this->appointments = Appointment::all();
             $this->appointments = Appointment::orderBy('order')->get();

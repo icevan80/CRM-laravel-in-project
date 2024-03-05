@@ -64,14 +64,9 @@
             <tr>
                 <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
 
-{{--                    <input type="date" wire:model="dateRange.now">--}}
                     <x-input wire:model="selectedDay" type="date"
-                           class="border text-gray-900  border-gray-300 rounded-lg"
-                           value="{{ Carbon\Carbon::parse($selectedDay)->format('Y-m-d') }}"
-                    ></x-input>
-{{--                    <input type="date" wire:model="startDate"--}}
-{{--                           class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"--}}
-{{--                           value="{{ Carbon\Carbon::parse($startDate)->format('Y-m-d') }}">--}}
+                             class="border text-gray-900  border-gray-300 rounded-lg"></x-input>
+
 
                 </th>
                 @foreach($this->tableCells as $cellDay)
@@ -81,20 +76,42 @@
                 @endforeach
             </tr>
             </thead>
-            <tbody class="bg-gray-50">
+            <tbody drag-root class="bg-gray-50">
             @foreach($this->tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
                     <tr>
-                        <th scope="col" rowspan="2" class="pl-6 font-medium text-gray-900 border p-2">{{
+                        <th scope="col" rowspan="2" class="w-0 pl-6 font-medium text-gray-900 border p-2">{{
                                 $minutes['minutes']->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($this->tableCells as $cellDay)
                             @foreach($cellDay['schedule'] as $cellMinute)
                                 @if($cellMinute['minutes']->toTimeString() == $minutes['minutes']->toTimeString())
-                                    <th wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
-                                        scope="col" class="empty-spot text-center font-medium border py-2">
-                                        <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
-                                    </th>
+                                    @if($cellMinute['appointment'] != null)
+                                        <th drag-item="{{ $cellMinute['id'] }}" draggable="true"
+                                            wire:key="{{ $cellMinute['id'] }}"
+                                            rowspan="{{$cellMinute['range']}}"
+                                            wire:click="setSelectedAppointment({{ $cellMinute['appointment'] }})"
+                                            scope="col"
+                                            class="selected-slot text-white bg-pink-600 font-medium border p-2"><p
+                                                class="time-slot">{{
+                                        today()->setTimeFromTimeString($cellMinute['appointment']->start_time)->isoFormat('HH:mm') }}</p>
+                                            <p class="client-name-slot">{{
+                                        $cellMinute['appointment']->creator->name }}</p>
+                                            <p class="appointment-name-slot">{{
+                                        $cellMinute['appointment']->service->name }}</p></th>
+                                    @elseif($cellMinute['collapse'])
+                                        <th wire:key="{{ $cellMinute['id'] }}"
+                                            wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
+                                            scope="col" style="display: none">
+                                            <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
+                                        </th>
+                                    @else
+                                        <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
+                                            wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
+                                            scope="col" class="empty-spot text-center font-medium border py-2">
+                                            <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
+                                        </th>
+                                    @endif
                                 @endif
                             @endforeach
                         @endforeach
@@ -422,9 +439,66 @@
     </div>
 </div>
 
+@live-wireScripts
+
+<script>
+    let root = document.querySelector('[drag-root]');
+
+    currentElem = 0;
+    root.querySelectorAll('[drag-item]').forEach(el => {
+        el.addEventListener('dragstart', e => {
+            // console.log('start');
+            e.target.setAttribute('dragging', true)
+            currentElem = el.getAttribute('drag-item');
+        })
+        el.addEventListener('drop', e => {
+            // console.log('drop');
+            e.target.classList.remove('bg-pink-100')
+
+            let draggingEl = root.querySelector('[dragging]')
+
+            e.target.before(draggingEl)
+
+            let component = Livewire.find(
+                e.target.closest('[wire\\:id]').getAttribute('wire:id')
+            )
+
+            // let id1 = component.getAttribute('drag-item');
+            // let id1 = el.getAttribute('drag-item');
+            let id2 = e.target.getAttribute('drag-item')
+            // let id2 = e.target.classList.getAttribute('drag-item')
+
+            // let orderIds = Array.from(root.querySelectorAll('[drag-item]'))
+            //     .map(itemEl => itemEl.getAttribute('drag-item'))
+
+            // component.call('reorder', orderIds);
+            component.call('reorder', currentElem, id2);
+            // $wire.refresh()
+
+        })
+        el.addEventListener('dragenter', e => {
+            // console.log('enter');
+            e.target.classList.add('bg-pink-100')
+
+            e.preventDefault()
+        })
+
+        el.addEventListener('dragover', e => e.preventDefault())
+
+        el.addEventListener('dragleave', e => {
+            // console.log('leave');
+            e.target.classList.remove('bg-pink-100')
+        })
+        el.addEventListener('dragend', e => {
+            // console.log('end');
+            e.target.removeAttribute('dragging')
+        })
+    })
+</script>
+
 <style>
-    .selected-slot p {
-        max-width: 60px;
+    .selected-slot {
+        width: calc(100% / 7);
     }
 
     .selected-slot .client-name-slot {
@@ -432,7 +506,6 @@
     }
 
     .selected-slot .appointment-name-slot {
-        max-height: 148px;
         overflow: hidden;
         max-lines: 2;
     }
@@ -442,6 +515,7 @@
     }
 
     .empty-spot {
+        width: calc(100% / 7);
         height: 37px;
     }
 
