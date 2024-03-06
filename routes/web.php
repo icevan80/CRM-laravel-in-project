@@ -28,6 +28,8 @@ Route::get('/services/{slug}', [App\Http\Controllers\DisplayService::class, 'sho
 // Route::get('/services/{id}', [App\Http\Controllers\ServiceDisplay::class, 'show'])->name('services.show');
 Route::get('/deals', [App\Http\Controllers\DisplayDeal::class, 'index'])->name('deals');
 
+Route::post('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'index'])->name('botCreate');
+Route::get('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'indexGet'])->name('botCreate');
 
 // Users needs to be logged in for these routes
 Route::middleware([

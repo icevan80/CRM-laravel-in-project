@@ -2,21 +2,21 @@
     <div class="flex justify-between mx-7">
         <h2 class="text-2xl font-bold">
 
-            @if ($selectFilter == 'upcoming')
-                Ожидающиеся
-            @elseif ($selectFilter == 'previous')
-                Старые
-            @elseif ($selectFilter == 'cancelled')
-                Отменененые
-            @endif
+{{--            @if ($selectFilter == 'upcoming')--}}
+{{--                Ожидающиеся--}}
+{{--            @elseif ($selectFilter == 'previous')--}}
+{{--                Старые--}}
+{{--            @elseif ($selectFilter == 'cancelled')--}}
+{{--                Отменененые--}}
+{{--            @endif--}}
 
 
-            записи</h2>
+            Менеджер записей</h2>
 
-        <x-button wire:click="confirmAppointmentAdd"
-                  class="px-5 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
-            Create
-        </x-button>
+{{--        <x-button wire:click="confirmAppointmentAdd"--}}
+{{--                  class="px-5 py-2 text-white bg-pink-500 rounded-md hover:bg--600">--}}
+{{--            Create--}}
+{{--        </x-button>--}}
     </div>
     <div class="mt-4">
         @if (session()->has('message'))
@@ -29,7 +29,7 @@
 
     <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
 
-        <div class="w-full m-4 flex">
+       {{-- <div class="w-full m-4 flex">
 
             <div class="w-1/2 mx-2">
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
@@ -56,9 +56,11 @@
                 <option value="previous">Старые</option>
                 <option value="cancelled">Отменены</option>
             </select>
-        </div>
+        </div>--}}
 
         <h1>{{ $this->selectedDay  }}</h1>
+        <h1>{{ $this->timeNow  }}</h1>
+        <h1>{{ \Carbon\Carbon::now()  }}</h1>
         <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
             <tr>
@@ -69,48 +71,57 @@
 
 
                 </th>
-                @foreach($this->tableCells as $cellDay)
+                @foreach($tableCells as $cellDay)
                     <th scope="col"
-                        class="{{$cellDay['day']->toDateString() == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} py-4 text-center font-medium border p-2">{{
-                                $cellDay['day']->isoFormat('MMM. D') }}<br/>{{ $cellDay['day']->isoFormat('ddd') }}</th>
+                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} py-4 text-center font-medium border p-2">{{
+                                \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
+                        <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}</th>
                 @endforeach
             </tr>
             </thead>
             <tbody drag-root class="bg-gray-50">
-            @foreach($this->tableCells[0]['schedule'] as $minutes)
+            @foreach($tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
                     <tr>
                         <th scope="col" rowspan="2" class="w-0 pl-6 font-medium text-gray-900 border p-2">{{
-                                $minutes['minutes']->isoFormat('HH : mm') }}</th>
+                                \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($this->tableCells as $cellDay)
                             @foreach($cellDay['schedule'] as $cellMinute)
-                                @if($cellMinute['minutes']->toTimeString() == $minutes['minutes']->toTimeString())
+                                @if($cellMinute['minutes'] == $minutes['minutes'])
                                     @if($cellMinute['appointment'] != null)
-                                        <th drag-item="{{ $cellMinute['id'] }}" draggable="true"
+                                        <th drag-item="{{ $cellMinute['id'] }}"
+                                            draggable="{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()) && $cellMinute['appointment']['status'] == 1 ? 'true' : 'false' }}"
                                             wire:key="{{ $cellMinute['id'] }}"
                                             rowspan="{{$cellMinute['range']}}"
                                             wire:click="setSelectedAppointment({{ $cellMinute['appointment'] }})"
                                             scope="col"
-                                            class="selected-slot text-white bg-pink-600 font-medium border p-2"><p
+                                            class="selected-slot text-white {{ $cellMinute['appointment']['status'] == 1 ? 'bg-pink-600' : 'bg-green-600' }}  font-medium border p-2"><p
                                                 class="time-slot">{{
                                         today()->setTimeFromTimeString($cellMinute['appointment']->start_time)->isoFormat('HH:mm') }}</p>
                                             <p class="client-name-slot">{{
                                         $cellMinute['appointment']->creator->name }}</p>
                                             <p class="appointment-name-slot">{{
                                         $cellMinute['appointment']->service->name }}</p></th>
-                                    @elseif($cellMinute['collapse'])
+                                    @elseif($cellMinute['collapse'] == true)
                                         <th wire:key="{{ $cellMinute['id'] }}"
                                             wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
                                             scope="col" style="display: none">
-                                            <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
                                         </th>
                                     @else
-                                        <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
-                                            wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"
-                                            scope="col" class="empty-spot text-center font-medium border py-2">
-                                            <p>{{ $cellMinute['minutes']->isoFormat('HH : mm') }}</p>
-                                        </th>
+                                        @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
+                                            <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
+                                                wire:click="confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}')"
+                                                scope="col" class="empty-spot text-center font-medium border py-2">
+                                                <p>{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
+                                            </th>
+                                        @else
+                                            <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
+                                                {{--                                                wire:click="confirmAppointmentCreate('{{ $cellMinute['minutes'] }}')"--}}
+                                                scope="col" class="past-spot text-center font-medium border py-2">
+                                                <p>{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
+                                            </th>
+                                        @endif
                                     @endif
                                 @endif
                             @endforeach
@@ -277,6 +288,13 @@
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
+                    @if ($selectedAppointment != null && $selectedAppointment->status == 1)
+                        <x-danger-button
+                            wire:click="confirmAppointmentCancellation({{ $selectedAppointment->id }})"
+                            wire:loading.attr="disabled">
+                            {{ __('Cancel') }}
+                        </x-danger-button>
+                    @endif
                     <x-secondary-button wire:click="$set('confirmingAppointmentSelect', false)"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
@@ -327,6 +345,50 @@
             {{ $appointments->links() }}
         </div>
 
+        <x-dialog-modal wire:model="notificationAppointmentSwapped">
+            <x-slot name="title">
+                Статус создания
+            </x-slot>
+            <x-slot name="content">
+                <p>Объявление было назначено на другое время!</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentSwapped', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <div class="p-5">
+            {{ $appointments->links() }}
+        </div>
+
+        <x-dialog-modal wire:model="notificationAppointmentSwappedError">
+            <x-slot name="title">
+                Статус создания
+            </x-slot>
+            <x-slot name="content">
+                <p>Объявление не было перемещено, т.к. выбранный промежуток времени уже занят</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentSwappedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <div class="p-5">
+            {{ $appointments->links() }}
+        </div>
+
 
         <x-dialog-modal wire:model="confirmingAppointmentCreate">
             <x-slot name="title">
@@ -339,7 +401,7 @@
                             wire:model="selectedCreateService">
                         <option selected="selected" disabled value="">Select a service</option>
                         @foreach ($services as $service)
-                            <option value="{{$service}}">{{$service->name}}</option>
+                            <option value="{{$service->id}}">{{$service->name}}</option>
                         @endforeach
                     </select>
 
@@ -365,7 +427,7 @@
                             wire:model="selectedCreateLocation">
                         <option selected="selected" disabled value="">Select a location</option>
                         @foreach ($locations as $location)
-                            <option value="{{$location}}">{{$location->name}} - {{$location->address}}</option>
+                            <option value="{{$location->id}}">{{$location->name}} - {{$location->address}}</option>
                         @endforeach
                     </select>
                 @endif
@@ -402,7 +464,7 @@
                         {{ __('Back') }}
                     </x-secondary-button>
 
-                    <x-danger-button wire:click="cancelAppointment({{ $confirmingAppointmentCancellation }})"
+                    <x-danger-button wire:click="cancelAppointment({{ $selectedAppointment }})"
                                      wire:loading.attr="disabled">
                         {{ __('Cancel') }}
                     </x-danger-button>
@@ -447,38 +509,23 @@
     currentElem = 0;
     root.querySelectorAll('[drag-item]').forEach(el => {
         el.addEventListener('dragstart', e => {
-            // console.log('start');
             e.target.setAttribute('dragging', true)
             currentElem = el.getAttribute('drag-item');
         })
         el.addEventListener('drop', e => {
-            // console.log('drop');
-            e.target.classList.remove('bg-pink-100')
+            e.target.classList.remove('bg-pink-500')
 
             let draggingEl = root.querySelector('[dragging]')
 
             e.target.before(draggingEl)
 
-            let component = Livewire.find(
-                e.target.closest('[wire\\:id]').getAttribute('wire:id')
-            )
-
-            // let id1 = component.getAttribute('drag-item');
-            // let id1 = el.getAttribute('drag-item');
             let id2 = e.target.getAttribute('drag-item')
-            // let id2 = e.target.classList.getAttribute('drag-item')
 
-            // let orderIds = Array.from(root.querySelectorAll('[drag-item]'))
-            //     .map(itemEl => itemEl.getAttribute('drag-item'))
-
-            // component.call('reorder', orderIds);
-            component.call('reorder', currentElem, id2);
-            // $wire.refresh()
+            @this.call('reorder', currentElem, id2)
 
         })
         el.addEventListener('dragenter', e => {
-            // console.log('enter');
-            e.target.classList.add('bg-pink-100')
+            e.target.classList.add('bg-pink-500')
 
             e.preventDefault()
         })
@@ -486,11 +533,9 @@
         el.addEventListener('dragover', e => e.preventDefault())
 
         el.addEventListener('dragleave', e => {
-            // console.log('leave');
-            e.target.classList.remove('bg-pink-100')
+            e.target.classList.remove('bg-pink-500')
         })
         el.addEventListener('dragend', e => {
-            // console.log('end');
             e.target.removeAttribute('dragging')
         })
     })
@@ -514,19 +559,32 @@
         background-color: red;
     }
 
-    .empty-spot {
+    .empty-spot, .past-spot {
         width: calc(100% / 7);
         height: 37px;
     }
 
-    .empty-spot p {
+    .empty-spot p, .past-spot p {
         display: none;
     }
 
+
+
     .empty-spot:hover {
-        background: gray;
+        background-color:rgb(219 39 119 / 0.5);
         color: black;
         cursor: pointer;
+    }
+
+    .past-spot:hover {
+        background-color:rgb(229 231 235 / 1);
+        color: black;
+        /*cursor: pointer;*/
+    }
+
+    .past-spot:hover p {
+        display: block;
+        /*cursor: pointer;*/
     }
 
     .empty-spot:hover p {
