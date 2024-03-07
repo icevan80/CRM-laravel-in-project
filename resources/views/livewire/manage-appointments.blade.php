@@ -277,9 +277,9 @@
                         <h1>{{ $selectedAppointment->service->name }}</h1>
                         <h1>{{ $selectedAppointment->date }}</h1>
                         <h1>{{ $selectedAppointment->start_time }}</h1><br>
-                        <h1>{{ $selectedAppointment->receiving->name}}</h1>
-                        <h1>{{ $selectedAppointment->receiving->phone_number}}</h1>
-                        <h1>{{ $selectedAppointment->receiving->email}}</h1><br>
+{{--                        <h1>{{ $selectedAppointment->receiving->name}}</h1>--}}
+{{--                        <h1>{{ $selectedAppointment->receiving->phone_number}}</h1>--}}
+{{--                        <h1>{{ $selectedAppointment->receiving->email}}</h1><br>--}}
                         <h1>{{ $selectedAppointment->creator->name}}</h1>
                         <h1>{{ $selectedAppointment->creator->phone_number}}</h1>
                         <h1>{{ $selectedAppointment->creator->email}}</h1>
@@ -396,6 +396,11 @@
             </x-slot>
             <x-slot name="content">
                 @if($selectedCreateTime != null)
+                    <label for="name" class="block text-sm font-medium text-gray-700">Имя</label>
+                    <x-input id="name" type="text" class="border text-gray-900  border-gray-300 rounded-lg">
+                    </x-input>
+                    <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
+                    <textarea id="description" class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
                     <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="selectedCreateService">
@@ -406,10 +411,11 @@
                     </select>
 
                     <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
-                    <input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
+                    <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
                            wire:model="selectedCreateDay"
                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                            max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
+                    </x-input>
                     <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
                     <div class="time-block">
                         <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"

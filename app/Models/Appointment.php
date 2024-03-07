@@ -11,13 +11,15 @@ class Appointment extends Model
 {
     protected $fillable = [
         'appointment_code',
+        'referral',
         'creator_id',
-        'receiving_id',
-        'service_id',
+        'receiving_name',
+        'receiving_description',
         'date',
         'start_time',
         'end_time',
         'location_id',
+        'service_id',
         'total',
         'status',
     ];
@@ -28,11 +30,6 @@ class Appointment extends Model
     ];
 
     public function creator()
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function receiving()
     {
         return $this->belongsTo(User::class);
     }
