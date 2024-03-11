@@ -29,9 +29,16 @@ Route::get('/services/{slug}', [App\Http\Controllers\DisplayService::class, 'sho
 Route::get('/deals', [App\Http\Controllers\DisplayDeal::class, 'index'])->name('deals');
 
 //Route::post('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'indexPost'])->name('botCreatePost');
-Route::get('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'indexGet'])->name('botCreateGet');
-Route::get('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'indexGet'])->name('botCreateGet');
-Route::get('/botCreate', [App\Http\Controllers\BotAppointmentController::class, 'indexGet'])->name('botCreateGet');
+Route::get('/bot_create/get&key={key}&method={method}', [App\Http\Controllers\BotAppointmentController::class, 'getArray']);
+Route::get('/bot_create/get_time_slots&key={key}&date={date}', [App\Http\Controllers\BotAppointmentController::class, 'getTimeSlots']);
+Route::get('/bot_create/save_appointment&key={key}'
+    . '&creator_id={creator_id}'
+    . '&receiving_name={receiving_name}'
+    . '&date={date}'
+    . '&start_time={start_time}'
+    . '&location_id={location_id}'
+    . '&service_id={service_id}'
+    , [App\Http\Controllers\BotAppointmentController::class, 'saveAppointment']);
 
 // Users needs to be logged in for these routes
 Route::middleware([
@@ -48,7 +55,7 @@ Route::middleware([
             'validateRole:Admin'
         ])->group(function () {
 
-            Route::prefix('manage')->group( function () {
+            Route::prefix('manage')->group(function () {
                 Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
                 Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
                 Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
@@ -59,7 +66,6 @@ Route::middleware([
             });
 
 
-
         });
 
         // middlleware to give access only for admin and employee
@@ -67,7 +73,7 @@ Route::middleware([
             'validateRole:Admin,Employee'
         ])->group(function () {
 
-            Route::prefix('manage')->group( function () {
+            Route::prefix('manage')->group(function () {
                 Route::get('services', function () {
                     return view('dashboard.manage-services.index');
                 })->name('manageservices');
@@ -78,7 +84,7 @@ Route::middleware([
 
                 Route::get('categories', function () {
                     return view('dashboard.manage-categories.index');
-                })->name('managecategories' );
+                })->name('managecategories');
 
                 Route::get('categories/create', function () {
                     return view('dashboard.manage-categories.index');
@@ -87,8 +93,7 @@ Route::middleware([
                 Route::get('appointments', function () {
                     return view('dashboard.manage-appointments.index');
                 })->name('manageappointments');
-            } );
-
+            });
 
 
             // analytics route group
@@ -118,7 +123,7 @@ Route::middleware([
             'validateRole:Customer'
         ])->group(function () {
 
-            Route::prefix('cart')->group( function () {
+            Route::prefix('cart')->group(function () {
                 Route::get('/', [App\Http\Controllers\CartController::class, 'index'])->name('cart');
                 Route::post('/', [App\Http\Controllers\CartController::class, 'store'])->name('cart.store');
                 Route::delete('/item/{cart_service_id}', [App\Http\Controllers\CartController::class, 'removeItem'])->name('cart.remove-item');
@@ -135,8 +140,6 @@ Route::middleware([
 //
 //            // Cancel an appointment
 //            Route::delete('appointments/{appointment_code}', [App\Http\Controllers\AppointmentController::class, 'destroy'])->name('appointments.destroy');
-
-
 
 
         });

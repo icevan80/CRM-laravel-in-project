@@ -29,8 +29,6 @@ class ManageAppointments extends Component
 
     public $appointment;
 
-    public $confirmingAppointmentAdd;
-
     public $confirmAppointmentCancellation = false;
     public $confirmingAppointmentCancellation = false;
     public $confirmingAppointmentCreate = false;
@@ -42,15 +40,19 @@ class ManageAppointments extends Component
 
     // public
 
-    public $timeNow;
     public $selectedDay;
-    public $startDate;
-    public $selectedAppointment;
 
-    public $selectedCreateDay;
-    public $selectedCreateService;
-    public $selectedCreateLocation;
-    public $selectedCreateTime;
+    public $newAppointment = array(
+        'creator_id' => null,
+        'receiving_name' => null,
+        'receiving_description' => null,
+        'date' => null,
+        'start_time' => null,
+        'end_time' => null,
+        'location_id' => null,
+        'service_id' => null,
+        'total' => null,
+    );
 
     public $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
 
@@ -58,20 +60,14 @@ class ManageAppointments extends Component
 
     protected $rules = [
 //        "appointment.name" => "required|string|max:255",
-        'selectedCreateService' => 'required',
-        'selectedCreateLocation' => 'required',
-        'selectedCreateDay' => 'required|string',
-        'selectedCreateTime' => 'required|string',
     ];
 
     protected $casts = [
         'selectedDay' => 'date:Y-m-d'
     ];
 
-
     public function mount($userId = null, $selectFilter = 'upcoming')
     {
-
         if (auth()->user()->role->name == "Customer") {
             $this->userId = auth()->user()->id;
         } else if (auth()->user()->role->name == ("Employee" || "Admin")) {
@@ -79,8 +75,85 @@ class ManageAppointments extends Component
         }
         $selectFilter ? $this->selectFilter = $selectFilter : $this->selectFilter = 'upcoming';
 
-        $this->timeNow = Carbon::now();
         $this->selectedDay = Carbon::today()->format('Y-m-d');
+    }
+
+    public function render()
+    {
+        $query = Appointment::with('creator', 'service', 'location');
+        if ($this->search) {
+            $query->where(function ($subQuery) {
+                $subQuery
+                    ->where('date', 'like', '%' . $this->search . '%')
+                    ->orWhere('appointment_code', 'like', '%' . $this->search . '%')
+                    ->orWhere('start_time', 'like', '%' . $this->search . '%')
+                    ->orWhere('end_time', 'like', '%' . $this->search . '%')
+                    ->orWhere('status', 'like', '%' . $this->search . '%')
+                    ->orWhere('service_id', 'like', '%' . $this->search . '%')
+//                    ->orWhere('time_slot_id', 'like', '%' . $this->search . '%')
+                    ->orWhere('location_id', 'like', '%' . $this->search . '%');
+            });
+
+            $query->orWhereHas('creator', function ($userQuery) {
+                $userQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('email', 'like', '%' . $this->search . '%')
+                    ->orWhere('phone_number', 'like', '%' . $this->search . '%');
+            });
+
+            $query->orWhereHas('service', function ($serviceQuery) {
+                $serviceQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('description', 'like', '%' . $this->search . '%')
+                    ->orWhere('category_id', 'like', '%' . $this->search . '%');
+            });
+
+            $query->orWhereHas('location', function ($locationQuery) {
+                $locationQuery->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('address', 'like', '%' . $this->search . '%')
+                    ->orWhere('telephone_number', 'like', '%' . $this->search . '%');
+            });
+        }
+
+
+        if ($this->userId) {
+
+            $query->where('creator_id', $this->userId);
+        }
+//        dd($this->selectFilter);
+        if ($this->selectFilter === 'previous') {
+            $query->whereDate('date', '<', Carbon::today())->where('status', 1);
+
+        } else if ($this->selectFilter === 'upcoming') {
+            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2));
+
+        } else if ($this->selectFilter === 'cancelled') {
+            $query->where('status', 0);
+        }
+
+        $this->appointments = $query
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->paginate(50);
+//        dd($this->appointments);
+
+
+        if ($this->services == null) {
+            $this->services = Service::all();
+        }
+
+        if ($this->locations == null) {
+            $this->locations = Location::all();
+        }
+
+        if ($this->generateDateRange($this->selectedDay)) {
+            $this->tableCells = $this->generateArray($this->appointments);
+        }
+
+        return view('livewire.manage-appointments', [
+            'appointments' => $this->appointments,
+            'services' => $this->services,
+            'locations' => $this->locations,
+            'tableCells' => $this->tableCells,
+        ]);
     }
 
     public function generateArray($appointments): array
@@ -188,155 +261,14 @@ class ManageAppointments extends Component
             } else {
                 $this->notificationAppointmentSwappedError = true;
             }
-        }
-        else {
+        } else {
             $this->notificationAppointmentSwappedError = true;
         }
     }
 
-    public function appointmentCancel() {
-
-    }
-
-    public function appointmentCancelConfirmed($appointment) {
-
-    }
-
-    public function render()
-    {
-
-
-        $query = Appointment::with('creator', 'receiving', 'service', 'location');
-        if ($this->search) {
-            $query->where(function ($subQuery) {
-                $subQuery
-                    ->where('date', 'like', '%' . $this->search . '%')
-                    ->orWhere('appointment_code', 'like', '%' . $this->search . '%')
-                    ->orWhere('start_time', 'like', '%' . $this->search . '%')
-                    ->orWhere('end_time', 'like', '%' . $this->search . '%')
-                    ->orWhere('status', 'like', '%' . $this->search . '%')
-                    ->orWhere('service_id', 'like', '%' . $this->search . '%')
-//                    ->orWhere('time_slot_id', 'like', '%' . $this->search . '%')
-                    ->orWhere('location_id', 'like', '%' . $this->search . '%');
-            });
-
-            $query->orWhereHas('creator', function ($userQuery) {
-                $userQuery->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-                    ->orWhere('phone_number', 'like', '%' . $this->search . '%');
-            });
-
-            $query->orWhereHas('receiving', function ($userQuery) {
-                $userQuery->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('email', 'like', '%' . $this->search . '%')
-                    ->orWhere('phone_number', 'like', '%' . $this->search . '%');
-            });
-
-            $query->orWhereHas('service', function ($serviceQuery) {
-                $serviceQuery->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('description', 'like', '%' . $this->search . '%')
-                    ->orWhere('category_id', 'like', '%' . $this->search . '%');
-            });
-
-            $query->orWhereHas('location', function ($locationQuery) {
-                $locationQuery->where('name', 'like', '%' . $this->search . '%')
-                    ->orWhere('address', 'like', '%' . $this->search . '%')
-                    ->orWhere('telephone_number', 'like', '%' . $this->search . '%');
-            });
-        }
-
-
-        if ($this->userId) {
-
-            $query->where('creator_id', $this->userId);
-        }
-//        dd($this->selectFilter);
-        if ($this->selectFilter === 'previous') {
-            $query->whereDate('date', '<', Carbon::today())->where('status', 1);
-
-        } else if ($this->selectFilter === 'upcoming') {
-            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2));
-
-        } else if ($this->selectFilter === 'cancelled') {
-            $query->where('status', 0);
-        }
-
-        $this->appointments = $query
-            ->orderBy('date')
-            ->orderBy('start_time')
-            ->paginate(50);
-//        dd($this->appointments);
-
-
-        if ($this->services == null) {
-            $this->services = Service::all();
-        }
-
-        if ($this->selectedCreateService == null && $this->services != null) {
-            $this->selectedCreateService = $this->services[0];
-        }
-
-        if ($this->locations == null) {
-            $this->locations = Location::all();
-        }
-
-        if ($this->selectedCreateLocation == null && $this->locations != null) {
-            $this->selectedCreateLocation = $this->locations[0];
-        }
-
-        if ($this->generateDateRange($this->selectedDay)) {
-            $this->tableCells = $this->generateArray($this->appointments);
-        }
-
-        return view('livewire.manage-appointments', [
-            'appointments' => $this->appointments,
-            'services' => $this->services,
-            'locations' => $this->locations,
-            'selectedCreateService' => $this->selectedCreateService,
-            'selectedCreateLocation' => $this->selectedCreateLocation,
-            'tableCells' => $this->tableCells,
-//            'selectedCreateService' => $this->selectedCreateService,
-        ]);
-    }
-
-
-    private function getServicesList()
-    {
-        $services = Service::all();
-        if ($services->isNull()) {
-            $this->services = [];
-        } else {
-            $this->services = $services;
-        }
-    }
-
-
-
-//    public function confirmAppointmentEdit(Appointment $appointment) {
-//        $this->appointment = $appointment;
-//        $this->confirmingAppointmentAdd= true;
-//    }
     public function confirmAppointmentCancellation()
     {
         $this->confirmingAppointmentCancellation = true;
-    }
-
-    public function saveAppointment()
-    {
-        //    $this->validate();
-
-        if (isset($this->appointment->id)) {
-            $this->appointment->save();
-        } else {
-            Appointment::create(
-                [
-                    'name' => $this->appointment['name'],
-                ]
-            );
-        }
-
-        $this->confirmingAppointmentAdd = false;
-        $this->appointment = null;
     }
 
     public function cancelAppointment(Appointment $appointment)
@@ -347,24 +279,18 @@ class ManageAppointments extends Component
 //        if (auth()->user()->id == $this->appointment->user->id
 //            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
 
-            $this->appointment->status = 0;
+        $this->appointment->status = 0;
 //        $this->appointment->cancelled_by = auth()->user()->id;
-            // TODO add reason
-            $this->appointment->save();
-            $this->confirmingAppointmentCancellation = false;
+        // TODO add reason
+        $this->appointment->save();
+        $this->confirmingAppointmentCancellation = false;
         $this->confirmingAppointmentSelect = false;
 //        }
     }
 
-    public function confirmAppointmentAdd()
-    {
-//        $this->getServicesList();
-        $this->confirmingAppointmentAdd = true;
-    }
-
     public function setSelectedAppointment(Appointment $appointment)
     {
-        $this->selectedAppointment = $appointment;
+        $this->appointment = $appointment;
         $this->confirmingAppointmentSelect = true;
     }
 
@@ -373,54 +299,70 @@ class ManageAppointments extends Component
     )
     {
         $carbonTime = Carbon::create($time);
-        $this->selectedCreateDay = $carbonTime->toDateString();
-        $this->selectedCreateTime = $carbonTime->toTimeString();
+        $this->newAppointment['creator_id'] = auth()->user()->id;
+        $this->newAppointment['date'] = $carbonTime->toDateString();
+        $this->newAppointment['start_time'] = $carbonTime->toTimeString();
+        $this->newAppointment['location_id'] = $this->locations->first()->id;
+        $this->newAppointment['service_id'] = $this->services->first()->id;
         $this->confirmingAppointmentCreate = true;
-        $this->render();
     }
 
     public function createAppointment()
     {
 
         $is_available = DB::table('appointments')
-            ->whereDate('date', '=', Carbon::today()->setDateFrom($this->selectedCreateDay))
-            ->whereBetween('start_time', [$this->selectedCreateTime, today()->setTimeFrom($this->selectedCreateTime)->addMinutes(59)->toTimeString()]);
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($this->newAppointment['date']))
+            ->whereBetween('start_time', [$this->newAppointment['start_time'], today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(59)->toTimeString()]);
 
         if ($is_available->count() == 0) {
 
+            $this->newAppointment['end_time'] = today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->toTimeString();
+            $this->newAppointment['total'] = $this->serviceConverter($this->newAppointment['service_id'])->price;
+
             Appointment::create([
-                'creator_id' => auth()->user()->id,
-                'receiving_id' => auth()->user()->id,
-                'service_id' => $this->serviceConverter($this->selectedCreateService)->id,
-                'date' => $this->selectedCreateDay,
-                'start_time' => $this->selectedCreateTime,
-                'end_time' => today()->setTimeFrom($this->selectedCreateTime)->addMinutes(60)->toTimeString(),
-                'location_id' => $this->locationConverter($this->selectedCreateLocation)->id,
-                'total' => $this->serviceConverter($this->selectedCreateService)->price,
+                'creator_id' => $this->newAppointment['creator_id'],
+                'receiving_name' => $this->newAppointment['receiving_name'],
+                'receiving_description' => $this->newAppointment['receiving_description'],
+                'date' => $this->newAppointment['date'],
+                'start_time' => $this->newAppointment['start_time'],
+                'end_time' => $this->newAppointment['end_time'],
+                'location_id' => $this->newAppointment['location_id'],
+                'service_id' => $this->newAppointment['service_id'],
+                'total' => $this->newAppointment['total'],
             ]);
             $this->notificationAppointmentCreated = true;
         } else {
             $this->notificationAppointmentCreatedError = true;
         }
         $this->confirmingAppointmentCreate = false;
+        $this->newAppointment = array(
+            'creator_id' => null,
+            'receiving_name' => null,
+            'receiving_description' => null,
+            'date' => null,
+            'start_time' => null,
+            'end_time' => null,
+            'location_id' => null,
+            'service_id' => null,
+            'total' => null,
+        );
     }
 
     protected function serviceConverter($serviceId): Service
     {
         foreach ($this->services as $service) {
-            if ($serviceId.'' == $service->id.'') {
+            if ($serviceId . '' == $service->id . '') {
                 return $service;
             }
         }
-            return $this->services->first();
-//        return $service;
+        return $this->services->first();
     }
 
     protected function locationConverter($locationId): Location
     {
         foreach ($this->locations as $location) {
 
-            if ($locationId.'' == $location->id.'') {
+            if ($locationId . '' == $location->id . '') {
                 return $location;
             }
         }
