@@ -52,7 +52,7 @@ class Appointment extends Model
 
         static::creating(function ($appointment) {
             // a readable unique code for the appointment, including the id in the code
-            $appointment->appointment_code = 'APP-'.  ($appointment->count() + 1) ;
+            $appointment->appointment_code = 'APP-'.  (Appointment::orderBy('id', 'desc')->first()->id + 1) ;
 
         });
     }

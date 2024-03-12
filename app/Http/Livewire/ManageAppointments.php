@@ -17,6 +17,9 @@ class ManageAppointments extends Component
     private $appointments;
     public $tableCells = [];
     public $dateRange = array('now' => null, 'start' => null, 'end' => null);
+    private $forceGenerate = false;
+
+    public $typeOfView = 'TableCrmTwoWeeks';
 
     public $services;
     public $locations;
@@ -31,6 +34,8 @@ class ManageAppointments extends Component
 
     public $confirmAppointmentCancellation = false;
     public $confirmingAppointmentCancellation = false;
+    public $confirmAppointmentDelete = false;
+    public $confirmingAppointmentDelete = false;
     public $confirmingAppointmentCreate = false;
     public $confirmingAppointmentSelect = false;
     public $notificationAppointmentCreated = false;
@@ -144,19 +149,28 @@ class ManageAppointments extends Component
             $this->locations = Location::all();
         }
 
-        if ($this->generateDateRange($this->selectedDay)) {
+        if ($this->generateDateRange($this->selectedDay) || $this->forceGenerate) {
             $this->tableCells = $this->generateArray($this->appointments);
+            $this->forceGenerate = false;
         }
 
-        return view('livewire.manage-appointments', [
-            'appointments' => $this->appointments,
-            'services' => $this->services,
-            'locations' => $this->locations,
-            'tableCells' => $this->tableCells,
-        ]);
+        switch ($this->typeOfView) {
+            case 'TableCrmTodayTomorrow':
+            case 'TableCrmTwoWeeks':
+                return view('livewire.manage-appointments', [
+                    'appointments' => $this->appointments,
+                    'services' => $this->services,
+                    'locations' => $this->locations,
+                    'tableCells' => $this->tableCells,
+                ]);
+            case 'TableRows':
+                return view('livewire.manage-appointments-stroke', [
+                    'appointments' => $this->appointments,
+                    ]);
+        }
     }
 
-    public function generateArray($appointments): array
+    private function generateArray($appointments): array
     {
         $arrayWeek = array();
         $elementId = 1;
@@ -207,11 +221,11 @@ class ManageAppointments extends Component
         return $arrayByNeedle;
     }
 
-    public function generateDateRange(string $date): bool
+    private function generateDateRange(string $date): bool
     {
-        $result = true;
-        $this->dateRange['now'] = Carbon::parse($this->selectedDay);
-        $startDay = Carbon::parse($this->selectedDay)->setDaysFromStartOfWeek(1);
+        $result = false;
+        $this->dateRange['now'] = Carbon::parse($date);
+        $startDay = Carbon::parse($date)->setDaysFromStartOfWeek(1);
 
         if ($this->dateRange['start'] == null || $this->dateRange['start'] != $startDay) {
             $result = true;
@@ -246,6 +260,7 @@ class ManageAppointments extends Component
         if ($cellFrom != null && $cellTo != null &&
             Carbon::parse($dayFrom)->setTimeFrom(Carbon::parse($cellFrom['minutes']))->greaterThan(now()) &&
             Carbon::parse($dayTo)->setTimeFrom(Carbon::parse($cellTo['minutes']))->greaterThan(now())) {
+            $this->forceGenerate = true;
 
             $is_available = DB::table('appointments')
                 ->whereDate('date', '=', Carbon::parse($dayTo)->toDateString())
@@ -269,6 +284,19 @@ class ManageAppointments extends Component
     public function confirmAppointmentCancellation()
     {
         $this->confirmingAppointmentCancellation = true;
+    }
+
+    public function confirmAppointmentDelete()
+    {
+        $this->confirmingAppointmentDelete = true;
+    }
+
+    public function deleteAppointment(Appointment $appointment)
+    {
+        $appointment->delete();
+        $this->confirmingAppointmentDelete = false;
+        $this->confirmingAppointmentSelect = false;
+        $this->appointment = null;
     }
 
     public function cancelAppointment(Appointment $appointment)
@@ -318,6 +346,9 @@ class ManageAppointments extends Component
 
             $this->newAppointment['end_time'] = today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->toTimeString();
             $this->newAppointment['total'] = $this->serviceConverter($this->newAppointment['service_id'])->price;
+            if ($this->newAppointment['receiving_description'] == null) {
+                $this->newAppointment['receiving_description'] = '';
+            }
 
             Appointment::create([
                 'creator_id' => $this->newAppointment['creator_id'],
