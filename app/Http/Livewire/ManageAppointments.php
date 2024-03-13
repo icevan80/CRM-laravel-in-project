@@ -172,6 +172,9 @@ class ManageAppointments extends Component
 
     private function generateArray($appointments): array
     {
+
+
+
         $arrayWeek = array();
         $elementId = 1;
         $dayId = 1;
@@ -180,33 +183,25 @@ class ManageAppointments extends Component
             $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
             if (count($arrayDayAppointment) > 0) {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $addSlot = false;
-                    foreach ($arrayDayAppointment as $appointment) {
-                        $currentStart = $i->copy()->setTimeFrom($appointment['start_time']);
-                        $currentEnd = $i->copy()->setTimeFrom($appointment['end_time'])->subMinute();
-                        if ($currentStart == $k) {
-                            $range = Carbon::parse($appointment['start_time'])->diffInMinutes(Carbon::parse($appointment['end_time'])) / 15;
-                            $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointment' => $appointment, 'collapse' => false, 'range' => $range];
-                            $addSlot = true;
-                            break;
-                        } elseif ($k->between($currentStart, $currentEnd)) {
-                            $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointment' => null, 'collapse' => true, 'range' => 1];
-                            $addSlot = true;
-                        }
-                    }
-                    if (!$addSlot) {
-                        $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointment' => null, 'collapse' => false, 'range' => 1];
-                    }
+                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
+                }
+                foreach ($arrayDayAppointment as $appointment) {
+                    $index = array_search($appointment['start_time'], array_column($arrayDay, 'minutes'));
+                    $range = Carbon::parse($appointment['start_time'])->diffInMinutes(Carbon::parse($appointment['end_time'])) / 15;
+                    $available = $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['status'];
+                    $arrayDay[$index]['appointments'][] = array('range' => $range, 'data' => $appointment, 'available' => $available);
+                    usort($arrayDay[$index]['appointments'], fn($a, $b) => $b["range"] <=> $a["range"]);
                 }
             } else {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointment' => null, 'collapse' => false];
+                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
             }
             $arrayWeek[] = ['id' => $dayId++, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay];
         }
         return $arrayWeek;
     }
+
 
     private function in_array_by_key(mixed $needle, mixed $array, string $key): array
     {
@@ -236,8 +231,9 @@ class ManageAppointments extends Component
         return $result;
     }
 
-    public function reorder($idFrom, $idTo)
+    public function reorder($idFrom, $idTo, $idElement)
     {
+//        dd($idFrom.' '.$idTo.' '.$idElement);
         $dayFrom = '';
         $dayTo = '';
         $cellFrom = array();
@@ -261,21 +257,31 @@ class ManageAppointments extends Component
             Carbon::parse($dayFrom)->setTimeFrom(Carbon::parse($cellFrom['minutes']))->greaterThan(now()) &&
             Carbon::parse($dayTo)->setTimeFrom(Carbon::parse($cellTo['minutes']))->greaterThan(now())) {
             $this->forceGenerate = true;
+            $range = null;
+            foreach ($cellFrom['appointments'] as $appointment) {
+                if ($appointment['data']['appointment_code'] == $idElement) {
+                    $range = $appointment['range'];
+                }
+            }
 
-            $is_available = DB::table('appointments')
-                ->whereDate('date', '=', Carbon::parse($dayTo)->toDateString())
-                ->whereBetween('start_time', [Carbon::parse($cellTo['minutes'])->toTimeString(), Carbon::parse($cellTo['minutes'])->addMinutes($cellFrom['range'] * 15)->subMinute()->toTimeString()]);
-            if ($is_available->count() == 0) {
+//            dd($currentAppointment);
 
-                Appointment::where('appointment_code', $cellFrom['appointment']['appointment_code'])->update([
+//            $is_available = DB::table('appointments')
+//                ->whereDate('date', '=', Carbon::parse($dayTo)->toDateString())
+//                ->whereBetween('start_time', [Carbon::parse($cellTo['minutes'])->toTimeString(), Carbon::parse($cellTo['minutes'])->addMinutes($cellFrom['range'] * 15)->subMinute()->toTimeString()]);
+//            if ($is_available->count() == 0) {
+            if ($range != null) {
+                Appointment::where('appointment_code', $idElement)->update([
                     'date' => Carbon::parse($dayTo)->toDateString(),
                     'start_time' => Carbon::parse($cellTo['minutes'])->toTimeString(),
-                    'end_time' => Carbon::parse($cellTo['minutes'])->addMinutes($cellFrom['range'] * 15)->toTimeString(),
+                    'end_time' => Carbon::parse($cellTo['minutes'])->addMinutes(15 * $range)->toTimeString(),
                 ]);
                 $this->notificationAppointmentSwapped = true;
-            } else {
-                $this->notificationAppointmentSwappedError = true;
             }
+//            } else {
+//                $this->notificationAppointmentSwappedError = true;
+//            }
+
         } else {
             $this->notificationAppointmentSwappedError = true;
         }

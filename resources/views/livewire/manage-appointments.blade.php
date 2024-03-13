@@ -16,17 +16,15 @@
     </div>
 
     <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
-
-
         <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
             <thead class="bg-gray-50">
             <tr>
-                <th scope="col" colspan="48" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
+                <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
                     <x-input wire:model="selectedDay" type="date"
                              class="border text-gray-900  border-gray-300 rounded-lg"></x-input>
                 </th>
                 @foreach($tableCells as $cellDay)
-                    <th scope="col" colspan="48"
+                    <th scope="col"
                         class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} py-4 text-center font-medium border p-2">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                         <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}</th>
@@ -37,7 +35,7 @@
             @foreach($tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
                     <tr>
-                        <th scope="col" rowspan="2" colspan="48" class="w-0 pl-6 font-medium text-gray-900 border p-2">{{
+                        <th scope="col" rowspan="2" class="w-0 pl-6 font-medium text-gray-900 border p-2">{{
                                 \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($tableCells as $cellDay)
@@ -65,22 +63,41 @@
                                     {{--                                        </th>--}}
                                     {{--                                    @else--}}
                                     @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
-                                        <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
-                                            style="position: relative;"
+                                        <th
+
+                                            {{--                                            @if(now()->toDateString() == $cellDay['day'] && now()->between(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']), \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)))--}}
+                                            {{--                                            {{dd('aboba') }}--}}
+                                            {{--                                            @endif--}}
+                                            {{--                                            @if(no)--}}
+                                            {{--                                                                                        time-line--}}
                                             wire:click="confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}')"
-                                            scope="col" colspan="48"
-                                            class="empty-spot text-center font-medium border py-2">
+                                            scope="col"
+                                            class="time-slot text-center font-medium border py-2">
                                             <p>{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
-                                            @if($cellMinute['appointment'] != null)
-                                                <div style=" z-index:10; position: absolute; width: 30%;height: 1000%; top: 0px; left: 0;  background-color: red;">Aboba</div>
-                                                <div style=" z-index:10; position: absolute; width: 30%;height: 400%; top: 0px; left: 30%;  background-color: green;"></div>
-                                                <div style=" z-index:10; position: absolute; width: 30%;height: 400%; top: 0px; left: 60%;  background-color: yellow;"></div>
-                                            @endif
+                                            <div drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
+                                                 class="appointment-container"
+                                            >
+                                                @foreach($cellMinute['appointments'] as $appointmentData)
+                                                    <div
+                                                        drag-item="{{ $appointmentData['data']['appointment_code'] }}"
+                                                        draggable="{{ $appointmentData['available'] ? 'true' : 'false' }}"
+                                                        class="appointment-slot text-white {{ $appointmentData['data']['status'] == 1 ? 'bg-pink-600' : 'bg-green-600' }}  font-medium border"
+                                                        style="height: calc(102% * {{$appointmentData['range']}})"
+                                                    >
+                                                        {{--                                                        <p>{{ $appointmentData['data']['appointment_code'] }}</p>--}}
+                                                    </div>
+
+
+                                                @endforeach
+                                            </div>
                                         </th>
                                     @else
-                                        <th drag-item="{{ $cellMinute['id'] }}" wire:key="{{ $cellMinute['id'] }}"
-                                            scope="col" colspan="48"
-                                            class="past-spot text-center font-medium border py-2">
+                                        <th
+                                            @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->lessThan(now()) && \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
+                                                time-line
+                                            @endif
+                                            scope="col"
+                                            class="past-time-slot text-center font-medium border py-2">
                                             <p>{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
                                         </th>
                                     @endif
@@ -342,25 +359,55 @@
 </div>
 
 <script>
+    let rootTimeLine = document.querySelector('[time-line]')
+    // let timeLine =
+    let timeLineElement = document.createElement('timeline');
+    timeLineElement.classList.add('time-line');
+    // element.style.top = 50 + '%';
+    rootTimeLine.appendChild(timeLineElement);
+    // let ctx = timeLineElement.getContext("2d");
+
+
+    function moveLine() {
+        let now = new Date();
+        let current = now.getMinutes();
+        let unit = 100 / 15;
+        timeLineElement.style.top = unit * (current % 15) + '%';
+        let timerId = setInterval(() => {
+            if (now.getHours() === 20) {
+                alert(now)
+                    clearInterval(timerId);
+                }
+            now.setMinutes(now.getMinutes() + 1)
+            current++;
+            timeLineElement.style.top = unit * current + '%';
+        }, 60000);
+    }
+    moveLine()
+
     let root = document.querySelector('[drag-root]');
 
-    currentElem = 0;
     root.querySelectorAll('[drag-item]').forEach(el => {
         el.addEventListener('dragstart', e => {
             e.target.setAttribute('dragging', true)
-            currentElem = el.getAttribute('drag-item');
         })
         el.addEventListener('drop', e => {
             e.target.classList.remove('bg-pink-500')
 
             let draggingEl = root.querySelector('[dragging]')
 
-            e.target.before(draggingEl)
+            let currentAppointment = draggingEl.getAttribute('drag-item')
+            let idForm = draggingEl.parentElement.getAttribute('drag-item');
+            let idTo;
+            if (e.target.parentElement.tagName === 'DIV') {
+                e.target.parentElement.appendChild(draggingEl)
+                idTo = e.target.parentElement.getAttribute('drag-item')
+            } else {
+                e.target.appendChild(draggingEl)
+                idTo = e.target.getAttribute('drag-item')
+            }
 
-            let id2 = e.target.getAttribute('drag-item')
-
-        @this.call('reorder', currentElem, id2)
-
+        @this.call('reorder', idForm, idTo, currentAppointment)
         })
         el.addEventListener('dragenter', e => {
             e.target.classList.add('bg-pink-500')
@@ -380,60 +427,103 @@
 </script>
 
 <style>
-    .selected-slot {
-        width: calc(100% / 7);
-    }
-
-    .selected-slot .client-name-slot {
-        margin: 16px 0;
-    }
-
-    .selected-slot .appointment-name-slot {
-        overflow: hidden;
-        max-lines: 2;
-    }
-
-    .selected-slot:hover {
+    .time-line {
+        width: 100%;
+        height: 2px;
+        top: 0;
+        left: 0;
+        position: absolute;
         background-color: red;
+        z-index: 10;
     }
 
-    .empty-spot, .past-spot {
-        width: calc(100% / 7);
-        height: 37px;
+    .time-slot {
+        position: relative;
     }
 
-    .empty-spot p, .past-spot p {
-        display: none;
+    .past-time-slot {
+        position: relative;
+
     }
 
-
-    .empty-spot:hover {
-        background-color: rgb(219 39 119 / 0.5);
-        color: black;
-        cursor: pointer;
+    .appointment-slot {
+        z-index: 1;
+        width: 100%;
+        top: 0;
+        left: 0;
+        border-top-left-radius: .750rem;
+        border-top-right-radius: .750rem;
+        /*background-color: green;*/
+        /*border: solid red;*/
     }
 
-    .past-spot:hover {
-        background-color: rgb(229 231 235 / 1);
-        color: black;
-        /*cursor: pointer;*/
-    }
-
-    .past-spot:hover p {
-        display: block;
-        /*cursor: pointer;*/
-    }
-
-    .empty-spot:hover p {
-        display: block;
-        cursor: pointer;
-    }
-
-    .time-block {
+    .appointment-container {
+        position: absolute;
         display: flex;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        padding-right: 10%;
     }
 
-    .time-block p {
-        margin: auto 16px;
-    }
+    /*
+        .selected-slot {
+            width: calc(100% / 7);
+        }
+
+        .selected-slot .client-name-slot {
+            margin: 16px 0;
+        }
+
+        .selected-slot .appointment-name-slot {
+            overflow: hidden;
+            max-lines: 2;
+        }
+
+        .selected-slot:hover {
+            background-color: red;
+        }
+
+        .empty-spot, .past-spot {
+            width: calc(100% / 7);
+            height: 37px;
+        }
+
+        .empty-spot p, .past-spot p {
+            display: none;
+        }
+
+
+        .empty-spot:hover {
+            background-color: rgb(219 39 119 / 1);
+            color: black;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .past-spot:hover {
+            background-color: rgb(229 231 235 / 1);
+            color: black;
+            !*cursor: pointer;*!
+        }
+
+        .past-spot:hover p {
+            display: block;
+            !*cursor: pointer;*!
+        }
+
+        .empty-spot:hover p {
+            display: block;
+            cursor: pointer;
+        }
+
+        .time-block {
+            display: flex;
+        }
+
+        .time-block p {
+            margin: auto 16px;
+        }
+        */
 </style>
