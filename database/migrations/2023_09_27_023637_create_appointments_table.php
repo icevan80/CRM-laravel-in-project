@@ -10,7 +10,6 @@ return new class extends Migration {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->string('appointment_code')->unique();
-            $table->boolean('referral')->default(false);
             $table->foreignId('creator_id')->constrained('user');
             $table->string('receiving_name');
             $table->string('receiving_description')->default('');
@@ -20,6 +19,8 @@ return new class extends Migration {
             $table->foreignId('location_id')->constrained();
             $table->foreignId('service_id')->constrained();
             $table->double('total', 10, 2)->default(0);
+            $table->boolean('referral')->default(false);
+            $table->boolean('complete')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

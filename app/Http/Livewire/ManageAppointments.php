@@ -19,7 +19,7 @@ class ManageAppointments extends Component
     public $dateRange = array('now' => null, 'start' => null, 'end' => null);
     private $forceGenerate = false;
 
-    public $typeOfView = 'TableCrmTwoWeeks';
+    public $typeOfView = 'TableCrmWeek';
 
     public $services;
     public $locations;
@@ -128,7 +128,7 @@ class ManageAppointments extends Component
             $query->whereDate('date', '<', Carbon::today())->where('status', 1);
 
         } else if ($this->selectFilter === 'upcoming') {
-            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2));
+            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))->where('status', 1);
 
         } else if ($this->selectFilter === 'cancelled') {
             $query->where('status', 0);
@@ -156,7 +156,7 @@ class ManageAppointments extends Component
 
         switch ($this->typeOfView) {
             case 'TableCrmTodayTomorrow':
-            case 'TableCrmTwoWeeks':
+            case 'TableCrmWeek':
                 return view('livewire.manage-appointments', [
                     'appointments' => $this->appointments,
                     'services' => $this->services,
@@ -299,10 +299,20 @@ class ManageAppointments extends Component
 
     public function deleteAppointment(Appointment $appointment)
     {
-        $appointment->delete();
+        $this->appointment = $appointment;
+
+
+//        if (auth()->user()->id == $this->appointment->user->id
+//            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
+
+        $this->appointment->status = 0;
+//        $this->appointment->cancelled_by = auth()->user()->id;
+        // TODO add reason
+        $this->appointment->save();
         $this->confirmingAppointmentDelete = false;
         $this->confirmingAppointmentSelect = false;
-        $this->appointment = null;
+
+
     }
 
     public function cancelAppointment(Appointment $appointment)
@@ -313,7 +323,7 @@ class ManageAppointments extends Component
 //        if (auth()->user()->id == $this->appointment->user->id
 //            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
 
-        $this->appointment->status = 0;
+        $this->appointment->complete = 1;
 //        $this->appointment->cancelled_by = auth()->user()->id;
         // TODO add reason
         $this->appointment->save();
@@ -329,16 +339,19 @@ class ManageAppointments extends Component
     }
 
     public function confirmAppointmentCreate(
-        string $time
+        string $time,
+        bool $onAppointment,
     )
     {
-        $carbonTime = Carbon::create($time);
-        $this->newAppointment['creator_id'] = auth()->user()->id;
-        $this->newAppointment['date'] = $carbonTime->toDateString();
-        $this->newAppointment['start_time'] = $carbonTime->toTimeString();
-        $this->newAppointment['location_id'] = $this->locations->first()->id;
-        $this->newAppointment['service_id'] = $this->services->first()->id;
-        $this->confirmingAppointmentCreate = true;
+        if (!$onAppointment) {
+            $carbonTime = Carbon::create($time);
+            $this->newAppointment['creator_id'] = auth()->user()->id;
+            $this->newAppointment['date'] = $carbonTime->toDateString();
+            $this->newAppointment['start_time'] = $carbonTime->toTimeString();
+            $this->newAppointment['location_id'] = $this->locations->first()->id;
+            $this->newAppointment['service_id'] = $this->services->first()->id;
+            $this->confirmingAppointmentCreate = true;
+        }
     }
 
     public function createAppointment()
