@@ -11,7 +11,6 @@ class Appointment extends Model
 {
     protected $fillable = [
         'appointment_code',
-        'referral',
         'creator_id',
         'receiving_name',
         'receiving_description',
@@ -21,6 +20,8 @@ class Appointment extends Model
         'location_id',
         'service_id',
         'total',
+        'referral',
+        'complete',
         'status',
     ];
 
