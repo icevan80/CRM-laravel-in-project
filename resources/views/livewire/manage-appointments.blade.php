@@ -1,31 +1,41 @@
 <div>
     <div class="flex justify-between mx-7">
-        <h2 class="text-2xl font-bold">
-            Менеджер записей -
-            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="typeOfView">
-                <option value="TableCrmWeek">Неделя</option>
-                <option value="TableCrmTodayTomorrow">Сегодня - завтра</option>
-                <option value="TableRows">Строки</option>
-            </select> -
-            <select class="border text-gray-900  border-gray-300 rounded-lg">
-                <option value="Select">Салон</option>
-                <option value="CurrentMaster">Конкретный мастер</option>
-                <option value="SelfAppointment">Мои записи</option>
-            </select> -
-            <select class="border text-gray-900  border-gray-300 rounded-lg">
-                @foreach ($locations as $location)
-                    <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
-                @endforeach
-            </select> -
-            <select class="border text-gray-900  border-gray-300 rounded-lg">
-                <option value="1">Маша</option>
-                <option value="2">Машенька</option>
-                <option value="3">Машуля</option>
-                <option value="4">Мышенька</option>
-                <option value="5">Машка</option>
-                <option value="6">Мышьяк</option>
+        <div style="display: flex">
+            <h2 class="text-2xl font-bold">
+                Менеджер записей
+            </h2>
+            <h2 class="text-2xl font-bold px-2">-</h2>
+            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
+                <option value="table_two_weeks">Две недели</option>
+                <option value="table_one_week">Неделя</option>
+                <option value="table_today_tomorrow">Сегодня - завтра</option>
+                <option value="rows">Строки</option>
             </select>
-        </h2>
+            <h2 class="text-2xl font-bold px-4">-</h2>
+
+
+            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
+                <option value="salon">Салон</option>
+                <option value="master">Конкретный мастер</option>
+                <option value="self">Мои записи</option>
+                <option value="all">Без фильтра</option>
+            </select>
+            @if($this->followFilter == 'salon')
+                <h2 class="text-2xl font-bold px-4">-</h2>
+                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="locationFilter">
+                    @foreach ($locations as $location)
+                        <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                    @endforeach
+                </select>
+            @elseif($this->followFilter == 'master')
+                <h2 class="text-2xl font-bold px-4">-</h2>
+                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
+                    @foreach ($masters as $master)
+                        <option value={{$master->id}}>{{$master->name}}</option>
+                    @endforeach
+                </select>
+            @endif
+        </div>
     </div>
     <div class="mt-4">
         @if (session()->has('message'))
@@ -64,6 +74,7 @@
                                     @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
                                         <th x-data="{ appointHover = false }"
                                             x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
+                                            {{--                                            wire:key="'item-'.$cellDay['day'].$cellMinute['minutes']"--}}
                                             scope="col"
                                             class="time-slot text-center font-medium border py-2">
                                             <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
@@ -89,7 +100,9 @@
                                     @else
                                         <th
                                             scope="col"
-                                            class="past-time-slot text-center font-medium border py-2">
+                                            class="past-time-slot text-center font-medium border py-2"
+                                            {{--                                            wire:key="'item-'.$cellDay['day'].$cellMinute['minutes']"--}}
+                                        >
                                             @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
                                                 <timeline id="time-line" class="time-line"></timeline>
                                             @endif
@@ -372,6 +385,7 @@
     </div>
 </div>
 
+
 <script>
     let timeLineElement = document.getElementById('time-line');
 
@@ -396,53 +410,102 @@
             }
             timeLineElement.style.top = unit * current + '%';
 
+
         }, 3000);
 
     }
+
 
     moveLine();
 
     let root = document.querySelector('[drag-root]');
 
+    let eventDragStart = e => {
+        e.target.setAttribute('dragging', true)
+    }
+    let eventDrop = e => {
+        e.target.classList.remove('bg-pink-500')
+
+        let draggingEl = root.querySelector('[dragging]')
+
+        let currentAppointment = draggingEl.getAttribute('drag-item')
+        let idForm = draggingEl.parentElement.getAttribute('drag-item');
+        let idTo;
+        if (e.target.parentElement.tagName === 'DIV') {
+            e.target.parentElement.appendChild(draggingEl)
+            idTo = e.target.parentElement.getAttribute('drag-item')
+        } else {
+            e.target.appendChild(draggingEl)
+            idTo = e.target.getAttribute('drag-item')
+        }
+
+    @this.call('reorder', idForm, idTo, currentAppointment)
+    }
+    let eventDragenter = e => {
+        if (e.target.tagName !== 'P') {
+            e.target.classList.add('bg-pink-500')
+        }
+
+        e.preventDefault()
+    }
+    let eventDragOver = e => e.preventDefault()
+    let eventDragLeave = e => {
+        e.target.classList.remove('bg-pink-500')
+    }
+    let eventDragEnd = e => {
+        e.target.removeAttribute('dragging')
+    }
+
+    function linkDaDEvents(el) {
+        el.addEventListener('dragstart', eventDragStart)
+        el.addEventListener('drop', eventDrop)
+        el.addEventListener('dragenter', eventDragenter)
+        el.addEventListener('dragover', eventDragOver)
+        el.addEventListener('dragleave', eventDragLeave)
+        el.addEventListener('dragend', eventDragEnd)
+    }
+
+    function removeDaDEvents(el) {
+        el.removeEventListener('dragstart', eventDragStart)
+        el.removeEventListener('drop', eventDrop)
+        el.removeEventListener('dragenter', eventDragenter)
+        el.removeEventListener('dragover', eventDragOver)
+        el.removeEventListener('dragleave', eventDragLeave)
+        el.removeEventListener('dragend', eventDragEnd)
+    }
+
+
     root.querySelectorAll('[drag-item]').forEach(el => {
-        el.addEventListener('dragstart', e => {
-            e.target.setAttribute('dragging', true)
-        })
-        el.addEventListener('drop', e => {
-            e.target.classList.remove('bg-pink-500')
+        linkDaDEvents(el);
+    });
 
-            let draggingEl = root.querySelector('[dragging]')
+    document.addEventListener("DOMContentLoaded", () => {
+        let needFlushEvents = false;
 
-            let currentAppointment = draggingEl.getAttribute('drag-item')
-            let idForm = draggingEl.parentElement.getAttribute('drag-item');
-            let idTo;
-            if (e.target.parentElement.tagName === 'DIV') {
-                e.target.parentElement.appendChild(draggingEl)
-                idTo = e.target.parentElement.getAttribute('drag-item')
-            } else {
-                e.target.appendChild(draggingEl)
-                idTo = e.target.getAttribute('drag-item')
+        Livewire.hook('element.initialized', (el, component) => {
+            if (el.hasAttribute('drag-item')) {
+                linkDaDEvents(el);
             }
-
-        @this.call('reorder', idForm, idTo, currentAppointment)
         })
-        el.addEventListener('dragenter', e => {
-            if (e.target.tagName !== 'P') {
-                e.target.classList.add('bg-pink-500')
+
+        Livewire.hook('element.updating', (fromEl, toEl, component) => {
+            if (fromEl.hasAttribute('drag-item') && !toEl.hasAttribute('drag-item')) {
+                needFlushEvents = true;
             }
-
-            e.preventDefault()
         })
 
-        el.addEventListener('dragover', e => e.preventDefault())
+        Livewire.hook('element.updated', (el, component) => {
+            if (el.hasAttribute('drag-item')) {
+                linkDaDEvents(el);
+            } else if (needFlushEvents) {
+                removeDaDEvents(el);
+                needFlushEvents = false;
 
-        el.addEventListener('dragleave', e => {
-            e.target.classList.remove('bg-pink-500')
+            }
         })
-        el.addEventListener('dragend', e => {
-            e.target.removeAttribute('dragging')
-        })
-    })
+    });
+
+
 </script>
 
 <style>

@@ -6,6 +6,7 @@ use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
 use App\Models\Location;
 use App\Models\Service;
+use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
@@ -19,10 +20,9 @@ class ManageAppointments extends Component
     public $dateRange = array('now' => null, 'start' => null, 'end' => null);
     private $forceGenerate = false;
 
-    public $typeOfView = 'TableCrmWeek';
-
     public $services;
     public $locations;
+    public $masters;
 
     public $search;
 
@@ -32,22 +32,22 @@ class ManageAppointments extends Component
 
     public $appointment;
 
-    public $confirmAppointmentCancellation = false;
-    public $confirmingAppointmentCancellation = false;
-    public $confirmAppointmentDelete = false;
-    public $confirmingAppointmentDelete = false;
-    public $confirmingAppointmentCreate = false;
-    public $confirmingAppointmentSelect = false;
-    public $notificationAppointmentCreated = false;
-    public $notificationAppointmentCreatedError = false;
-    public $notificationAppointmentSwapped = false;
-    public $notificationAppointmentSwappedError = false;
+    public bool $confirmAppointmentCancellation = false;
+    public bool $confirmingAppointmentCancellation = false;
+    public bool $confirmAppointmentDelete = false;
+    public bool $confirmingAppointmentDelete = false;
+    public bool $confirmingAppointmentCreate = false;
+    public bool $confirmingAppointmentSelect = false;
+    public bool $notificationAppointmentCreated = false;
+    public bool $notificationAppointmentCreatedError = false;
+    public bool $notificationAppointmentSwapped = false;
+    public bool $notificationAppointmentSwappedError = false;
 
     // public
 
     public $selectedDay;
 
-    public $newAppointment = array(
+    public array $newAppointment = array(
         'creator_id' => null,
         'receiving_name' => null,
         'receiving_description' => null,
@@ -59,7 +59,13 @@ class ManageAppointments extends Component
         'total' => null,
     );
 
-    public $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
+    public string $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
+    public string $viewFilter = 'table_one_week'; // table_two_weeks table_one_week table_today_tomorrow rows
+    public string $followFilter = 'salon'; // salon master self
+    public $locationFilter = 0;
+    public $masterFilter = 0;
+
+//    public string $locationFilter = 'table_one_week';
 
     public $userId;
 
@@ -95,7 +101,6 @@ class ManageAppointments extends Component
                     ->orWhere('end_time', 'like', '%' . $this->search . '%')
                     ->orWhere('status', 'like', '%' . $this->search . '%')
                     ->orWhere('service_id', 'like', '%' . $this->search . '%')
-//                    ->orWhere('time_slot_id', 'like', '%' . $this->search . '%')
                     ->orWhere('location_id', 'like', '%' . $this->search . '%');
             });
 
@@ -119,25 +124,13 @@ class ManageAppointments extends Component
         }
 
 
-        if ($this->userId) {
-
-            $query->where('creator_id', $this->userId);
-        }
+//        if ($this->userId) {
+//
+//            $query->where('creator_id', $this->userId);
+//        }
 //        dd($this->selectFilter);
-        if ($this->selectFilter === 'previous') {
-            $query->whereDate('date', '<', Carbon::today())->where('status', 1);
 
-        } else if ($this->selectFilter === 'upcoming') {
-            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))->where('status', 1);
 
-        } else if ($this->selectFilter === 'cancelled') {
-            $query->where('status', 0);
-        }
-
-        $this->appointments = $query
-            ->orderBy('date')
-            ->orderBy('start_time')
-            ->paginate(50);
 //        dd($this->appointments);
 
 
@@ -147,26 +140,72 @@ class ManageAppointments extends Component
 
         if ($this->locations == null) {
             $this->locations = Location::all();
+            $this->locationFilter = $this->locations->first()->id;
         }
 
-        if ($this->generateDateRange($this->selectedDay) || $this->forceGenerate) {
-            $this->tableCells = $this->generateArray($this->appointments);
-            $this->forceGenerate = false;
+        if ($this->masters == null) {
+            $this->masters = User::all()->where('role_id', 3);
+            $this->masterFilter = $this->masters->first()->id;
         }
 
-        switch ($this->typeOfView) {
-            case 'TableCrmTodayTomorrow':
-            case 'TableCrmWeek':
+
+        switch ($this->viewFilter) {
+            case 'table_today_tomorrow':
+            case 'table_one_week':
+//            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))
+//                ->where('status', 1);
+            break;
+            case 'rows':
+                if ($this->selectFilter === 'previous') {
+                    $query->whereDate('date', '<', Carbon::today())->where('status', 1);
+
+                } else if ($this->selectFilter === 'upcoming') {
+                    $query->whereDate('date', '>', Carbon::today())->where('status', 1);
+
+                } else if ($this->selectFilter === 'cancelled') {
+                    $query->where('status', 0);
+                }
+                break;
+        }
+
+        if ($this->followFilter == 'salon') {
+            $query->where('location_id', $this->locationFilter);
+        } elseif ($this->followFilter == 'master') {
+            $query->where('creator_id', $this->masterFilter);
+        } elseif ($this->followFilter == 'self') {
+            $query->where('creator_id', auth()->user()->id);
+        }
+
+
+        $this->appointments = $query
+            ->orderBy('date')
+            ->orderBy('start_time')
+            ->paginate(50);
+
+
+
+        switch ($this->viewFilter) {
+            case 'table_today_tomorrow':
+            case 'table_two_weeks':
+            case 'table_one_week':
+                if ($this->generateDateRange($this->selectedDay) || $this->forceGenerate) {
+                    $query->whereDate('date', '>=', $this->dateRange['start'])
+                        ->whereDate('date', '<=', $this->dateRange['end'])
+                        ->where('status', 1);
+                    $this->tableCells = $this->generateArray($this->appointments);
+                    $this->forceGenerate = false;
+                }
                 return view('livewire.manage-appointments', [
                     'appointments' => $this->appointments,
                     'services' => $this->services,
                     'locations' => $this->locations,
+                    'masters' => $this->masters,
                     'tableCells' => $this->tableCells,
                 ]);
-            case 'TableRows':
+            case 'rows':
                 return view('livewire.manage-appointments-stroke', [
                     'appointments' => $this->appointments,
-                    ]);
+                ]);
         }
     }
 
@@ -174,16 +213,14 @@ class ManageAppointments extends Component
     {
 
 
-
         $arrayWeek = array();
         $elementId = 1;
-        $dayId = 1;
         for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
             $arrayDay = array();
             $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
             if (count($arrayDayAppointment) > 0) {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
+                    $arrayDay[] = ['id' => $i->day.'-'.$k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
                 foreach ($arrayDayAppointment as $appointment) {
                     $index = array_search($appointment['start_time'], array_column($arrayDay, 'minutes'));
@@ -194,10 +231,10 @@ class ManageAppointments extends Component
                 }
             } else {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $arrayDay[] = ['id' => $elementId++, 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
+                    $arrayDay[] = ['id' => $i->day.'-'.$k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
             }
-            $arrayWeek[] = ['id' => $dayId++, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay];
+            $arrayWeek[] = ['id' => $i->day, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay];
         }
         return $arrayWeek;
     }
@@ -220,12 +257,27 @@ class ManageAppointments extends Component
     {
         $result = false;
         $this->dateRange['now'] = Carbon::parse($date);
-        $startDay = Carbon::parse($date)->setDaysFromStartOfWeek(1);
+        $start = Carbon::parse($date);
+        $end = Carbon::parse($date)->setDaysFromStartOfWeek(1);
 
-        if ($this->dateRange['start'] == null || $this->dateRange['start'] != $startDay) {
+        switch ($this->viewFilter) {
+            case 'table_two_weeks':
+                $start->setDaysFromStartOfWeek(1);
+                $end = $start->copy()->addWeeks(2);
+                break;
+            case 'table_one_week':
+                $start->setDaysFromStartOfWeek(1);
+                $end = $start->copy()->addWeeks(1);
+                break;
+            case 'table_today_tomorrow':
+                $end = $start->copy()->addDays(2);
+                break;
+        }
+
+        if ($this->dateRange['start'] == null || $this->dateRange['start'] != $start || $this->dateRange['end'] != $end) {
             $result = true;
-            $this->dateRange['start'] = $startDay->copy();
-            $this->dateRange['end'] = $startDay->copy()->addWeeks(1);
+            $this->dateRange['start'] = $start;
+            $this->dateRange['end'] = $end;
         }
 
         return $result;
@@ -340,7 +392,7 @@ class ManageAppointments extends Component
 
     public function confirmAppointmentCreate(
         string $time,
-        bool $onAppointment,
+        bool   $onAppointment,
     )
     {
         if (!$onAppointment) {
