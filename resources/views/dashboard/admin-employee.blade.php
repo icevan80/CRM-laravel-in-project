@@ -125,7 +125,7 @@
       </div>
 
      <div class="mt-4">
-         @foreach($locations as $location)
+         {{--@foreach($locations as $location)
              <h1 class=" m-3 font-medium text-gray-800 text-2xl mb-2">{{ $location->name }}</h1>
 
              <div class="grid md:grid-cols-2">
@@ -140,7 +140,7 @@
                  </div>
 
              </div>
-         @endforeach
+         @endforeach--}}
      </div>
 
 

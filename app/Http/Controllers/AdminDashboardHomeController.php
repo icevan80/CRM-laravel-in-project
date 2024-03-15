@@ -50,7 +50,7 @@ class AdminDashboardHomeController extends Controller
                 ->where('status', '!=', 0)
                 ->orderBy('date', 'asc')
                 ->where('status', '!=', 0)
-                ->with('service', 'timeSlot', 'user')
+                ->with('service', 'creator')
                 ->get();
 
         $tommorowsSchedule = Appointment::orderBy('start_time', 'asc')
@@ -58,7 +58,7 @@ class AdminDashboardHomeController extends Controller
                 ->where('status', '!=', 0)
                 ->orderBy('date', 'asc')
                 ->where('status', '!=', 0)
-                ->with('service', 'timeSlot', 'user')
+                ->with('service', 'creator')
                 ->get();
 
         $timeSlots = TimeSlot::all();

@@ -48,7 +48,7 @@ class DaySchedule extends Component
             ->orderBy('date', 'asc')
             ->where('status', '!=', 0)
             ->where('location_id', $this->locationId)
-            ->with('service', 'timeSlot', 'user')
+            ->with('service', 'creator')
             ->get());
     }
 
