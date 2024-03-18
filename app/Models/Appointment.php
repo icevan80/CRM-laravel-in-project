@@ -12,6 +12,7 @@ class Appointment extends Model
     protected $fillable = [
         'appointment_code',
         'creator_id',
+        'implementer_id',
         'receiving_name',
         'receiving_description',
         'date',
@@ -31,6 +32,11 @@ class Appointment extends Model
     ];
 
     public function creator()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function implementer()
     {
         return $this->belongsTo(User::class);
     }

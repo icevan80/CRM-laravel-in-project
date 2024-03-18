@@ -11,7 +11,13 @@ class Role extends Model
 
     protected $fillable = [
         'name',
-        'status'
+        'status',
+        'edit_self',
+        'edit_other',
+        'edit_date_self',
+        'edit_date_other',
+        'create_appointment',
+        'delete_appointment',
     ];
 
     public function users()

@@ -81,6 +81,7 @@ class BotAppointmentController extends Controller
             Appointment::create([
                 'referral' => true,
                 'creator_id' => $creator_id,
+                'implementer_id' => 1,
                 'receiving_name' => $receiving_name,
                 'receiving_description' => 'Создано с помощью чат бота',
                 'date' => $date,

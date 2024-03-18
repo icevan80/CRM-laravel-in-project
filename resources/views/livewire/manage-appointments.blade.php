@@ -11,9 +11,8 @@
                 <option value="table_today_tomorrow">Сегодня - завтра</option>
                 <option value="rows">Строки</option>
             </select>
+            @if($this->allowOthers)
             <h2 class="text-2xl font-bold px-4">-</h2>
-
-
             <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
                 <option value="salon">Салон</option>
                 <option value="master">Конкретный мастер</option>
@@ -30,10 +29,12 @@
             @elseif($this->followFilter == 'master')
                 <h2 class="text-2xl font-bold px-4">-</h2>
                 <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
+                    <option value="0">Все мастера</option>
                     @foreach ($masters as $master)
-                        <option value={{$master->id}}>{{$master->name}}</option>
+                        <option value="{{$master->id}}">{{$master->name}}</option>
                     @endforeach
                 </select>
+            @endif
             @endif
         </div>
     </div>
@@ -152,6 +153,23 @@
                             - {{ today()->setTimeFrom($appointment->start_time)->isoFormat('HH:mm') }}</h2>
                         <h2>Создатель: {{ $appointment->creator->name}} - По реферальной
                             ссылке? {{ $appointment->referral ? 'Да' : 'Нет' }} </h2>
+                        @if($this->allowOthers && $appointment->complete == 0)
+                            <label>
+                                Исполнитель:
+                                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="implementer">
+                                    @foreach ($masters as $master)
+                                        <option value={{$master->id}}>{{$master->name}}</option>
+                                    @endforeach
+                                </select>
+                                <x-button
+                                    wire:click="changeImplementer({{ $appointment->id }})"
+                                    wire:loading.attr="disabled">
+                                    Подтвердить
+                                </x-button>
+                            </label>
+                        @else
+                            <h2>Исполнитель: {{ $appointment->implementer->name}}</h2>
+                        @endif
                         <h3>Где: {{ $appointment->location->name}} - {{ $appointment->location->address}}</h3>
                         <h3>Кого: {{ $appointment->receiving_name}}</h3>
                         <p>Описание: {{ $appointment->receiving_description}}</p>
@@ -160,14 +178,14 @@
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    @if ($appointment != null && (auth()->user()->role->name == 'Admin' || auth()->user()->id == $appointment->creator_id))
+                    @if ($appointment != null && $this->user->role->delete_appointment)
                         <x-danger-button
                             wire:click="confirmAppointmentDelete({{ $appointment->id }})"
                             wire:loading.attr="disabled">
                             {{ __('Delete') }}
                         </x-danger-button>
                     @endif
-                    @if ($appointment != null && $appointment->status == 1)
+                    @if ($appointment != null && $appointment->complete == 0 && $appointment->status == 1 && $this->allowOthers)
                         <x-danger-button
                             wire:click="confirmAppointmentCancellation({{ $appointment->id }})"
                             wire:loading.attr="disabled">

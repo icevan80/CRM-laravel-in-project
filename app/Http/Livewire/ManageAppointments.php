@@ -43,6 +43,11 @@ class ManageAppointments extends Component
     public bool $notificationAppointmentSwapped = false;
     public bool $notificationAppointmentSwappedError = false;
 
+
+    public bool $allowOthers = false;
+    public bool $allowChangeDate = false;
+    public bool $allowChangeAppointments = false;
+
     // public
 
     public $selectedDay;
@@ -63,11 +68,13 @@ class ManageAppointments extends Component
     public string $viewFilter = 'table_one_week'; // table_two_weeks table_one_week table_today_tomorrow rows
     public string $followFilter = 'salon'; // salon master self
     public $locationFilter = 0;
-    public $masterFilter = 0;
+    public $masterFilter = "0";
+    public $implementer;
 
 //    public string $locationFilter = 'table_one_week';
 
     public $userId;
+    public $user;
 
     protected $rules = [
 //        "appointment.name" => "required|string|max:255",
@@ -79,11 +86,24 @@ class ManageAppointments extends Component
 
     public function mount($userId = null, $selectFilter = 'upcoming')
     {
-        if (auth()->user()->role->name == "Customer") {
-            $this->userId = auth()->user()->id;
-        } else if (auth()->user()->role->name == ("Employee" || "Admin")) {
-            $this->userId = $userId;
+        $user = auth()->user();
+
+        $this->user = $user;
+        $this->allowOthers = $user->role->edit_other == 1;
+        $this->allowChangeDate = $user->role->edit_date_self == 1;
+        $this->allowChangeAppointments = $user->role->edit_self == 1;
+
+        if (!$this->allowOthers) {
+            $this->viewFilter = 'table_today_tomorrow';
+            $this->followFilter = 'master';
+            $this->masterFilter = $user->id;
         }
+//        if (auth()->user()->role->name == "Customer") {
+//            $this->userId = auth()->user()->id;
+//        } else if (auth()->user()->role->name == ("Employee" || "Admin")) {
+//            $this->userId = $userId;
+//        }
+
         $selectFilter ? $this->selectFilter = $selectFilter : $this->selectFilter = 'upcoming';
 
         $this->selectedDay = Carbon::today()->format('Y-m-d');
@@ -133,7 +153,6 @@ class ManageAppointments extends Component
 
 //        dd($this->appointments);
 
-
         if ($this->services == null) {
             $this->services = Service::all();
         }
@@ -144,13 +163,15 @@ class ManageAppointments extends Component
         }
 
         if ($this->masters == null) {
-            $this->masters = User::all()->where('role_id', 3);
-            $this->masterFilter = $this->masters->first()->id;
+            $this->masters = User::all()->filter(function ($master) {
+                return in_array($master->role_id, array(3, 5, 8, 10, 11));
+            });
         }
 
 
         switch ($this->viewFilter) {
             case 'table_today_tomorrow':
+            case 'table_two_weeks':
             case 'table_one_week':
 //            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))
 //                ->where('status', 1);
@@ -168,13 +189,17 @@ class ManageAppointments extends Component
                 break;
         }
 
-        if ($this->followFilter == 'salon') {
-            $query->where('location_id', $this->locationFilter);
-        } elseif ($this->followFilter == 'master') {
-            $query->where('creator_id', $this->masterFilter);
-        } elseif ($this->followFilter == 'self') {
-            $query->where('creator_id', auth()->user()->id);
-        }
+//        if (!$this->allowOthers) {
+//            $query->where('implementer_id', $this->user->id);
+//        } else {
+            if ($this->followFilter == 'salon') {
+                $query->where('location_id', $this->locationFilter);
+            } elseif ($this->followFilter == 'master' && $this->masterFilter != 0) {
+                $query->where('implementer_id', $this->masterFilter);
+            } elseif ($this->followFilter == 'self') {
+                $query->where('creator_id', auth()->user()->id);
+            }
+//        }
 
 
         $this->appointments = $query
@@ -203,8 +228,11 @@ class ManageAppointments extends Component
                     'tableCells' => $this->tableCells,
                 ]);
             case 'rows':
-                return view('livewire.manage-appointments-stroke', [
+                return view('livewire.manage-appointments-rows', [
                     'appointments' => $this->appointments,
+                    'services' => $this->services,
+                    'locations' => $this->locations,
+                    'masters' => $this->masters,
                 ]);
         }
     }
@@ -214,7 +242,7 @@ class ManageAppointments extends Component
 
 
         $arrayWeek = array();
-        $elementId = 1;
+        $available = $this->allowChangeDate;
         for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
             $arrayDay = array();
             $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
@@ -225,7 +253,7 @@ class ManageAppointments extends Component
                 foreach ($arrayDayAppointment as $appointment) {
                     $index = array_search($appointment['start_time'], array_column($arrayDay, 'minutes'));
                     $range = Carbon::parse($appointment['start_time'])->diffInMinutes(Carbon::parse($appointment['end_time'])) / 15;
-                    $available = $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['status'];
+                    $available = $available && $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['status'];
                     $arrayDay[$index]['appointments'][] = array('range' => $range, 'data' => $appointment, 'available' => $available);
                     usort($arrayDay[$index]['appointments'], fn($a, $b) => $b["range"] <=> $a["range"]);
                 }
@@ -387,7 +415,15 @@ class ManageAppointments extends Component
     public function setSelectedAppointment(Appointment $appointment)
     {
         $this->appointment = $appointment;
+        $this->implementer = $appointment->implementer_id;
         $this->confirmingAppointmentSelect = true;
+    }
+
+    public function changeImplementer(Appointment $appointment)
+    {
+        $this->appointment = $appointment;
+        $this->appointment->implementer_id = $this->implementer;
+        $this->appointment->save();
     }
 
     public function confirmAppointmentCreate(

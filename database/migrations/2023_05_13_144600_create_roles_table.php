@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
+            $table->boolean('edit_self')->default(false);
+            $table->boolean('edit_other')->default(false);
+            $table->boolean('edit_date_self')->default(false);
+            $table->boolean('edit_date_other')->default(false);
+            $table->boolean('create_appointment')->default(false);
+            $table->boolean('delete_appointment')->default(false);
             $table->timestamps();
         });
     }

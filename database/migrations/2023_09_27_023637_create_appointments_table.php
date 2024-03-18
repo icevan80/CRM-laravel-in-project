@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('appointment_code')->unique();
             $table->foreignId('creator_id')->constrained('user');
+            $table->foreignId('implementer_id')->constrained('user');
             $table->string('receiving_name');
             $table->string('receiving_description')->default('');
             $table->date('date');
