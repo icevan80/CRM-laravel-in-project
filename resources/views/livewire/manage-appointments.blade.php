@@ -299,6 +299,17 @@
                     <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
                     <textarea id="description" wire:model.debounce.500ms="newAppointment.receiving_description"
                               class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
+
+                    <label for="implementer" class="block text-sm font-medium text-gray-700">Исполнитель</label>
+                    @if($this->allowOthers)
+                            <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg" wire:model="newAppointment.implementer_id">
+                                @foreach ($masters as $master)
+                                    <option value={{$master->id}}>{{$master->name}}</option>
+                                @endforeach
+                            </select>
+                    @else
+                        <p>{{ $this->user->name }}</p>
+                    @endif
                     <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="newAppointment.service_id">
@@ -317,12 +328,21 @@
                     <div class="time-block">
                         <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
                                 wire:model="newAppointment.start_time">
-                            @for ($i = today()->setDateFrom($selectedDay)->hour(8); $i <= today()->setDateFrom($selectedDay)->hour(20); $i->addMinutes(15))
+                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->hour(8); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                @if($i->lessThan(now()))
+                                    @continue
+                                @endif
                                 <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
                             @endfor
                         </select>
-                        <p class="block text-center text-sm font-medium text-gray-700">
-                            - {{ today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->isoFormat('HH:mm') }}</p>
+                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="newAppointment.end_time">
+                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->setTimeFrom($this->newAppointment['start_time'])->addMinutes(15); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+{{--                        <p class="block text-center text-sm font-medium text-gray-700">--}}
+{{--                            - {{ today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->isoFormat('HH:mm') }}</p>--}}
                     </div>
                     <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
                     <select id="location"

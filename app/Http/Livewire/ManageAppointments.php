@@ -10,6 +10,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\alert;
 
 
 class ManageAppointments extends Component
@@ -54,6 +55,7 @@ class ManageAppointments extends Component
 
     public array $newAppointment = array(
         'creator_id' => null,
+        'implementer_id' => null,
         'receiving_name' => null,
         'receiving_description' => null,
         'date' => null,
@@ -175,7 +177,7 @@ class ManageAppointments extends Component
             case 'table_one_week':
 //            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))
 //                ->where('status', 1);
-            break;
+                break;
             case 'rows':
                 if ($this->selectFilter === 'previous') {
                     $query->whereDate('date', '<', Carbon::today())->where('status', 1);
@@ -192,13 +194,13 @@ class ManageAppointments extends Component
 //        if (!$this->allowOthers) {
 //            $query->where('implementer_id', $this->user->id);
 //        } else {
-            if ($this->followFilter == 'salon') {
-                $query->where('location_id', $this->locationFilter);
-            } elseif ($this->followFilter == 'master' && $this->masterFilter != 0) {
-                $query->where('implementer_id', $this->masterFilter);
-            } elseif ($this->followFilter == 'self') {
-                $query->where('creator_id', auth()->user()->id);
-            }
+        if ($this->followFilter == 'salon') {
+            $query->where('location_id', $this->locationFilter);
+        } elseif ($this->followFilter == 'master' && $this->masterFilter != 0) {
+            $query->where('implementer_id', $this->masterFilter);
+        } elseif ($this->followFilter == 'self') {
+            $query->where('creator_id', auth()->user()->id);
+        }
 //        }
 
 
@@ -206,7 +208,6 @@ class ManageAppointments extends Component
             ->orderBy('date')
             ->orderBy('start_time')
             ->paginate(50);
-
 
 
         switch ($this->viewFilter) {
@@ -248,18 +249,18 @@ class ManageAppointments extends Component
             $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
             if (count($arrayDayAppointment) > 0) {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $arrayDay[] = ['id' => $i->day.'-'.$k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
+                    $arrayDay[] = ['id' => $i->day . '-' . $k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
                 foreach ($arrayDayAppointment as $appointment) {
                     $index = array_search($appointment['start_time'], array_column($arrayDay, 'minutes'));
                     $range = Carbon::parse($appointment['start_time'])->diffInMinutes(Carbon::parse($appointment['end_time'])) / 15;
-                    $available = $available && $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['status'];
-                    $arrayDay[$index]['appointments'][] = array('range' => $range, 'data' => $appointment, 'available' => $available);
+                    $itemAvailable = $available && $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['complete'] == 0;
+                    $arrayDay[$index]['appointments'][] = array('range' => $range, 'data' => $appointment, 'available' => $itemAvailable);
                     usort($arrayDay[$index]['appointments'], fn($a, $b) => $b["range"] <=> $a["range"]);
                 }
             } else {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
-                    $arrayDay[] = ['id' => $i->day.'-'.$k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
+                    $arrayDay[] = ['id' => $i->day . '-' . $k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
             }
             $arrayWeek[] = ['id' => $i->day, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay];
@@ -337,10 +338,10 @@ class ManageAppointments extends Component
             Carbon::parse($dayFrom)->setTimeFrom(Carbon::parse($cellFrom['minutes']))->greaterThan(now()) &&
             Carbon::parse($dayTo)->setTimeFrom(Carbon::parse($cellTo['minutes']))->greaterThan(now())) {
             $this->forceGenerate = true;
-            $range = null;
+            $currentAppointment = null;
             foreach ($cellFrom['appointments'] as $appointment) {
                 if ($appointment['data']['appointment_code'] == $idElement) {
-                    $range = $appointment['range'];
+                    $currentAppointment = $appointment;
                 }
             }
 
@@ -349,18 +350,23 @@ class ManageAppointments extends Component
 //            $is_available = DB::table('appointments')
 //                ->whereDate('date', '=', Carbon::parse($dayTo)->toDateString())
 //                ->whereBetween('start_time', [Carbon::parse($cellTo['minutes'])->toTimeString(), Carbon::parse($cellTo['minutes'])->addMinutes($cellFrom['range'] * 15)->subMinute()->toTimeString()]);
-//            if ($is_available->count() == 0) {
-            if ($range != null) {
-                Appointment::where('appointment_code', $idElement)->update([
-                    'date' => Carbon::parse($dayTo)->toDateString(),
-                    'start_time' => Carbon::parse($cellTo['minutes'])->toTimeString(),
-                    'end_time' => Carbon::parse($cellTo['minutes'])->addMinutes(15 * $range)->toTimeString(),
-                ]);
-                $this->notificationAppointmentSwapped = true;
+            if ($currentAppointment != null) {
+                if ($this->masterSlotValidate(Carbon::parse($dayTo)->toDateString(),
+                    Carbon::parse($cellTo['minutes'])->toTimeString(),
+                    Carbon::parse($cellTo['minutes'])->addMinutes($currentAppointment['range'] * 15)->subMinute()->toTimeString(),
+                    $currentAppointment['data']['implementer_id'],
+                    $currentAppointment['data']['appointment_code'])) {
+                    Appointment::where('appointment_code', $idElement)->update([
+                        'date' => Carbon::parse($dayTo)->toDateString(),
+                        'start_time' => Carbon::parse($cellTo['minutes'])->toTimeString(),
+                        'end_time' => Carbon::parse($cellTo['minutes'])->addMinutes(15 * $currentAppointment['range'])->toTimeString(),
+                    ]);
+                    $this->notificationAppointmentSwapped = true;
+                } else {
+                    $this->notificationAppointmentSwappedError = true;
+                }
             }
-//            } else {
-//                $this->notificationAppointmentSwappedError = true;
-//            }
+
 
         } else {
             $this->notificationAppointmentSwappedError = true;
@@ -433,9 +439,15 @@ class ManageAppointments extends Component
     {
         if (!$onAppointment) {
             $carbonTime = Carbon::create($time);
-            $this->newAppointment['creator_id'] = auth()->user()->id;
+            $this->newAppointment['creator_id'] = $this->user->id;
+            if ($this->allowOthers) {
+                $this->newAppointment['implementer_id'] = $this->masters->first()->id;
+            } else {
+                $this->newAppointment['implementer_id'] = $this->masterFilter;
+            }
             $this->newAppointment['date'] = $carbonTime->toDateString();
             $this->newAppointment['start_time'] = $carbonTime->toTimeString();
+            $this->newAppointment['end_time'] = $carbonTime->addMinutes(15)->toTimeString();
             $this->newAppointment['location_id'] = $this->locations->first()->id;
             $this->newAppointment['service_id'] = $this->services->first()->id;
             $this->confirmingAppointmentCreate = true;
@@ -444,21 +456,16 @@ class ManageAppointments extends Component
 
     public function createAppointment()
     {
+        $this->newAppointment['total'] = $this->serviceConverter($this->newAppointment['service_id'])->price;
+        if ($this->newAppointment['receiving_description'] == null) {
+            $this->newAppointment['receiving_description'] = '';
+        }
 
-        $is_available = DB::table('appointments')
-            ->whereDate('date', '=', Carbon::today()->setDateFrom($this->newAppointment['date']))
-            ->whereBetween('start_time', [$this->newAppointment['start_time'], today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(59)->toTimeString()]);
-
-        if ($is_available->count() == 0) {
-
-            $this->newAppointment['end_time'] = today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->toTimeString();
-            $this->newAppointment['total'] = $this->serviceConverter($this->newAppointment['service_id'])->price;
-            if ($this->newAppointment['receiving_description'] == null) {
-                $this->newAppointment['receiving_description'] = '';
-            }
+        if ($this->masterSlotValidate($this->newAppointment['date'], $this->newAppointment['start_time'], $this->newAppointment['end_time'], $this->newAppointment['implementer_id'])) {
 
             Appointment::create([
                 'creator_id' => $this->newAppointment['creator_id'],
+                'implementer_id' => $this->newAppointment['implementer_id'],
                 'receiving_name' => $this->newAppointment['receiving_name'],
                 'receiving_description' => $this->newAppointment['receiving_description'],
                 'date' => $this->newAppointment['date'],
@@ -475,6 +482,7 @@ class ManageAppointments extends Component
         $this->confirmingAppointmentCreate = false;
         $this->newAppointment = array(
             'creator_id' => null,
+            'implementer_id' => null,
             'receiving_name' => null,
             'receiving_description' => null,
             'date' => null,
@@ -505,5 +513,25 @@ class ManageAppointments extends Component
             }
         }
         return $this->locations->first();
+    }
+
+    protected function masterSlotValidate(string $date, string $timeStart, string $timeEnd, int $masterId, string $appointmentCode = ''): bool
+    {
+
+//        dd($date.'\n'.$timeStart.'\n'.$timeEnd);
+
+        $is_available_first = DB::table('appointments')
+            ->whereNot('appointment_code', $appointmentCode)
+            ->where('implementer_id', $masterId)
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($date))
+            ->whereBetween('start_time', [$timeStart, today()->setTimeFrom($timeEnd)->subMinute()->toTimeString()]);
+
+        $is_available_second = DB::table('appointments')
+            ->whereNot('appointment_code', $appointmentCode)
+            ->where('implementer_id', $masterId)
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($date))
+            ->whereBetween('end_time', [$timeStart, today()->setTimeFrom($timeEnd)->subMinute()->toTimeString()]);
+
+        return $is_available_first->count() == 0 && $is_available_second->count() == 0;
     }
 }
