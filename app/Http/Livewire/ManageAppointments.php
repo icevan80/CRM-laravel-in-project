@@ -245,6 +245,7 @@ class ManageAppointments extends Component
         $arrayWeek = array();
         $available = $this->allowChangeDate;
         for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
+            $appointmentsToday = 0;
             $arrayDay = array();
             $arrayDayAppointment = $this->in_array_by_key($i->toDateString(), $appointments, 'date');
             if (count($arrayDayAppointment) > 0) {
@@ -257,13 +258,14 @@ class ManageAppointments extends Component
                     $itemAvailable = $available && $i->copy()->setTimeFrom($appointment['start_time'])->greaterThan(now()) && $appointment['complete'] == 0;
                     $arrayDay[$index]['appointments'][] = array('range' => $range, 'data' => $appointment, 'available' => $itemAvailable);
                     usort($arrayDay[$index]['appointments'], fn($a, $b) => $b["range"] <=> $a["range"]);
+                    $appointmentsToday++;
                 }
             } else {
                 for ($k = $i->copy()->hour(8); $k <= $i->copy()->hour(20); $k->addMinutes(15)) {
                     $arrayDay[] = ['id' => $i->day . '-' . $k->toTimeString(), 'minutes' => $k->copy()->toTimeString(), 'appointments' => array()];
                 }
             }
-            $arrayWeek[] = ['id' => $i->day, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay];
+            $arrayWeek[] = ['id' => $i->day, 'day' => $i->copy()->toDateString(), 'schedule' => $arrayDay, 'count_appointments' => $appointmentsToday];
         }
         return $arrayWeek;
     }

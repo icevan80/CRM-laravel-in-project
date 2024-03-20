@@ -5,38 +5,38 @@
                 Менеджер записей
             </h2>
             <div class="mobile-filters">
-            <h2 class="text-2xl font-bold px-2">-</h2>
-            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
-                <option value="table_two_weeks">Две недели</option>
-                <option value="table_one_week">Неделя</option>
-                <option value="table_today_tomorrow">Сегодня - завтра</option>
-                <option value="rows">Строки</option>
-            </select>
-            @if($this->allowOthers)
-            <h2 class="text-2xl font-bold px-4">-</h2>
-            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
-                <option value="salon">Салон</option>
-                <option value="master">Конкретный мастер</option>
-                <option value="self">Мои записи</option>
-                <option value="all">Без фильтра</option>
-            </select>
-            @if($this->followFilter == 'salon')
-                <h2 class="text-2xl font-bold px-4">-</h2>
-                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="locationFilter">
-                    @foreach ($locations as $location)
-                        <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
-                    @endforeach
+                <h2 class="text-2xl font-bold px-2">-</h2>
+                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
+                    <option value="table_two_weeks">Две недели</option>
+                    <option value="table_one_week">Неделя</option>
+                    <option value="table_today_tomorrow">Сегодня - завтра</option>
+                    <option value="rows">Строки</option>
                 </select>
-            @elseif($this->followFilter == 'master')
-                <h2 class="text-2xl font-bold px-4">-</h2>
-                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
-                    <option value="0">Все мастера</option>
-                    @foreach ($masters as $master)
-                        <option value="{{$master->id}}">{{$master->name}}</option>
-                    @endforeach
-                </select>
-            @endif
-            @endif
+                @if($this->allowOthers)
+                    <h2 class="text-2xl font-bold px-4">-</h2>
+                    <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
+                        <option value="salon">Салон</option>
+                        <option value="master">Конкретный мастер</option>
+                        <option value="self">Мои записи</option>
+                        <option value="all">Без фильтра</option>
+                    </select>
+                    @if($this->followFilter == 'salon')
+                        <h2 class="text-2xl font-bold px-4">-</h2>
+                        <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="locationFilter">
+                            @foreach ($locations as $location)
+                                <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                            @endforeach
+                        </select>
+                    @elseif($this->followFilter == 'master')
+                        <h2 class="text-2xl font-bold px-4">-</h2>
+                        <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
+                            <option value="0">Все мастера</option>
+                            @foreach ($masters as $master)
+                                <option value="{{$master->id}}">{{$master->name}}</option>
+                            @endforeach
+                        </select>
+                    @endif
+                @endif
             </div>
         </div>
     </div>
@@ -58,9 +58,11 @@
                 </th>
                 @foreach($tableCells as $cellDay)
                     <th scope="col"
-                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} py-4 text-center font-medium border p-2">{{
+                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} day-column py-4 text-center font-medium border p-2">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
-                        <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}</th>
+                        <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
+                        @if($cellDay['count_appointments'] != 0)
+                            <div class="appointment-notification">{{ $cellDay['count_appointments'] }}</div>@endif</th>
                 @endforeach
             </tr>
             </thead>
@@ -68,7 +70,8 @@
             @foreach($tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
                     <tr>
-                        <th scope="col" rowspan="2" class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-2">{{
+                        <th scope="col" rowspan="2"
+                            class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-2">{{
                                 \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($tableCells as $cellDay)
@@ -158,7 +161,8 @@
                         @if($this->allowOthers && $appointment->complete == 0)
                             <label>
                                 Исполнитель:
-                                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="implementer">
+                                <select class="border text-gray-900  border-gray-300 rounded-lg"
+                                        wire:model="implementer">
                                     @foreach ($masters as $master)
                                         <option value={{$master->id}}>{{$master->name}}</option>
                                     @endforeach
@@ -304,11 +308,12 @@
 
                     <label for="implementer" class="block text-sm font-medium text-gray-700">Исполнитель</label>
                     @if($this->allowOthers)
-                            <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg" wire:model="newAppointment.implementer_id">
-                                @foreach ($masters as $master)
-                                    <option value={{$master->id}}>{{$master->name}}</option>
-                                @endforeach
-                            </select>
+                        <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="newAppointment.implementer_id">
+                            @foreach ($masters as $master)
+                                <option value={{$master->id}}>{{$master->name}}</option>
+                            @endforeach
+                        </select>
                     @else
                         <p>{{ $this->user->name }}</p>
                     @endif
@@ -343,8 +348,8 @@
                                 <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
                             @endfor
                         </select>
-{{--                        <p class="block text-center text-sm font-medium text-gray-700">--}}
-{{--                            - {{ today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->isoFormat('HH:mm') }}</p>--}}
+                        {{--                        <p class="block text-center text-sm font-medium text-gray-700">--}}
+                        {{--                            - {{ today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->isoFormat('HH:mm') }}</p>--}}
                     </div>
                     <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
                     <select id="location"
@@ -544,6 +549,21 @@
 </script>
 
 <style>
+    .day-column {
+        position: relative;
+    }
+
+    .appointment-notification {
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        top: 10%;
+        right: 5%;
+        border-radius: 100%;
+        background-color: orange;
+        color: white;
+    }
+
     .time-line {
         width: 100%;
         height: 2px;
@@ -627,14 +647,16 @@
         left: 0;
         padding-right: 10%;
     }
-    .mobile-filters{
+
+    .mobile-filters {
         display: flex;
     }
 
     @media (max-width: 640px) {
-        .mobile-calendar, .mobile-filters{
+        .mobile-calendar, .mobile-filters {
             display: none;
         }
+
         .time-slot-mobile {
 
             writing-mode: vertical-lr;
