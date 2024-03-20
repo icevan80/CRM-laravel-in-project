@@ -4,6 +4,7 @@
             <h2 class="text-2xl font-bold">
                 Менеджер записей
             </h2>
+            <div class="mobile-filters">
             <h2 class="text-2xl font-bold px-2">-</h2>
             <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
                 <option value="table_two_weeks">Две недели</option>
@@ -36,6 +37,7 @@
                 </select>
             @endif
             @endif
+            </div>
         </div>
     </div>
     <div class="mt-4">
@@ -52,7 +54,7 @@
             <tr>
                 <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
                     <x-input wire:model="selectedDay" type="date"
-                             class="border text-gray-900  border-gray-300 rounded-lg"></x-input>
+                             class="mobile-calendar border text-gray-900  border-gray-300 rounded-lg"></x-input>
                 </th>
                 @foreach($tableCells as $cellDay)
                     <th scope="col"
@@ -66,7 +68,7 @@
             @foreach($tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
                     <tr>
-                        <th scope="col" rowspan="2" class="w-0 pl-6 font-medium text-gray-900 border p-2">{{
+                        <th scope="col" rowspan="2" class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-2">{{
                                 \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($tableCells as $cellDay)
@@ -450,9 +452,7 @@
 
 
         }, 3000);
-
     }
-
 
     moveLine();
 
@@ -538,12 +538,9 @@
             } else if (needFlushEvents) {
                 removeDaDEvents(el);
                 needFlushEvents = false;
-
             }
         })
     });
-
-
 </script>
 
 <style>
@@ -629,5 +626,20 @@
         top: 0;
         left: 0;
         padding-right: 10%;
+    }
+    .mobile-filters{
+        display: flex;
+    }
+
+    @media (max-width: 640px) {
+        .mobile-calendar, .mobile-filters{
+            display: none;
+        }
+        .time-slot-mobile {
+
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+        }
+
     }
 </style>
