@@ -41,11 +41,16 @@ Route::get('/bot_create/save_appointment&key={key}'
     , [App\Http\Controllers\BotAppointmentController::class, 'saveAppointment']);
 
 // Users needs to be logged in for these routes
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+//    Route::prefix('translation')->group(function () {
+
+//    });
 
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardHomeController::class, 'index'])->name('dashboard');
@@ -55,7 +60,13 @@ Route::middleware([
             'validateRole:Admin'
         ])->group(function () {
 
-            Route::prefix('manage')->group(function () {
+
+                Route::get('translation', function () {
+                    return view('dashboard.translation-settings.index');
+                })->name('translation');
+
+
+        Route::prefix('manage')->group(function () {
                 Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
                 Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
                 Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');

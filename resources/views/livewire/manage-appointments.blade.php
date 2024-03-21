@@ -2,23 +2,23 @@
     <div class="flex justify-between mx-7">
         <div style="display: flex">
             <h2 class="text-2xl font-bold">
-                Менеджер записей
+                {{ __('Manage Appointments') }}
             </h2>
             <div class="mobile-filters">
                 <h2 class="text-2xl font-bold px-2">-</h2>
                 <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
-                    <option value="table_two_weeks">Две недели</option>
-                    <option value="table_one_week">Неделя</option>
-                    <option value="table_today_tomorrow">Сегодня - завтра</option>
-                    <option value="rows">Строки</option>
+                    <option value="table_two_weeks">{{ __('Two weeks') }}</option>
+                    <option value="table_one_week">{{ __('Week') }}</option>
+                    <option value="table_today_tomorrow">{{ __('Today - tomorrow') }}</option>
+                    <option value="rows">{{ __('Rows') }}</option>
                 </select>
                 @if($this->allowOthers)
                     <h2 class="text-2xl font-bold px-4">-</h2>
                     <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
-                        <option value="salon">Салон</option>
-                        <option value="master">Конкретный мастер</option>
-                        <option value="self">Мои записи</option>
-                        <option value="all">Без фильтра</option>
+                        <option value="salon">{{ __('Salon') }}</option>
+                        <option value="master">{{ __('Current master') }}</option>
+                        <option value="self">{{ __('My appointments') }}</option>
+                        <option value="all">{{ __('Without filters') }}</option>
                     </select>
                     @if($this->followFilter == 'salon')
                         <h2 class="text-2xl font-bold px-4">-</h2>
@@ -30,7 +30,7 @@
                     @elseif($this->followFilter == 'master')
                         <h2 class="text-2xl font-bold px-4">-</h2>
                         <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
-                            <option value="0">Все мастера</option>
+                            <option value="0">{{ __('All masters') }}</option>
                             @foreach ($masters as $master)
                                 <option value="{{$master->id}}">{{$master->name}}</option>
                             @endforeach
@@ -62,7 +62,9 @@
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                         <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
                         @if($cellDay['count_appointments'] != 0)
-                            <div class="appointment-notification">{{ $cellDay['count_appointments'] }}</div>@endif</th>
+                            <div class="appointment-notification">{{ $cellDay['count_appointments'] }}</div>
+                        @endif
+                    </th>
                 @endforeach
             </tr>
             </thead>
@@ -80,7 +82,6 @@
                                     @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
                                         <th x-data="{ appointHover = false }"
                                             x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
-                                            {{--                                            wire:key="'item-'.$cellDay['day'].$cellMinute['minutes']"--}}
                                             scope="col"
                                             class="time-slot text-center font-medium border py-2">
                                             <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
@@ -106,22 +107,17 @@
                                     @else
                                         <th
                                             scope="col"
-                                            class="past-time-slot text-center font-medium border py-2"
-                                            {{--                                            wire:key="'item-'.$cellDay['day'].$cellMinute['minutes']"--}}
-                                        >
+                                            class="past-time-slot text-center font-medium border py-2">
                                             @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
                                                 <timeline id="time-line" class="time-line"></timeline>
                                             @endif
                                             <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
-                                            <div
-                                                class="appointment-container"
-                                            >
+                                            <div class="appointment-container">
                                                 @foreach($cellMinute['appointments'] as $appointmentData)
                                                     <div
                                                         wire:click="setSelectedAppointment({{ $appointmentData['data'] }})"
                                                         class="appointment-slot past text-white {{ $appointmentData['data']['complete'] ? 'bg-green-600' : 'bg-pink-600' }}  font-medium border"
-                                                        style="height: calc(102% * {{$appointmentData['range']}})"
-                                                    >
+                                                        style="height: calc(102% * {{$appointmentData['range']}})">
                                                         <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
                                                         <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
                                                         <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
@@ -210,10 +206,10 @@
 
         <x-dialog-modal wire:model="notificationAppointmentCreated">
             <x-slot name="title">
-                Статус создания
+                {{ __('Creation status') }}
             </x-slot>
             <x-slot name="content">
-                <p>Объявление успешно создано</p>
+                <p>{{ __('Appointment created successfully') }}</p>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
@@ -228,10 +224,10 @@
 
         <x-dialog-modal wire:model="notificationAppointmentCreatedError">
             <x-slot name="title">
-                Статус создания
+                {{ __('Creation status') }}
             </x-slot>
             <x-slot name="content">
-                <p>Объявление не было создано, т.к. этот промежуток времени уже занят</p>
+                <p>{{ __('Appointment has not been created because the selected time slot is already occupied') }}</p>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
@@ -250,10 +246,10 @@
 
         <x-dialog-modal wire:model="notificationAppointmentSwapped">
             <x-slot name="title">
-                Статус создания
+                {{ __('Creation status') }}
             </x-slot>
             <x-slot name="content">
-                <p>Объявление было назначено на другое время!</p>
+                <p>{{ __('Appointment was scheduled for another time!') }}</p>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
@@ -272,10 +268,10 @@
 
         <x-dialog-modal wire:model="notificationAppointmentSwappedError">
             <x-slot name="title">
-                Статус создания
+                {{ __('Creation status') }}
             </x-slot>
             <x-slot name="content">
-                <p>Объявление не было перемещено, т.к. выбранный промежуток времени уже занят</p>
+                <p>{{ __('Appointment has not been moved because the selected time slot is already occupied') }}</p>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
@@ -298,15 +294,15 @@
             </x-slot>
             <x-slot name="content">
                 @if($this->newAppointment['creator_id'] != null)
-                    <label for="name" class="block text-sm font-medium text-gray-700">Имя</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
                     <x-input id="name" type="text" wire:model.debounce.500ms="newAppointment.receiving_name"
                              class="border text-gray-900  border-gray-300 rounded-lg">
                     </x-input>
-                    <label for="description" class="block text-sm font-medium text-gray-700">Описание</label>
+                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
                     <textarea id="description" wire:model.debounce.500ms="newAppointment.receiving_description"
                               class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
 
-                    <label for="implementer" class="block text-sm font-medium text-gray-700">Исполнитель</label>
+                    <label for="implementer" class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
                     @if($this->allowOthers)
                         <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
                                 wire:model="newAppointment.implementer_id">
@@ -317,7 +313,7 @@
                     @else
                         <p>{{ $this->user->name }}</p>
                     @endif
-                    <label for="service" class="block text-sm font-medium text-gray-700">Sevice</label>
+                    <label for="service" class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
                     <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="newAppointment.service_id">
                         @foreach ($services as $service)
@@ -325,13 +321,13 @@
                         @endforeach
                     </select>
 
-                    <label for="date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
                     <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
                              wire:model="newAppointment.date"
                              min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                              max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
                     </x-input>
-                    <label for="time" class="block text-sm font-medium text-gray-700">Time</label>
+                    <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
                     <div class="time-block">
                         <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
                                 wire:model="newAppointment.start_time">
@@ -348,10 +344,8 @@
                                 <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
                             @endfor
                         </select>
-                        {{--                        <p class="block text-center text-sm font-medium text-gray-700">--}}
-                        {{--                            - {{ today()->setTimeFrom($this->newAppointment['start_time'])->addMinutes(60)->isoFormat('HH:mm') }}</p>--}}
                     </div>
-                    <label for="location" class="block text-sm font-medium text-gray-700">Location</label>
+                    <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
                     <select id="location"
                             class="border text-gray-900  border-gray-300 rounded-lg"
                             wire:model="newAppointment.location_id">
@@ -378,7 +372,7 @@
 
         <x-dialog-modal wire:model="confirmingAppointmentDelete">
             <x-slot name="title">
-                {{ __('Delete Appointment') }}
+                {{ __('Delete appointment') }}
             </x-slot>
 
             <x-slot name="content">
@@ -404,7 +398,7 @@
 
         <x-dialog-modal wire:model="confirmingAppointmentCancellation">
             <x-slot name="title">
-                {{ __('Cancel Appointment') }}
+                {{ __('Cancel appointment') }}
             </x-slot>
 
             <x-slot name="content">
