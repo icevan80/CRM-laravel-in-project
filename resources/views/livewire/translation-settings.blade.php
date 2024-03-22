@@ -1,24 +1,25 @@
 <div>
     <h1>{{ __('Choose translate') }}</h1>
     <div id="set_translation" style="display: flex">
-        <label>
-            <input type="radio" wire:model="temp_lang" value="en"/>
-            {{ __('English') }}
-        </label>
-        <label>
-            <input type="radio" wire:model="temp_lang" value="ru"/>
-            {{ __('Russian') }}
-        </label>
-        <label>
-            <input type="radio" wire:model="temp_lang" value="custom"/>
-            {{ __('Custom translate') }}
-        </label>
+        @foreach($translations as $translate)
+            <label>
+                <input type="radio" wire:model="temp_lang" value="{{ $translate }}"/>
+                {{ __($translate) }}
+            </label>
+        @endforeach
         <x-button wire:click="changeTranslation('{{$this->temp_lang}}')" wire:loading.attr="disabled">
             <p>{{ __('Choose') }}</p>
+        </x-button>
+        <x-button wire:click="$set('createNewTranslation', true)"
+                            wire:loading.attr="disabled">
+            {{ __('Create') }}
         </x-button>
     </div>
     <x-button wire:click="saveTranslationConfig">
         <p>{{ __('Save changes') }}</p>
+    </x-button>
+    <x-button wire:click="syncTranslationKeys">
+        <p>{{ __('Sync keys') }}</p>
     </x-button>
     <table>
         <thead class="bg-gray-50">
@@ -69,10 +70,46 @@
 
         </x-slot>
     </x-dialog-modal>
+
+    <x-dialog-modal wire:model="createNewTranslation">
+        <x-slot name="title">
+            {{ __('Create translation') }}
+        </x-slot>
+
+        <x-slot name="content">
+            <label for="code" class="block text-sm font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }} en</label>
+            <x-input id="code" type="text" wire:model.debounce.500ms="code"
+                     class="border text-gray-900  border-gray-300 rounded-lg">
+            </x-input>
+            <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Language name') }} - {{ __('Example') }} English</label>
+            <x-input id="name" type="text" wire:model.debounce.500ms="name"
+                     class="border text-gray-900  border-gray-300 rounded-lg">
+            </x-input>
+        </x-slot>
+
+        <x-slot name="footer">
+
+            <div class="flex gap-3">
+                <x-button wire:click="createNewTranslation('{{ $code }}', '{{ $name }}')">
+                    {{ __('Create') }}
+                </x-button>
+            </div>
+            <div class="flex gap-3">
+                <x-secondary-button wire:click="$set('createNewTranslation', false)"
+                                    wire:loading.attr="disabled">
+                    {{ __('Ok') }}
+                </x-secondary-button>
+
+
+            </div>
+
+        </x-slot>
+    </x-dialog-modal>
 </div>
 
 <style>
     #set_translation * {
-        padding: 8px;
+        padding: 4px 6px;
+        margin: 0 8px;
     }
 </style>
