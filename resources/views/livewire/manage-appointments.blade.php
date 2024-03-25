@@ -80,7 +80,7 @@
                             @foreach($cellDay['schedule'] as $cellMinute)
                                 @if($cellMinute['minutes'] == $minutes['minutes'])
                                     @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
-                                        <th x-data="{ appointHover = false }"
+                                        <th x-data="{ appointHover: false }"
                                             x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
                                             scope="col"
                                             class="time-slot text-center font-medium border py-2">

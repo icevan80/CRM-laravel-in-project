@@ -97,11 +97,12 @@ class UserController extends Controller
     {
 
         // find the appointments of the user
-        $appointments = Appointment::where('user_id', $user->id)
+        $appointments = Appointment::where('implementer_id', $user->id)
                             ->orderBy('created_at', 'desc')
                             ->paginate(10);
 
-        return view('dashboard.manage-users.show-user', compact('user', 'appointments'));
+//        return view('dashboard.manage-users.show-user', compact('user', 'appointments'));
+        return view('dashboard.manage-users.show-user', ['user' => $user, 'appointments' => $appointments]);
     }
 
     /**

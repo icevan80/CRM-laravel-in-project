@@ -29,8 +29,8 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'role_id',
+        'preferences',
         'status',
-
     ];
 
     /**
@@ -69,6 +69,10 @@ class User extends Authenticatable
 
     function cart() {
         return $this->hasOne(Cart::class);
+    }
+
+    function preferences() {
+        return $this->belongsTo(Preferences::class);
     }
 }
 

@@ -120,7 +120,7 @@
 {{--                          </li>--}}
 
                           {{-- User Role 1= Admin, 2 = Employee --}}
-                          @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+                          @if(Auth::user()->role_id == 1 || Auth::user()->role_id == 2 || Auth::user()->role_id == 5)
 
                                     <li class="px-5">
                                         <div class="flex flex-row items-center h-8">

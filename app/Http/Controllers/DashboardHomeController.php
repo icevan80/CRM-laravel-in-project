@@ -14,6 +14,10 @@ class DashboardHomeController extends Controller
             return $adminDashboardHomeController->index();
         } else if (auth()->user()->role_id == 3) {
             return view('dashboard.customer');
+        } else if (auth()->user()->role_id == 5) {
+            $adminDashboardHomeController = new AdminDashboardHomeController();
+            return $adminDashboardHomeController->index();
+//            return  view('dashboard.testim');
         }
         else {
             return redirect()->route('home')->with('error', 'You are not authorized to perform this action.');

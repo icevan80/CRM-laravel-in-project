@@ -12,6 +12,18 @@
                         <h3 class="text-gray-600 font-lg text-semibold leading-6">{{ $user->role->name }}</h3>
 
                     </div>
+                    <div x-data="{ editPreferences: false }">
+                    <x-button @click="editPreferences = !editPreferences">
+                        <p>Edit preferences</p>
+                    </x-button>
+                        <div x-show="editPreferences">
+{{--                            {{dd($user->preferences->manage_appointment)}}--}}
+                            @foreach($user->preferences->toArray() as $key => $value)
+                                @if(gettype($value) != 'boolean') @continue @endif
+                                <h1>{{$key}} - {{ $value ? 'true' : 'false' }}</h1>
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="text-gray-700" >
                         <div class="grid md:grid-cols-2 text-sm">
 {{--                            <div class="grid grid-cols-2">--}}

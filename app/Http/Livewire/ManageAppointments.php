@@ -88,12 +88,17 @@ class ManageAppointments extends Component
 
     public function mount($userId = null, $selectFilter = 'upcoming')
     {
+
         $user = auth()->user();
 
+        if ($userId != null) {
+            $user = User::all()->where('id', $userId)->first();
+        }
+
         $this->user = $user;
-        $this->allowOthers = $user->role->edit_other == 1;
-        $this->allowChangeDate = $user->role->edit_date_self == 1;
-        $this->allowChangeAppointments = $user->role->edit_self == 1;
+        $this->allowOthers = $user->preferences->edit_other_appointment;
+        $this->allowChangeDate = $user->preferences->edit_date_appointment;
+        $this->allowChangeAppointments = $user->preferences->edit_appointment;
 
         if (!$this->allowOthers) {
             $this->viewFilter = 'table_today_tomorrow';
@@ -161,7 +166,9 @@ class ManageAppointments extends Component
 
         if ($this->locations == null) {
             $this->locations = Location::all();
-            $this->locationFilter = $this->locations->first()->id;
+            if ($this->locations->count()  > 0) {
+                $this->locationFilter = $this->locations->first()->id;
+            }
         }
 
         if ($this->masters == null) {
@@ -289,15 +296,15 @@ class ManageAppointments extends Component
         $result = false;
         $this->dateRange['now'] = Carbon::parse($date);
         $start = Carbon::parse($date);
-        $end = Carbon::parse($date)->setDaysFromStartOfWeek(1);
+        $end = Carbon::parse($date)->setDaysFromStartOfWeek(0);
 
         switch ($this->viewFilter) {
             case 'table_two_weeks':
-                $start->setDaysFromStartOfWeek(1);
+                $start->setDaysFromStartOfWeek(0);
                 $end = $start->copy()->addWeeks(2);
                 break;
             case 'table_one_week':
-                $start->setDaysFromStartOfWeek(1);
+                $start->setDaysFromStartOfWeek(0);
                 $end = $start->copy()->addWeeks(1);
                 break;
             case 'table_today_tomorrow':
@@ -436,7 +443,7 @@ class ManageAppointments extends Component
 
     public function confirmAppointmentCreate(
         string $time,
-        bool   $onAppointment,
+        bool $onAppointment,
     )
     {
         if (!$onAppointment) {

@@ -10,8 +10,8 @@ return new class extends Migration {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->string('appointment_code')->unique();
-            $table->foreignId('creator_id')->constrained('user');
-            $table->foreignId('implementer_id')->constrained('user');
+            $table->foreignId('creator_id')->constrained('users');
+            $table->foreignId('implementer_id')->constrained('users');
             $table->string('receiving_name');
             $table->string('receiving_description')->default('');
             $table->date('date');
