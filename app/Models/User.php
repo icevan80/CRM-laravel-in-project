@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Json;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,7 +31,6 @@ class User extends Authenticatable
         'phone_number',
         'role_id',
         'status',
-
     ];
 
     /**
@@ -69,6 +69,47 @@ class User extends Authenticatable
 
     function cart() {
         return $this->hasOne(Cart::class);
+    }
+
+    function hasPermission(int $id) :bool {
+        return array_key_exists($id, Json::decode($this->permissions, true));
+    }
+
+    function addPermission(int $id) :bool{
+        $result = true;
+        $permission = Permission::all()->where('id', $id);
+        if (count($permission) > 0) {
+            if (!$this->permissions->contains($id)) {
+                $this->permissions += [$id => $permission->first()->name];
+                $this->save();
+            }
+        } else {
+            $result = false;
+        }
+        return $result;
+    }
+
+    /*function removePermission(int $id) :bool{
+        $result = true;
+            if ($this->permissions->contains($id)) {
+                $this->permissions ;
+                $this->save();
+            }
+        } else {
+            $result = false;
+        }
+        return $result;
+    }*/
+
+    static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            // a readable unique code for the appointment, including the id in the code
+            $user->permission = $user->role->default_permission;
+
+        });
     }
 }
 
