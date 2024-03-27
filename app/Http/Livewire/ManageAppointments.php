@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
 use App\Models\Location;
 use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
-use Livewire\Component;
 use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\alert;
+use Livewire\Component;
 
 
 class ManageAppointments extends Component
@@ -91,14 +89,14 @@ class ManageAppointments extends Component
 
         $user = auth()->user();
 
-        if ($userId != null) {
-            $user = User::all()->where('id', $userId)->first();
-        }
+//        if ($userId != null) {
+//            $user = User::all()->where('id', $userId)->first();
+//        }
 
         $this->user = $user;
-        $this->allowOthers = $user->preferences->edit_other_appointment;
-        $this->allowChangeDate = $user->preferences->edit_date_appointment;
-        $this->allowChangeAppointments = $user->preferences->edit_appointment;
+        $this->allowOthers = $user->hasPermission('edit_other_appointment');
+        $this->allowChangeDate = $user->hasPermission('edit_date_appointment');
+        $this->allowChangeAppointments = $user->hasPermission('edit_appointment');
 
         if (!$this->allowOthers) {
             $this->viewFilter = 'table_today_tomorrow';

@@ -1,8 +1,5 @@
 <?php
 
-use App\Enums\UserRolesEnum;
-use App\Models\Role;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,42 +54,59 @@ Route::middleware([
 
         // middleware to give access only for admin
         Route::middleware([
-            'validateRole:Admin'
+            'validatePermission:edit_translations'
         ])->group(function () {
-
-
-                Route::get('translation', function () {
-                    return view('dashboard.translation-settings.index');
-                })->name('translation');
-
+            Route::get('translation', function () {
+                return view('dashboard.translation-settings.index');
+            })->name('translation');
+        });
+        Route::middleware([
+            'validatePermission:edit_roles'
+        ])->group(function () {
+            Route::get('roles', function () {
+                return view('dashboard.role-settings.index');
+            })->name('roles');
+        });
+        Route::middleware([
+            'validatePermission:edit_permissions'
+        ])->group(function () {
+            Route::get('permissions', function () {
+                return view('dashboard.permission-settings.index');
+            })->name('permissions');
+        });
 
         Route::prefix('manage')->group(function () {
+            Route::middleware([
+                'validatePermission:manage_users'
+            ])->group(function () {
                 Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
                 Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
                 Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
-
+            });
+            Route::middleware([
+                'validatePermission:manage_locations'
+            ])->group(function () {
                 Route::get('locations', function () {
                     return view('dashboard.manage-locations.index');
                 })->name('managelocations');
             });
-
-
-        });
-
-        // middlleware to give access only for admin and employee
-        Route::middleware([
-            'validateRole:Admin,Employee'
-        ])->group(function () {
-
-            Route::prefix('manage')->group(function () {
+            Route::middleware([
+                'validatePermission:manage_services'
+            ])->group(function () {
                 Route::get('services', function () {
                     return view('dashboard.manage-services.index');
                 })->name('manageservices');
-
+            });
+            Route::middleware([
+                'validatePermission:manage_deals'
+            ])->group(function () {
                 Route::get('deals', function () {
                     return view('dashboard.manage-deals.index');
                 })->name('managedeals');
-
+            });
+            Route::middleware([
+                'validatePermission:manage_categories'
+            ])->group(function () {
                 Route::get('categories', function () {
                     return view('dashboard.manage-categories.index');
                 })->name('managecategories');
@@ -101,10 +115,50 @@ Route::middleware([
                     return view('dashboard.manage-categories.index');
                 })->name('managecategories.create');
 
+            });
+            Route::middleware([
+                'validatePermission:manage_appointment'
+            ])->group(function () {
                 Route::get('appointments', function () {
                     return view('dashboard.manage-appointments.index');
                 })->name('manageappointments');
             });
+        });
+
+//        Route::prefix('manage')->group(function () {
+//            Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
+//            Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
+//            Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
+//
+//            Route::get('locations', function () {
+//                return view('dashboard.manage-locations.index');
+//            })->name('managelocations');
+//        });
+
+
+        // middlleware to give access only for admin and employee
+//        Route::middleware([
+//            'validateRole:Admin,Employee'
+//        ])->group(function () {
+//
+//            Route::prefix('manage')->group(function () {
+//
+//                Route::get('deals', function () {
+//                    return view('dashboard.manage-deals.index');
+//                })->name('managedeals');
+//
+//                Route::get('categories', function () {
+//                    return view('dashboard.manage-categories.index');
+//                })->name('managecategories');
+//
+//                Route::get('categories/create', function () {
+//                    return view('dashboard.manage-categories.index');
+//                })->name('managecategories.create');
+//
+//                Route::get('appointments', function () {
+//                    return view('dashboard.manage-appointments.index');
+//                })->name('manageappointments');
+//            });
 
 
             // analytics route group
@@ -128,7 +182,7 @@ Route::middleware([
 //                });
 
 
-        });
+//        });
 
         Route::middleware([
             'validateRole:Customer'

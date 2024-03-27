@@ -90,6 +90,10 @@ class DisplayDeal extends Controller
         Role::create([
             'name' => 'Partner',
             'default_permissions' => json_encode(array()),
+        ]);
+        Role::create([
+            'name' => 'Master',
+            'default_permissions' => json_encode(array()),
         ]);*/
 
 
