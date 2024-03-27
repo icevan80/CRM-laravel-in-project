@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('code_name');
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {
-            $table -> json('permissions');
+            $table -> json('permissions')->nullable();
         });
     }
 

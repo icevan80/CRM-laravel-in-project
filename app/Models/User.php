@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -29,7 +28,7 @@ class User extends Authenticatable
         'password',
         'phone_number',
         'role_id',
-        'preferences',
+        'permission',
         'status',
     ];
 
@@ -71,48 +70,60 @@ class User extends Authenticatable
         return $this->hasOne(Cart::class);
     }
 
-    function preferences() {
-        return $this->belongsTo(Preferences::class);
+    function updateRole($newRole) {
+        $this->role_id = $newRole->id;
+        return $this->save();
     }
 
-    function hasPermission(int $id) :bool {
-        return array_key_exists($id, Json::decode($this->permissions, true));
+    public function permissions(): array
+    {
+        return json_decode($this->permissions, true);
     }
 
-    function addPermission(int $id) :bool{
-        $result = true;
-        $permission = Permission::all()->where('id', $id);
-        if (count($permission) > 0) {
-            if (!$this->permissions->contains($id)) {
-                $this->permissions += [$id => $permission->first()->name];
-                $this->save();
-            }
+    function hasPermission($code) :bool {
+        $array = $this->permissions();
+        if (gettype($code) == 'string') {
+            return array_search($code, $array) > 0;
         } else {
-            $result = false;
+            return array_key_exists($code, $array);
+        }
+    }
+
+    public function removePermission($permission): bool
+    {
+        $result = false;
+        if ($permission != null) {
+            $array = $this->permissions();
+            unset($array[$permission->id]);
+            $this->permissions = json_encode($array);
+            $result = $this->save();
         }
         return $result;
     }
 
-    /*function removePermission(int $id) :bool{
-        $result = true;
-            if ($this->permissions->contains($id)) {
-                $this->permissions ;
-                $this->save();
-            }
-        } else {
-            $result = false;
+    public function addPermission($permission): bool
+    {
+        $result = false;
+        if ($permission != null) {
+            $array = $this->permissions();
+            $array[$permission->id] = $permission->code_name;
+            $this->permissions = json_encode($array);
+            $result = $this->save();
         }
         return $result;
-    }*/
+    }
 
     static function boot()
     {
         parent::boot();
 
         static::creating(function ($user) {
-            // a readable unique code for the appointment, including the id in the code
-            $user->permission = $user->role->default_permission;
+            $user->permissions = $user->role->default_permissions;
 
+        });
+
+        static::updating(function ($user) {
+            $user->permissions = $user->role->default_permissions;
         });
     }
 }
