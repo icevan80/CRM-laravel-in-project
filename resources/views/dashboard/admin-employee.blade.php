@@ -1,6 +1,6 @@
 @php
     use App\Enums\UserRolesEnum;
-    $role = UserRolesEnum::from(Auth::user()->role_id)->name;
+    $role = Auth::user()->role;
 @endphp
 <x-dashboard>
 

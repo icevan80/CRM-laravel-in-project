@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\User;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -70,9 +70,9 @@ class UserController extends Controller
         $role = $request['role'];
 
         if ($role == 'employee') {
-            $role_id = UserRolesEnum::Employee;
+            $role_id = Role::getRole('Employee')->id;
         } else {
-            $role_id = UserRolesEnum::Customer;
+            $role_id = Role::getRole('Customer')->id;
         }
 
         try {

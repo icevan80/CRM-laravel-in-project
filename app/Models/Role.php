@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Role extends Model
 {
@@ -17,7 +16,7 @@ class Role extends Model
     ];
 
     static function getRole($search) {
-        $table = DB::table('roles');
+        $table = Role::all();
         if (gettype($search) == 'string') {
             return $table->where('name', $search)->first();
         } else if (gettype($search) == 'integer') {

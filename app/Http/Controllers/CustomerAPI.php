@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRolesEnum;
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class CustomerAPI extends Controller
 {
     public function index()
     {
         // get all customers
-        $customers = User::where('role_id', UserRolesEnum::Customer->value)->get();
+        $customers = User::where('role_id', Role::getRole('Customer')->id)->get();
         return response()->json($customers, 200);
 
     }
@@ -40,7 +40,7 @@ class CustomerAPI extends Controller
             'email' => $request->email,
             'phone_number' => '1' . $request->phone_number,
             'password' => bcrypt($request->password),
-            'role_id' => UserRolesEnum::Customer->value,
+            'role_id' => Role::getRole('Customer')->id,
         ]);
 
         // return customer

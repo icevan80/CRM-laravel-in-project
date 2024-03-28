@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Permission extends Model
 {
@@ -14,7 +13,7 @@ class Permission extends Model
     ];
 
     static function getPermission($search) {
-        $table = DB::table('permissions');
+        $table = Permission::all();
         if (gettype($search) == 'string') {
             return $table->where('code_name', $search)->first();
         } else if (gettype($search) == 'integer') {

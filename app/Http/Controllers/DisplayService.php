@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRolesEnum;
 use App\Jobs\AnalyticsJob;
-use App\Models\Appointment;
-use App\Models\TimeSlot;
-use Illuminate\Http\Request;
+use App\Models\Role;
 use App\Models\Service;
+use App\Models\TimeSlot;
 
 class DisplayService extends Controller
 {
@@ -25,7 +23,7 @@ class DisplayService extends Controller
 
         $serviceQuery = Service::where('slug', $slug);
 
-        if (!auth()->check() || auth()->user()->role->id == UserRolesEnum::Customer->value)  {
+        if (!auth()->check() || auth()->user()->role->id == Role::getRole('Customer')->id)  {
             // If the user is not logged in or is a customer
             $serviceQuery->where('is_hidden', false);
         }
@@ -52,7 +50,7 @@ class DisplayService extends Controller
 
 
 
-        if( !auth()->check()  || auth()->user()->role->id ==  UserRolesEnum::Customer->value ) {
+        if( !auth()->check()  || auth()->user()->role->id ==  Role::getRole('Customer')->id ) {
             if ($service->is_hidden) {
                 abort(404);
             }

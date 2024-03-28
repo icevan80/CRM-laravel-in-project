@@ -1,6 +1,6 @@
 <?php
 
-use App\Enums\UserRolesEnum;
+use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {
-            $table -> foreignId('role_id')->default(UserRolesEnum::Customer->value)->constrained('roles');
+            $table -> foreignId('role_id')->default(Role::getRole('Customer')->id)->constrained('roles');
         });
     }
 

@@ -8,6 +8,12 @@ class DisplayDeal extends Controller
 {
     function index()
     {
+
+//        dd(auth()->user()->permissions());
+//        $permission =Permission::getPermission(11);
+//        dd($permission);
+//        auth()->user()->addPermissionRule($permission, false);
+        dd(auth()->user()->hasPermission(10));
 //        $permissions = Permission::all();
 //        $array = array();
 //        foreach ($permissions as $permission) {

@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRolesEnum;
 use App\Models\Appointment;
 use App\Models\Deal;
 use App\Models\Location;
+use App\Models\Role;
 use App\Models\Service;
 use App\Models\TimeSlot;
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class AdminDashboardHomeController extends Controller
 {
@@ -19,8 +18,8 @@ class AdminDashboardHomeController extends Controller
 
         $todayDate = Carbon::today()->toDateString();
 
-        $totalCustomers = User::where('role_id', UserRolesEnum::Customer)->count();
-        $totalEmployees = User::where('role_id', UserRolesEnum::Employee)->count();
+        $totalCustomers = User::where('role_id', Role::getRole('Customer')->id)->count();
+        $totalEmployees = User::where('role_id', Role::getRole('Employee')->id)->count();
 
         $totalServicesActive = Service::where('is_hidden', 0)->count();
         $totalServices = Service::count();

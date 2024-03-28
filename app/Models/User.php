@@ -77,7 +77,22 @@ class User extends Authenticatable
 
     public function permissions(): array
     {
-        return json_decode($this->permissions, true);
+        $customPermissions = $this->personalPermissions();
+        $rolePermissions = $this->role->permissions();
+        foreach ($customPermissions as $key => $permission) {
+            if ($permission['approve']) {
+                $rolePermissions[$key] = $permission['code_name'];
+            } else if (array_key_exists($key, $rolePermissions)){
+                unset($rolePermissions[$key]);
+            }
+        }
+
+        return $rolePermissions;
+    }
+
+    public function personalPermissions(): array
+    {
+        return json_decode($this->permissions, true);;
     }
 
     function hasPermission($code) :bool {
@@ -89,11 +104,11 @@ class User extends Authenticatable
         }
     }
 
-    public function removePermission($permission): bool
+    public function removePermissionRule($permission): bool
     {
         $result = false;
         if ($permission != null) {
-            $array = $this->permissions();
+            $array = $this->personalPermissions();
             unset($array[$permission->id]);
             $this->permissions = json_encode($array);
             $result = $this->save();
@@ -101,13 +116,14 @@ class User extends Authenticatable
         return $result;
     }
 
-    public function addPermission($permission): bool
+    public function addPermissionRule($permission, bool $approve): bool
     {
         $result = false;
         if ($permission != null) {
-            $array = $this->permissions();
-            $array[$permission->id] = $permission->code_name;
+            $array = $this->personalPermissions();
+            $array[$permission->id] = array('code_name' => $permission->code_name, 'approve' => $approve);
             $this->permissions = json_encode($array);
+//            dd($this->permissions);
             $result = $this->save();
         }
         return $result;
@@ -122,9 +138,9 @@ class User extends Authenticatable
 
         });
 
-        static::updating(function ($user) {
-            $user->permissions = $user->role->default_permissions;
-        });
+//        static::updating(function ($user) {
+//            $user->permissions = $user->role->default_permissions;
+//        });
     }
 }
 

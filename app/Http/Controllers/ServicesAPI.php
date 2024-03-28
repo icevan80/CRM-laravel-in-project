@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\UserRolesEnum;
+use App\Models\Role;
 use App\Models\Service;
 use Illuminate\Cache\RateLimiting\Limit;
 
@@ -14,8 +14,8 @@ class ServicesAPI extends Controller
 
         $queryHiddenData = false;
         if (auth()->check() &&
-            (auth()->user()->role->id == UserRolesEnum::Employee->value
-                || auth()->user()->role->id == UserRolesEnum::Admin->value)) {
+            (auth()->user()->role->id == Role::getRole('Employee')->id
+                || auth()->user()->role->id == Role::getRole('Admin')->id)) {
             // No rate limit for Employee or Admin
             $rateLimit = Limit::none();
             $queryHiddenData = true;

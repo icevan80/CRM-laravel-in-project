@@ -2,11 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\UserRolesEnum;
 use App\Jobs\SendNewServicePromoMailJob;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 
 class Service extends Model
 {
@@ -93,7 +90,7 @@ class Service extends Model
                 return;
             }
 
-            $customers = User::where('role_id', UserRolesEnum::Customer->value)->where('status', true)->get();
+            $customers = User::where('role_id', Role::getRole('Customer')->id)->where('status', true)->get();
 
             foreach ($customers as $customer) {
 
