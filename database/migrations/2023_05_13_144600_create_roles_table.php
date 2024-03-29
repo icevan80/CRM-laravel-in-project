@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Role;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,12 +14,12 @@ return new class extends Migration
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->json('default_permissions');
+            $table->json('default_permissions')->default('[]');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {
-            $table -> foreignId('role_id')->default(Role::getRole('Customer')->id)->constrained('roles');
+            $table -> foreignId('role_id')->default(3)->constrained('roles');
         });
     }
 

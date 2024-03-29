@@ -2,7 +2,6 @@
 
 namespace App\Actions\Fortify;
 
-use App\Enums\UserRolesEnum;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -27,13 +26,13 @@ class CreateNewUser implements CreatesNewUsers
             'phone_number' => ['required', 'string', 'regex:/^[0-9]{10}$/', 'unique:users'],
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-        
+
         // if ($input['role_id'] == 2) {
         //     $role_id = UserRolesEnum::Employee;
         // } else {
-            $role_id = UserRolesEnum::Customer;
+            $role_id = 3;
         // }
- 
+
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],

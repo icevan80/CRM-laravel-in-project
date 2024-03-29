@@ -109,21 +109,27 @@ class User extends Authenticatable
         $result = false;
         if ($permission != null) {
             $array = $this->personalPermissions();
-            unset($array[$permission->id]);
-            $this->permissions = json_encode($array);
-            $result = $this->save();
+            if (array_key_exists($permission->id, $array)) {
+                unset($array[$permission->id]);
+                $this->permissions = json_encode($array);
+                $result = $this->save();
+            } else {
+                $result = true;
+            }
         }
         return $result;
     }
 
     public function addPermissionRule($permission, bool $approve): bool
     {
+        if ($approve == null) {
+            return $this->removePermissionRule($permission);
+        }
         $result = false;
         if ($permission != null) {
             $array = $this->personalPermissions();
             $array[$permission->id] = array('code_name' => $permission->code_name, 'approve' => $approve);
             $this->permissions = json_encode($array);
-//            dd($this->permissions);
             $result = $this->save();
         }
         return $result;
@@ -133,13 +139,9 @@ class User extends Authenticatable
     {
         parent::boot();
 
-        static::creating(function ($user) {
-            $user->permissions = $user->role->default_permissions;
-
-        });
-
-//        static::updating(function ($user) {
+//        static::creating(function ($user) {
 //            $user->permissions = $user->role->default_permissions;
+//
 //        });
     }
 }

@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Exception;
-use Illuminate\Http\Request;
 
 class UserSuspensionController extends Controller
 {
     public function suspend(string $id) {
         try {
-           
+
             if ($id == 1) {
                 return redirect()->route('manageusers')->with('errormsg', 'You cannot suspend admin.');
             }
@@ -36,6 +35,10 @@ class UserSuspensionController extends Controller
         } catch (Exception $e) {
             return redirect()->route('manageusers')->with('errormsg', 'User activation failed.');
         }
+    }
+
+    public function create() {
+            return redirect()->route('manageusers')->with('success', 'User activated successfully.');
     }
 
 }

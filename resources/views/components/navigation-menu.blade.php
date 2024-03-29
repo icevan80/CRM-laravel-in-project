@@ -34,6 +34,8 @@
                         {{ __('Home') }}
                     </x-nav-link>
 
+
+
                    <!-- Navigation Links for cust facing web-->
 
                     <x-web.navlinks />

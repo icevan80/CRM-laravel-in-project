@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
+use App\Models\Permission;
+use App\Models\Role;
 
 class DisplayDeal extends Controller
 {
@@ -13,12 +15,13 @@ class DisplayDeal extends Controller
 //        $permission =Permission::getPermission(11);
 //        dd($permission);
 //        auth()->user()->addPermissionRule($permission, false);
-        dd(auth()->user()->hasPermission(10));
-//        $permissions = Permission::all();
-//        $array = array();
-//        foreach ($permissions as $permission) {
-//            $array[$permission->id] = $permission->code_name;
-//        }
+//        $role = Role::getRole(3);
+//        dd(auth()->user()->updateRole($role));
+        $permissions = Permission::all();
+        $array = array();
+        foreach ($permissions as $permission) {
+            $array[$permission->id] = $permission->code_name;
+        }
 
 //        auth()->user()->updateRole(Role::getRole(1));
 
@@ -81,7 +84,7 @@ class DisplayDeal extends Controller
         ]);*/
 
 
-        /*Role::create([
+        Role::create([
             'name' => 'Admin',
             'default_permissions' => json_encode($array),
         ]);
@@ -100,7 +103,7 @@ class DisplayDeal extends Controller
         Role::create([
             'name' => 'Master',
             'default_permissions' => json_encode(array()),
-        ]);*/
+        ]);
 
 
         $deals = Deal::all();

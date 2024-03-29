@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code_name');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
         Schema::table('users', function (Blueprint $table) {
-            $table -> json('permissions')->nullable();
+            $table -> json('permissions')->default('[]');
         });
     }
 

@@ -57,19 +57,6 @@
                     </x-button>
                 </th>
             </tr>
-            {{--<tr x-show="showPermissions{{$role->id}}">
-                <th scope="col" rowspan="{{round(count($permissions) / 4)}}"
-                    class="pl-6 py-4 font-medium text-gray-900"></th>
-                @foreach($permissions as $permission)
-                    <th scope="col"
-                        class="pl-6 py-4 font-medium text-gray-900">{{$permission->name}}</th>
-                @endforeach
-                <th scope="col" rowspan="{{round(count($permissions) / 4)}}"
-                    class="pl-6 py-4 font-medium text-gray-900"></th>
-                <th scope="col" rowspan="{{round(count($permissions) / 4)}}"
-                    class="pl-6 py-4 font-medium text-gray-900"></th>
-            </tr>--}}
-            {{--            </div>--}}
         @endforeach
         </tbody>
     </table>
@@ -83,9 +70,6 @@
         </x-slot>
         <x-slot name="footer">
             <div class="flex gap-3">
-                <x-danger-button wire:click="changePermissionsForAllUsersWithRole">
-                    Изменить для всех существующих пользователей
-                </x-danger-button>
                 <x-secondary-button wire:click="$set('notificationPermissionChanged', false)"
                                     wire:loading.attr="disabled">
                     Пон

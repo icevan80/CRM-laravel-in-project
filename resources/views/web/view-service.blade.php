@@ -39,6 +39,7 @@
 
 
                             @if (Auth::user()?->role_id == 1 || Auth::user()?->role_id == 2)
+{{--                            @if (false)--}}
 
                             <a href="{{ route('manageservices') }}?search={{ $service->slug }}">
                                 <x-button class="px-5 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
@@ -140,13 +141,13 @@
                                             <td class="border p-2">Revenue (Last Month)</td>
                                             <td class="border p-2">LKR {{ number_format($totalRevenueLastMonth, 2, '.', ',') }}</td>
                                             <td class="border p-2">
-                                                @if($percentageRevenueChangeLastMonth === 'N/A')
+                                                {{--@if($percentageRevenueChangeLastMonth === 'N/A')
                                                     {{ $percentageRevenueChangeLastMonth }}
                                                 @elseif($percentageRevenueChangeLastMonth > 0)
                                                     <span class="text-green-800"><span class="text-2xl">↑</span> <span class="text-2xl">{{ $percentageRevenueChangeLastMonth }} %</span></span>
                                                 @elseif ($percentageRevenueChangeLastMonth < 0)
                                                     <span class="text-red-800"><span class="text-2xl">↓</span> <span class="text-2xl">{{ $percentageRevenueChangeLastMonth }} %</span></span>
-                                                @endif
+                                                @endif--}}
                                                 <span class="text-[12px] block">Monthly</span>
                                             </td>
                                             <td class="border p-2"></td>
@@ -167,8 +168,8 @@
                                             @foreach ($timeSlotsStatsLastWeek as $timeSlotStat)
                                                 <tr>
 
-                                                    <td class="border p-2">{{ date('g:i a', strtotime($timeSlotStat['time_slot']->start_time))  . ' - ' .  date('g:i a', strtotime($timeSlotStat['time_slot']->end_time)) }}</td>
-                                                    <td class="border p-2">{{ $timeSlotStat['count'] }}</td>
+{{--                                                    <td class="border p-2">{{ date('g:i a', strtotime($timeSlotStat['time_slot']->start_time))  . ' - ' .  date('g:i a', strtotime($timeSlotStat['time_slot']->end_time)) }}</td>--}}
+{{--                                                    <td class="border p-2">{{ $timeSlotStat['count'] }}</td>--}}
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -187,12 +188,12 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach ($timeSlotsStats as $timeSlotStat)
+                                            {{--@foreach ($timeSlotsStats as $timeSlotStat)
                                                 <tr>
-                                                    <td class="border p-2">{{ date('g:i a', strtotime($timeSlotStat['time_slot']->start_time))  . ' - ' .  date('g:i a', strtotime($timeSlotStat['time_slot']->end_time)) }}</td>
-                                                    <td class="border p-2">{{ $timeSlotStat['count'] }}</td>
+                                                    --}}{{--<td class="border p-2">{{ date('g:i a', strtotime($timeSlotStat['time_slot']->start_time))  . ' - ' .  date('g:i a', strtotime($timeSlotStat['time_slot']->end_time)) }}</td>
+                                                    <td class="border p-2">{{ $timeSlotStat['count'] }}</td>--}}{{--
                                                 </tr>
-                                            @endforeach
+                                            @endforeach--}}
                                             </tbody>
                                         </table>
                                     </div>
