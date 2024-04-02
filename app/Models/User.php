@@ -97,6 +97,9 @@ class User extends Authenticatable
 
     function hasPermission($code) :bool {
         $array = $this->permissions();
+        if (Permission::getPermission($code)->status == 0) {
+            return false;
+        }
         if (gettype($code) == 'string') {
             return array_search($code, $array) > 0;
         } else {

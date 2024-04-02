@@ -7,7 +7,6 @@ use App\Models\Deal;
 use App\Models\Location;
 use App\Models\Role;
 use App\Models\Service;
-use App\Models\TimeSlot;
 use App\Models\User;
 use Carbon\Carbon;
 
@@ -60,8 +59,6 @@ class AdminDashboardHomeController extends Controller
                 ->with('service', 'creator')
                 ->get();
 
-        $timeSlots = TimeSlot::all();
-
         $locations = Location::all();
 
 
@@ -87,7 +84,6 @@ class AdminDashboardHomeController extends Controller
 
             'todaysSchedule' => $todaysSchedule,
             'tomorrowsSchedule' => $tommorowsSchedule,
-            'timeSlots' => $timeSlots,
             'locations' => $locations,
 
         ]);

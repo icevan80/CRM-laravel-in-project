@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\AdminDashboardHomeController;
-use Illuminate\Http\Request;
-
 class DashboardHomeController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->role_id == 1 || auth()->user()->role_id == 2) {
+
+        if (auth()->user()->hasPermission('new_style_access')) {
+            return view('dashboard.testim');
+        } else if (auth()->user()->hasPermission('admin_dashboard_access')) {
             $adminDashboardHomeController = new AdminDashboardHomeController();
             return $adminDashboardHomeController->index();
-        } else if (auth()->user()->role_id == 3) {
+        } else if (auth()->user()->hasPermission('customer_dashboard_access')) {
             return view('dashboard.customer');
-        } else if (auth()->user()->role_id == 5) {
-            $adminDashboardHomeController = new AdminDashboardHomeController();
-            return $adminDashboardHomeController->index();
-//            return  view('dashboard.testim');
-        }
-        else {
+        } else {
             return redirect()->route('home')->with('error', 'You are not authorized to perform this action.');
         }
     }
