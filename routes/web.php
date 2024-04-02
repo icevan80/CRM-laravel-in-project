@@ -80,11 +80,11 @@ Route::middleware([
                 'validatePermission:manage_users'
             ])->group(function () {
                 Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
-//                Route::get('users/create', [App\Http\Controllers\UserController::class, 'create'])->name('users.create');
                 Route::resource('users/create', App\Http\Controllers\UserController::class, )->name('create','users.create');
                 Route::resource('users/create/put', App\Http\Controllers\UserController::class)->name('store', 'manageusers.store');
                 Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
                 Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
+                Route::put('users/{id}/update_role/{roleId}', [App\Http\Controllers\UserSuspensionController::class, 'updateRole'])->name('users.updateRole');
             });
             Route::middleware([
                 'validatePermission:manage_locations'

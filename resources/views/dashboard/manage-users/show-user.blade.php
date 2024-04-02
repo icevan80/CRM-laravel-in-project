@@ -2,54 +2,46 @@
     <div class="container mx-auto p-1">
         <div class="pb-2 mb-3">
 
-                <div class="bg-white p-3 shadow-sm rounded-sm" x-data="{ showFullInfo : false}">
-                    <div class="text-center my-2">
-                        <img class="h-16 w-16 rounded-full mx-auto"
-                             src="{{ $user->profile_photo_url }}"
-                             alt="">
+            <div class="bg-white p-3 shadow-sm rounded-sm" x-data="{ showFullInfo : false}">
+                <div class="text-center my-2">
+                    <img class="h-16 w-16 rounded-full mx-auto"
+                         src="{{ $user->profile_photo_url }}"
+                         alt="">
 
-                        <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ $user->name }}</h1>
-                        <h3 class="text-gray-600 font-lg text-semibold leading-6">{{ $user->role->name }}</h3>
+                    <h1 class="text-gray-900 font-bold text-xl leading-8 my-1">{{ $user->name }}</h1>
+                    <h3 class="text-gray-600 font-lg text-semibold leading-6">{{ $user->role->name }}</h3>
 
-                    </div>
-                    <div x-data="{ editPreferences: false }">
-                    <x-button @click="editPreferences = !editPreferences">
-                        <p>Edit preferences</p>
-                    </x-button>
-{{--                        <div x-show="editPreferences">--}}
-{{--                            {{dd($user->preferences->manage_appointment)}}--}}
-{{--                            @foreach($user->preferences->toArray() as $key => $value)--}}
-{{--                                @if(gettype($value) != 'boolean') @continue @endif--}}
-{{--                                <h1>{{$key}} - {{ $value ? 'true' : 'false' }}</h1>--}}
-{{--                            @endforeach--}}
-{{--                        </div>--}}
-                    </div>
-                    <div class="text-gray-700" >
+                </div>
+                <div>
+                    @if(auth()->user()->hasPermission('edit_permissions'))
+                    <livewire:edit-user-permissions :user-id="$user->id" />
+                    @endif
+                    <div class="text-gray-700">
                         <div class="grid md:grid-cols-2 text-sm">
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">First Name</div>--}}
-{{--                                <div class="px-4 py-2">Jane</div>--}}
-{{--                            </div>--}}
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">Last Name</div>--}}
-{{--                                <div class="px-4 py-2">Doe</div>--}}
-{{--                            </div>--}}
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">Gender</div>--}}
-{{--                                <div class="px-4 py-2">Female</div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">First Name</div>--}}
+                            {{--                                <div class="px-4 py-2">Jane</div>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">Last Name</div>--}}
+                            {{--                                <div class="px-4 py-2">Doe</div>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">Gender</div>--}}
+                            {{--                                <div class="px-4 py-2">Female</div>--}}
+                            {{--                            </div>--}}
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Phone No.</div>
                                 <div class="px-4 py-2">{{ $user->phone_number }}</div>
                             </div>
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">Current Address</div>--}}
-{{--                                <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>--}}
-{{--                            </div>--}}
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">Permanant Address</div>--}}
-{{--                                <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">Current Address</div>--}}
+                            {{--                                <div class="px-4 py-2">Beech Creek, PA, Pennsylvania</div>--}}
+                            {{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">Permanant Address</div>--}}
+                            {{--                                <div class="px-4 py-2">Arlington Heights, IL, Illinois</div>--}}
+                            {{--                            </div>--}}
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Email.</div>
                                 <div class="px-4 py-2">
@@ -57,10 +49,10 @@
                                 </div>
                             </div>
 
-{{--                            <div class="grid grid-cols-2">--}}
-{{--                                <div class="px-4 py-2 font-semibold">Birthday</div>--}}
-{{--                                <div class="px-4 py-2">Feb 06, 1998</div>--}}
-{{--                            </div>--}}
+                            {{--                            <div class="grid grid-cols-2">--}}
+                            {{--                                <div class="px-4 py-2 font-semibold">Birthday</div>--}}
+                            {{--                                <div class="px-4 py-2">Feb 06, 1998</div>--}}
+                            {{--                            </div>--}}
 
                         </div>
                         <ul
@@ -82,49 +74,58 @@
 
                             <li class="flex items-center py-3">
                                 <span>Last Appointment</span>
-                                <span class="ml-auto">{{ $appointments->where('status', true)->sortByDesc('date')->where('date', '<=' , \Carbon\Carbon::today()->toDateString() )->first()?->service->name }}</span>
+                                <span
+                                    class="ml-auto">{{ $appointments->where('status', true)->sortByDesc('date')->where('date', '<=' , \Carbon\Carbon::today()->toDateString() )->first()?->service->name }}</span>
                             </li>
                             <li class="flex items-center py-3">
                                 <span>Last Appointment Date</span>
-                                <span class="ml-auto">{{ $appointments->where('status', true)->sortByDesc('date')->first()?->date }}</span>
+                                <span
+                                    class="ml-auto">{{ $appointments->where('status', true)->sortByDesc('date')->first()?->date }}</span>
                             </li>
                             <div x-cloak x-show="showFullInfo">
                                 <li class="flex items-center py-3">
                                     <span>Last Purchase</span>
-                                    <span class="ml-auto"> {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->service->name }} </span>
+                                    <span
+                                        class="ml-auto"> {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->service->name }} </span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Last Purchase Date</span>
-                                    <span class="ml-auto"> {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->created_at->toDateString() }}</span>
+                                    <span
+                                        class="ml-auto"> {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->created_at->toDateString() }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Last Purchase Amount</span>
-                                    <span class="ml-auto"> LKR {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->total }}</span>
+                                    <span
+                                        class="ml-auto"> LKR {{ $appointments->where('status', true)->sortByDesc('created_at')->first()?->total }}</span>
                                 </li>
 
                                 <li class="flex items-center py-3">
                                     <span>Total Purchases</span>
-                                    <span class="ml-auto"> LKR {{ $appointments->where('status', true)?->sum('total') }}</span>
+                                    <span
+                                        class="ml-auto"> LKR {{ $appointments->where('status', true)?->sum('total') }}</span>
                                 </li>
                                 <li class="flex items-center py-3">
                                     <span>Last Cancellation</span>
-                                    <span class="ml-auto">  {{ $appointments->where('status', false)->sortByDesc('created_at')->first()?->service->name}}</span>
+                                    <span
+                                        class="ml-auto">  {{ $appointments->where('status', false)->sortByDesc('created_at')->first()?->service->name}}</span>
                                 </li>
                             </div>
                         </ul>
                     </div>
                     <button
                         x-on:click="showFullInfo = !showFullInfo"
-                        class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">Show
-                        Full Information</button>
+                        class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                        Show
+                        Full Information
+                    </button>
+                </div>
+
             </div>
+            <div class="w-full">
 
+                <livewire:manage-appointments :user-id="$user->id" :select-filter="'upcoming'"/>
+
+
+            </div>
         </div>
-        <div class="w-full">
-
-            <livewire:manage-appointments :user-id="$user->id" :select-filter="'upcoming'" />
-
-
-        </div>
-    </div>
 </x-dashboard>

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Deal;
 use App\Models\Permission;
-use App\Models\Role;
 
 class DisplayDeal extends Controller
 {
@@ -84,7 +83,7 @@ class DisplayDeal extends Controller
         ]);*/
 
 
-        Role::create([
+        /*Role::create([
             'name' => 'Admin',
             'default_permissions' => json_encode($array),
         ]);
@@ -103,7 +102,7 @@ class DisplayDeal extends Controller
         Role::create([
             'name' => 'Master',
             'default_permissions' => json_encode(array()),
-        ]);
+        ]);*/
 
 
         $deals = Deal::all();

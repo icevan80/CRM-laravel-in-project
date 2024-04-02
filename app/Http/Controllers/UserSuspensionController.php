@@ -7,7 +7,8 @@ use Exception;
 
 class UserSuspensionController extends Controller
 {
-    public function suspend(string $id) {
+    public function suspend(string $id)
+    {
         try {
 
             if ($id == 1) {
@@ -25,7 +26,8 @@ class UserSuspensionController extends Controller
         }
     }
 
-    public function activate(string $id) {
+    public function activate(string $id)
+    {
         try {
             $user = User::findOrFail($id);
             $user->status = 1;
@@ -37,8 +39,22 @@ class UserSuspensionController extends Controller
         }
     }
 
-    public function create() {
-            return redirect()->route('manageusers')->with('success', 'User activated successfully.');
+    public function create()
+    {
+        return redirect()->route('manageusers')->with('success', 'User activated successfully.');
+    }
+
+    public function updateRole(string $id, string $roleId)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->role_id = $roleId;
+            $user->save();
+            return redirect()->route('users.show', $user->id)->with('success', 'User role change successfully.');
+
+        } catch (Exception $e) {
+            return redirect()->route('users.show', $user->id)->with('errormsg', 'User role change failed.');
+        }
     }
 
 }

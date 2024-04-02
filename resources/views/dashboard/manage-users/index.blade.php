@@ -102,11 +102,9 @@
                                         </form>
 
                                     @endif
-                                @endif
-
-                                    @if($user->role()->first()->name == 'Customer')
                                         <a href="{{ route('users.show', $user->id) }}" class="bg-blue-50 p-1 px-2 rounded-md text-blue-600 hover:text-blue-900">View</a>
-                                    @endif
+
+                                @endif
 
                             </div>
                         </td>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
@@ -100,9 +101,10 @@ class UserController extends Controller
         $appointments = Appointment::where('implementer_id', $user->id)
                             ->orderBy('created_at', 'desc')
                             ->paginate(10);
+        $permissions = Permission::all();
 
 //        return view('dashboard.manage-users.show-user', compact('user', 'appointments'));
-        return view('dashboard.manage-users.show-user', ['user' => $user, 'appointments' => $appointments]);
+        return view('dashboard.manage-users.show-user', ['user' => $user, 'appointments' => $appointments, 'permissions' => $permissions]);
     }
 
     /**

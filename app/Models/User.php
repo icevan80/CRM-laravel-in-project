@@ -139,10 +139,10 @@ class User extends Authenticatable
     {
         parent::boot();
 
-//        static::creating(function ($user) {
-//            $user->permissions = $user->role->default_permissions;
-//
-//        });
+        static::creating(function ($user) {
+            $user->permissions = json_encode(array());
+
+        });
     }
 }
 
