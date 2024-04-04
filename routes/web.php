@@ -59,6 +59,13 @@ Route::middleware([
             Route::get('translation', function () {
                 return view('dashboard.translation-settings.index');
             })->name('translation');
+//            Route::middleware([
+//                'validatePermission:new_style_access'
+//            ])->group(function () {
+//                Route::get('translation', function () {
+//                    return view('dashboard.settings.translation.index');
+//                })->name('settings.translation');
+//            });
         });
         Route::middleware([
             'validatePermission:edit_roles'
@@ -66,6 +73,13 @@ Route::middleware([
             Route::get('roles', function () {
                 return view('dashboard.role-settings.index');
             })->name('roles');
+//            Route::middleware([
+//                'validatePermission:new_style_access'
+//            ])->group(function () {
+//                Route::get('appointments', function () {
+//                    return view('dashboard.settings.roles.index');
+//                })->name('settings.roles');
+//            });
         });
         Route::middleware([
             'validatePermission:edit_permissions'
@@ -73,6 +87,14 @@ Route::middleware([
             Route::get('permissions', function () {
                 return view('dashboard.permission-settings.index');
             })->name('permissions');
+//            Route::middleware([
+//                'validatePermission:new_style_access'
+//            ])->group(function () {
+//                Route::get('permissions', function () {
+////                    return view('dashboard.settings.permissions.index');
+//                    return view('dashboard.settings.permissions.index');
+//                })->name('settings.permissions');
+//            });
         });
 
         Route::prefix('manage')->group(function () {
@@ -80,7 +102,7 @@ Route::middleware([
                 'validatePermission:manage_users'
             ])->group(function () {
                 Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
-                Route::resource('users/create', App\Http\Controllers\UserController::class, )->name('create','users.create');
+                Route::resource('users/create', App\Http\Controllers\UserController::class,)->name('create', 'users.create');
                 Route::resource('users/create/put', App\Http\Controllers\UserController::class)->name('store', 'manageusers.store');
                 Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
                 Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
@@ -123,8 +145,18 @@ Route::middleware([
                 'validatePermission:manage_appointment'
             ])->group(function () {
                 Route::get('appointments', function () {
+                    if (auth()->user()->hasPermission('new_style_access')) {
+                        return view('dashboard.manage.appointments.index');
+                    }
                     return view('dashboard.manage-appointments.index');
                 })->name('manageappointments');
+//                Route::middleware([
+//                    'validatePermission:new_style_access'
+//                ])->group(function () {
+//                    Route::get('appointments', function () {
+//                        return view('dashboard.manage.appointments.index');
+//                    })->name('manage.appointments');
+//                });
             });
         });
 

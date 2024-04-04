@@ -1,7 +1,7 @@
 <div>
     {{-- Do your work, then step back. --}}
     <div style="display: flex" class="text-left">
-        <h1>Менеджер прав</h1>
+        <h1 class="main-color-aboba">Менеджер прав</h1>
         <div class="px-6">
         <x-button wire:click="changePermissionsStatus">
             <p>Сохранить</p>
@@ -22,7 +22,7 @@
                     @endif
                     <td>
                         <div style="display: flex" class="text-left">
-                            <x-input type="checkbox" wire:model="permissionsMap.{{$permission->id}}.status"></x-input>
+                            <x-checkbox wire:model="permissionsMap.{{$permission->id}}.status"></x-checkbox>
                             <h2 class="pl-6">{{$permission->name}}</h2>
                         </div>
                     </td>
