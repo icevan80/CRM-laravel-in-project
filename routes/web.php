@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,8 +58,11 @@ Route::middleware([
             'validatePermission:edit_translations'
         ])->group(function () {
             Route::get('translation', function () {
+                if (auth()->user()->hasPermission('new_style_access')) {
+                    return view('dashboard.settings.translations.index');
+                }
                 return view('dashboard.translation-settings.index');
-            })->name('translation');
+            })->name('settings.translation');
 //            Route::middleware([
 //                'validatePermission:new_style_access'
 //            ])->group(function () {
@@ -71,8 +75,11 @@ Route::middleware([
             'validatePermission:edit_roles'
         ])->group(function () {
             Route::get('roles', function () {
+                if (auth()->user()->hasPermission('new_style_access')) {
+                    return view('dashboard.settings.roles.index');
+                }
                 return view('dashboard.role-settings.index');
-            })->name('roles');
+            })->name('settings.roles');
 //            Route::middleware([
 //                'validatePermission:new_style_access'
 //            ])->group(function () {
@@ -84,57 +91,66 @@ Route::middleware([
         Route::middleware([
             'validatePermission:edit_permissions'
         ])->group(function () {
-            Route::get('permissions', function () {
-                return view('dashboard.permission-settings.index');
-            })->name('permissions');
-//            Route::middleware([
-//                'validatePermission:new_style_access'
-//            ])->group(function () {
-//                Route::get('permissions', function () {
-////                    return view('dashboard.settings.permissions.index');
+            Route::resource('permissions', PermissionController::class)->name('index', 'settings.permissions');
+//            Route::resource('permissions', PermissionController::class);
+//            Route::get('permissions', function () {
+//                if (auth()->user()->hasPermission('new_style_access')) {
 //                    return view('dashboard.settings.permissions.index');
-//                })->name('settings.permissions');
-//            });
+//                }
+//                return view('dashboard.permission-settings.index');
+//            })->name('settings.permissions');
         });
 
         Route::prefix('manage')->group(function () {
             Route::middleware([
                 'validatePermission:manage_users'
             ])->group(function () {
-                Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manageusers');
+                Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manage.users');
                 Route::resource('users/create', App\Http\Controllers\UserController::class,)->name('create', 'users.create');
-                Route::resource('users/create/put', App\Http\Controllers\UserController::class)->name('store', 'manageusers.store');
-                Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manageusers.suspend');
-                Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manageusers.activate');
+                Route::resource('users/create/put', App\Http\Controllers\UserController::class)->name('store', 'manage.users.store');
+                Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manage.users.suspend');
+                Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manage.users.activate');
                 Route::put('users/{id}/update_role/{roleId}', [App\Http\Controllers\UserSuspensionController::class, 'updateRole'])->name('users.updateRole');
             });
             Route::middleware([
                 'validatePermission:manage_locations'
             ])->group(function () {
                 Route::get('locations', function () {
+                    if (auth()->user()->hasPermission('new_style_access')) {
+                        return view('dashboard.manage.locations.index');
+                    }
                     return view('dashboard.manage-locations.index');
-                })->name('managelocations');
+                })->name('manage.locations');
             });
             Route::middleware([
                 'validatePermission:manage_services'
             ])->group(function () {
                 Route::get('services', function () {
+                    if (auth()->user()->hasPermission('new_style_access')) {
+                        return view('dashboard.manage.services.index');
+                    }
                     return view('dashboard.manage-services.index');
-                })->name('manageservices');
+                })->name('manage.services');
             });
             Route::middleware([
                 'validatePermission:manage_deals'
             ])->group(function () {
                 Route::get('deals', function () {
+                    if (auth()->user()->hasPermission('new_style_access')) {
+                        return view('dashboard.manage.deals.index');
+                    }
                     return view('dashboard.manage-deals.index');
-                })->name('managedeals');
+                })->name('manage.deals');
             });
             Route::middleware([
                 'validatePermission:manage_categories'
             ])->group(function () {
                 Route::get('categories', function () {
+                    if (auth()->user()->hasPermission('new_style_access')) {
+                        return view('dashboard.manage.categories.index');
+                    }
                     return view('dashboard.manage-categories.index');
-                })->name('managecategories');
+                })->name('manage.categories');
 
                 Route::get('categories/create', function () {
                     return view('dashboard.manage-categories.index');
@@ -149,14 +165,7 @@ Route::middleware([
                         return view('dashboard.manage.appointments.index');
                     }
                     return view('dashboard.manage-appointments.index');
-                })->name('manageappointments');
-//                Route::middleware([
-//                    'validatePermission:new_style_access'
-//                ])->group(function () {
-//                    Route::get('appointments', function () {
-//                        return view('dashboard.manage.appointments.index');
-//                    })->name('manage.appointments');
-//                });
+                })->name('manage.appointments');
             });
         });
 

@@ -86,7 +86,7 @@
                                 </li>
                                 @if(Auth::user()->hasPermission('edit_translations'))
                                     <li>
-                                        <a href="{{ route('translation') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{ route('settings.translation') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                                         {{ request()->is('dashboard/translation') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                                       <span class="inline-flex justify-center items-center ml-4">
@@ -102,7 +102,7 @@
                                 @endif
                                 @if(Auth::user()->hasPermission('edit_roles'))
                                     <li>
-                                        <a href="{{ route('roles') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{ route('settings.roles') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                                         {{ request()->is('dashboard/roles') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                                       <span class="inline-flex justify-center items-center ml-4">
@@ -118,7 +118,7 @@
                                 @endif
                                 @if(Auth::user()->hasPermission('edit_permissions'))
                                     <li>
-                                        <a href="{{ route('permissions') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{ route('settings.permissions') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                                         {{ request()->is('dashboard/permissions') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                                       <span class="inline-flex justify-center items-center ml-4">
@@ -170,7 +170,7 @@
                                     </li>
                                     @if(Auth::user()->hasPermission('manage_users'))
                                         <li>
-                                            <a href="{{ route('manageusers') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                            <a href="{{ route('manage.users') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                             {{ request()->is('dashboard/manage/users') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}">
                               <span class="inline-flex justify-center items-center ml-4">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -185,7 +185,7 @@
                                     @endif
                                 @if(Auth::user()->hasPermission('manage_locations'))
                                         <li>
-                                            <a href="{{ route('managelocations') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                            <a href="{{ route('manage.locations') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                                 {{ request()->is('dashboard/manage/locations') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                                 ">
                                   <span class="inline-flex justify-center items-center ml-4">
@@ -206,7 +206,7 @@
                                     @endif
 
                                     <li>
-                                        <a href="{{ route('manageappointments') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{ route('manage.appointments') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                         {{ request()->is('dashboard/manage/appointments') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                           <span class="inline-flex justify-center items-center ml-4">
@@ -219,7 +219,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{route('manageservices')}}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{route('manage.services')}}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                             {{ request()->is('dashboard/manage/services') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                               <span class="inline-flex justify-center items-center ml-4">
@@ -233,7 +233,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('managecategories') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
+                                        <a href="{{ route('manage.categories') }}" class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6
                         {{ request()->is('dashboard/manage/categories') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}
                                             ">
                           <span class="inline-flex justify-center items-center ml-4">
@@ -247,7 +247,7 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ route('managedeals') }}"
+                                        <a href="{{ route('manage.deals') }}"
                                            class="relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 pr-6 {{ request()->is('dashboard/manage/deals') ? 'bg-gray-100 border-pink-500 text-gray-900 font-semibold' : '' }}">
                               <span class="inline-flex justify-center items-center ml-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

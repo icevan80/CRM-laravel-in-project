@@ -1,6 +1,3 @@
 <x-dashboard.shell>
-
-    <livewire:translation-settings />
-
-
+<div> ABOBA</div>
 </x-dashboard.shell>

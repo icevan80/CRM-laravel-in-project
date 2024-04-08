@@ -29,6 +29,10 @@ class UserController extends Controller
             ->orWhere('phone_number', 'LIKE', "%{$search}%")
             ->paginate(10);
 
+
+        if (auth()->user()->hasPermission('new_style_access')) {
+            return view('dashboard.manage.users.index', compact('users'), ['search' => $search]);
+        }
         return view('dashboard.manage-users.index', compact('users'), ['search' => $search]);
     }
 

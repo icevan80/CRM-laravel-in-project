@@ -217,7 +217,7 @@
 
             @auth
             @if($userRole == 'Admin')
-            <x-responsive-nav-link href="{{ route('manageusers') }}" :active="request()->routeIs('manageusers')">
+            <x-responsive-nav-link href="{{ route('manage.users') }}" :active="request()->routeIs('manageusers')">
                 {{ __('Manage Users') }}
             </x-responsive-nav-link>
             @endif

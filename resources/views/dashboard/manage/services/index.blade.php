@@ -1,6 +1,9 @@
 <x-dashboard.shell>
 
-    <livewire:translation-settings />
+
+
+
+   <livewire:manage-services />
 
 
 </x-dashboard.shell>

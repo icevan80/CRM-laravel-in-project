@@ -1,6 +1,6 @@
-<x-dashboard>
+<x-dashboard.shell>
 
     <livewire:role-settings />
 
 
-</x-dashboard>
+</x-dashboard.shell>

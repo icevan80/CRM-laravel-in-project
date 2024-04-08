@@ -1,6 +1,3 @@
 <x-dashboard.shell>
-
-    <livewire:translation-settings />
-
-
+    <livewire:manage-locations />
 </x-dashboard.shell>
