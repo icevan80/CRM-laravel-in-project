@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PermissionController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
@@ -28,9 +28,7 @@ class PermissionController extends Controller
      */
     public function create()
     {
-//        return Redirect::route('dashboard');
-//        return view('dashboard.settings.permissions.index');
-        return view('dashboard.settings.permissions.create');
+
     }
 
     /**
@@ -38,7 +36,25 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'permission_name' => 'required|string|min:1|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('settings.permissions')->with('errormsg', 'Permission not created.');
+        }
+
+        try {
+
+            Permission::create([
+                'name' => $request['permission_name'],
+            ]);
+        } catch (Exception $e) {
+            return redirect()->route('settings.permissions')->with('errormsg', 'Permission not created.');
+        }
+
+        return redirect()->route('settings.permissions')->with('success', 'Permission created successfully.');
+
+//        return redirect('settings.permissions', compact('permissions'));
     }
 
     /**
@@ -62,8 +78,12 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $permission = Permission::getPermission($id);
+        $permission->status = $request['status'];
+        $permission->save();
         //
     }
+
 
     /**
      * Remove the specified resource from storage.
