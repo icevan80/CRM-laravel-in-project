@@ -1,9 +1,4 @@
 <div>
-    {{-- Be like water. --}}
-    <h1>Менеджер ролей</h1>
-    <div x-data="{ open: false }">
-
-    </div>
     <table
         class="w-full bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
@@ -18,37 +13,24 @@
         </thead>
         <tbody>
         @foreach($roles as $role)
+            {{--            <div x-data="{showPermissions{{$role->id}}: false}">--}}
             <tr x-data="{showPermissions{{$role->id}}: false}">
                 <th scope="col"
                     class="pl-6 py-4 font-medium text-gray-900 border">{{$role->name}}</th>
                 <th scope="col" colspan="4"
                     class="w-full px-4 py-4 font-medium text-gray-900 border"><p
                         x-show="!showPermissions{{$role->id}}">{{count($role->permissions())}}</p>
-                    <table x-show="showPermissions{{$role->id}}" class="w-full">
-                        <tbody>
-                        @foreach($permissions as $permission)
-                            @if($loop->index % 4 == 0)
-                                <tr>
-                                    @endif
-                                    <td>
-                                        <div style="display: flex" class="text-center">
-                                            <x-input type="checkbox" wire:model="rolePermissionsMap.{{$role->id}}.{{$permission->id}}.contain"></x-input>
-                                            <label class="pl-6">{{$permission->name}}</label>
-                                        </div>
-                                    </td>
-                                    @if($loop->index % 4 == 3 || $loop->last)
-                                </tr>
-                            @endif
-                        @endforeach
-                        </tbody>
-                    </table>
+                    <div x-show="showPermissions{{$role->id}}" class="w-full">
+                        <h1>{{$role->id}}</h1>
+                        <livewire:settings.permissions :permissions="$permissions" :role-id="$role->id"/>
+                    </div>
                 </th>
                 <th scope="col"
                     class="px-4 py-4 font-medium text-gray-900 border">{{$role->status == 1 ? 'Активна' : 'Неактивна'}}</th>
                 <th scope="col"
                     class="px-4 py-4 font-medium text-gray-900 border">
                     <x-button @click="showPermissions{{$role->id}} = !showPermissions{{$role->id}}"
-                    wire:click="openRolePermissions({{$role}})">
+                              wire:click="openRolePermissions({{$role}})">
                         <p> Показать привелегии</p>
                     </x-button>
                     <x-button x-show="showPermissions{{$role->id}}" wire:click="saveNewPermissions({{$role}})">

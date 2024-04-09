@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -74,12 +75,17 @@ Route::middleware([
         Route::middleware([
             'validatePermission:edit_roles'
         ])->group(function () {
-            Route::get('roles', function () {
-                if (auth()->user()->hasPermission('new_style_access')) {
-                    return view('dashboard.settings.roles.index');
-                }
-                return view('dashboard.role-settings.index');
-            })->name('settings.roles');
+            Route::controller(RoleController::class)->group(function() {
+                Route::get('/roles', 'index')->name('settings.roles');
+                Route::put('/roles/store', 'store')->name('settings.roles.store');
+                Route::put('/roles/{id}/update', 'update')->name('settings.roles.update');
+            });
+//            Route::get('roles', function () {
+//                if (auth()->user()->hasPermission('new_style_access')) {
+//                    return view('dashboard.settings.roles.index');
+//                }
+//                return view('dashboard.role-settings.index');
+//            })->name('settings.roles');
 //            Route::middleware([
 //                'validatePermission:new_style_access'
 //            ])->group(function () {
@@ -91,14 +97,11 @@ Route::middleware([
         Route::middleware([
             'validatePermission:edit_permissions'
         ])->group(function () {
-            Route::resource('permissions', PermissionController::class)->name('index', 'settings.permissions');
-//            Route::resource('permissions', PermissionController::class);
-//            Route::get('permissions', function () {
-//                if (auth()->user()->hasPermission('new_style_access')) {
-//                    return view('dashboard.settings.permissions.index');
-//                }
-//                return view('dashboard.permission-settings.index');
-//            })->name('settings.permissions');
+            Route::controller(PermissionController::class)->group(function() {
+                Route::get('/permissions', 'index')->name('settings.permissions');
+                Route::put('/permissions/store', 'store')->name('settings.permissions.store');
+                Route::put('/permissions/{id}/update', 'update')->name('settings.permissions.update');
+            });
         });
 
         Route::prefix('manage')->group(function () {
