@@ -13,6 +13,10 @@
 
                 </div>
                 <div>
+{{--                    TODO: new style--}}
+                    {{--<div>
+                        <livewire:settings.permissions :user-id="$user->id"/>
+                    </div>--}}
                     @if(auth()->user()->hasPermission('edit_permissions'))
                     <livewire:edit-user-permissions :user-id="$user->id" />
                     @endif
@@ -128,4 +132,5 @@
 
             </div>
         </div>
+    </div>
 </x-dashboard>
