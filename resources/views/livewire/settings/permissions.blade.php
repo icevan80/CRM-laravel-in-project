@@ -4,6 +4,15 @@
     <table
         class="w-full bg-white text-left text-sm overflow-x-scroll min-w-screen">
         <tbody>
+        @if($this->roleId == null && $this->userId == null)
+            <tr>
+                <td>
+                    <x-button wire:click="$set('createNewPermission', true)">
+                        <p>Добавить</p>
+                    </x-button>
+                </td>
+            </tr>
+        @endif
         @foreach($permissions as $permission)
             @if($loop->index % 4 == 0)
                 <tr>
@@ -19,15 +28,7 @@
                 </tr>
             @endif
         @endforeach
-        @if($this->roleId == null && $this->userId == null)
-            <tr>
-                <td>
-                    <x-button wire:click="$set('createNewPermission', true)">
-                        <p>Добавить</p>
-                    </x-button>
-                </td>
-            </tr>
-        @endif
+
         </tbody>
     </table>
     <form action="{{route('settings.permissions.store')}}" method="post">

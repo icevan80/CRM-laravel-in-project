@@ -53,8 +53,6 @@ class PermissionController extends Controller
         }
 
         return redirect()->route('settings.permissions')->with('success', 'Permission created successfully.');
-
-//        return redirect('settings.permissions', compact('permissions'));
     }
 
     /**

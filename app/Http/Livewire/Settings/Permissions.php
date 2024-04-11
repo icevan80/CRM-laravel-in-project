@@ -12,6 +12,7 @@ class Permissions extends Component
     public $permissionsMap = array();
     public $roleId = null;
     public $userId = null;
+    public $role = null;
 
     public bool $createNewPermission = false;
 
@@ -23,7 +24,8 @@ class Permissions extends Component
             $this->fillMainPage($permissions);
         } else if ($roleId != null && $userId == null) {
             $this->roleId = $roleId;
-            $this->fillRolePage($permissions, $roleId);
+            $this->role = Role::getRole($roleId);
+            $this->fillRolePage($permissions, $this->role);
         }
     }
 
@@ -42,10 +44,8 @@ class Permissions extends Component
 
     }
 
-    public function fillRolePage($permissions, $roleId)
+    public function fillRolePage($permissions, $role)
     {
-        $role = Role::getRole($roleId);
-
         $permissionsMap = $role->permissions();
         foreach ($permissions as $permission) {
             $permissionsMap[$permission->id] = array(
@@ -62,9 +62,18 @@ class Permissions extends Component
 
     public function updateStatus(int $id)
     {
-        $permission = Permission::getPermission($id);
-        $permission->status = $this->permissionsMap[$id]['status'];
-        $permission->save();
+        if ($this->roleId == null && $this->userId == null) {
+            $permission = Permission::getPermission($id);
+            $permission->status = $this->permissionsMap[$id]['status'];
+            $permission->save();
+        } else if ($this->roleId != null && $this->userId == null) {
+            $permission = Permission::getPermission($id);
+            if ($this->permissionsMap[$id]['status']) {
+                $this->role->addPermission($permission);
+            } else {
+                $this->role->removePermission($permission);
+            }
+        }
     }
 
     public function render()

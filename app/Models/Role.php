@@ -62,4 +62,13 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($role) {
+            $role->default_permissions = json_encode(array());
+        });
+    }
 }

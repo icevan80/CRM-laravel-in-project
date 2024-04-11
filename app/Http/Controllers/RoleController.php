@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class RoleController extends Controller
 {
@@ -33,7 +34,23 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'role_name' => 'required|string|min:1|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('settings.roles')->with('errormsg', 'Role not created.');
+        }
+
+        try {
+
+            Role::create([
+                'name' => $request['role_name'],
+            ]);
+        } catch (Exception $e) {
+            return redirect()->route('settings.roles')->with('errormsg', 'Role not created.');
+        }
+
+        return redirect()->route('settings.roles')->with('success', 'Role created successfully.');
     }
 
     /**
