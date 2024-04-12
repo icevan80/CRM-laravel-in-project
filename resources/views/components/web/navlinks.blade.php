@@ -1,12 +1,12 @@
 {{-- Nav Links for the customer facing web --}}
 
-<x-nav-link href="{{ route('services') }}" :active="request()->routeIs('services')">
+<x-navlink.default href="{{ route('services') }}" :active="request()->routeIs('services')">
     {{ __('Services') }}
-</x-nav-link>
+</x-navlink.default>
 
-<x-nav-link href="{{ route('deals') }}" :active="request()->routeIs('deals')">
+<x-navlink.default href="{{ route('deals') }}" :active="request()->routeIs('deals')">
     {{ __('Deals') }}
-</x-nav-link>
+</x-navlink.default>
 {{--
 <x-nav-link href="{{ route('manageusers') }}" :active="request()->routeIs('manageusers')">
     {{ __('Manage Users') }}

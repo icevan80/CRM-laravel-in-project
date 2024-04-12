@@ -29,7 +29,7 @@
 <style>
     .shell-grid {
         display: grid;
-        grid-template-columns: 2fr 15fr;
+        grid-template-columns: 12fr 88fr;
     }
 
     @media (max-width: 640px) {

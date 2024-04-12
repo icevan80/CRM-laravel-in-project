@@ -18,8 +18,6 @@ class Permissions extends Component
 
     public int $elementsInRow = 4;
 
-    public bool $createNewPermission = false;
-
     public function mount($permissions = null, $roleId = null, $userId = null)
     {
 

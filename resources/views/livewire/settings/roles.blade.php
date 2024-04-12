@@ -1,9 +1,6 @@
 <div>
-    <x-button wire:click="$set('createNewRole', true)">
-        <p>Создать новую роль</p>
-    </x-button>
     <table
-        class="w-full bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+        class="w-full bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen ">
         <thead class="bg-gray-50">
 
         <tr>
@@ -54,29 +51,4 @@
         @endforeach
         </tbody>
     </table>
-    <form action="{{route('settings.roles.store')}}" method="post">
-        @csrf
-        @method('PUT')
-        <x-dialog-modal wire:model="createNewRole">
-            <x-slot name="title">
-                Создание новой роли
-            </x-slot>
-            <x-slot name="content">
-                <x-label for="role_name">Имя роли</x-label>
-                <x-input type="text" id="role_name" name="role_name"/>
-                <x-input-error for="role_name" class="mt-2"/>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-button type="submit">
-                        Сохранить
-                    </x-button>
-                    <x-secondary-button wire:click="$set('createNewRole', false)"
-                                        wire:loading.attr="disabled">
-                        Отмена
-                    </x-secondary-button>
-                </div>
-            </x-slot>
-        </x-dialog-modal>
-    </form>
 </div>

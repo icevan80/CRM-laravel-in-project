@@ -97,7 +97,10 @@ class User extends Authenticatable
 
     function hasPermission($code) :bool {
         $array = $this->permissions();
-        if (Permission::getPermission($code)->status == 0) {
+        $permission = Permission::getPermission($code);
+        if ($permission == null) {
+            return false;
+        } else if ($permission->status == false) {
             return false;
         }
         if (gettype($code) == 'string') {

@@ -11,9 +11,6 @@ class Roles extends Component
     public $roles;
     public $permissions;
 
-    public bool $createNewRole = false;
-
-
     public function mount($roles)
     {
         $permissions = Permission::all();

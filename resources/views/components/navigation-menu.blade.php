@@ -30,9 +30,9 @@
             <div class="hidden sm:flex sm:items-center sm:ml-6">
 
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    <x-navlink.default href="{{ route('home') }}" :active="request()->routeIs('home')">
                         {{ __('Home') }}
-                    </x-nav-link>
+                    </x-navlink.default>
 
 
 
@@ -47,17 +47,17 @@
 
                     <!-- Auth Navigation Links -->
                     @auth
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    <x-navlink.default href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
-                    </x-nav-link>
+                    </x-navlink.default>
                     @else
-                    <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                    <x-navlink.default href="{{ route('login') }}" :active="request()->routeIs('login')">
                         {{ __('Login') }}
-                    </x-nav-link>
+                    </x-navlink.default>
 
-                    <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                    <x-navlink.default href="{{ route('register') }}" :active="request()->routeIs('register')">
                         {{ __('Register') }}
-                    </x-nav-link>
+                    </x-navlink.default>
 
                     @endif
                 </div>

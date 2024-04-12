@@ -25,7 +25,7 @@
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen">
             <x-navigation-menu>
 
                 <!-- Pass the main logo from page to the nav menu component-->

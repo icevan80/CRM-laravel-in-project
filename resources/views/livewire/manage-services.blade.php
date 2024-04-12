@@ -40,32 +40,31 @@
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Category</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Visibility</th>
               <th scope="col" class="px-6 py-4 font-medium text-gray-900">Actions</th>
-              <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-100 border-t border-gray-100">
 
             @foreach ($services as $service)
             <tr class="hover:bg-gray-50">
-                <td class="pl-6 py-4  max-w-0">{{ $service->id }}</td>
+                <td class="pl-6 py-4">{{ $service->id }}</td>
 
-                <th class="flex gap-3 px-6 py-4 font-normal text-gray-900  max-w-0">
+                <td class="gap-3 px-6 py-4 font-medium text-gray-700 text-gray-900">
 
-                    <div class="font-medium text-gray-700">{{ $service->name}}</div>
+                    {{ $service->name}}
 
-                </th>
-                <td class="px-6 py-4  max-w-0">
-                    <div class="font-medium text-gray-700">
+                </td>
+                <td class="px-6 py-4">
+                    <div class="w-20 h-20 font-medium text-gray-700">
                         <img src="{{ asset('storage/' . $service->image) }}" alt="" class="w-20 h-20 object-cover">
                     </div>
                 </td>
 
-                <td class="px-6 py-4 max-w-0">{{ $service->description }}</td>
+                <td class="px-6 py-4 w-full">{{ $service->description }}</td>
 
-                <td class="px-6 py-4  max-w-0">
+                <td class="px-6 py-4 ">
                     <div class="font-medium text-gray-700">{{ $service->price}}</div>
                 </td>
-                <td class="px-6 py-4  max-w-0">
+                <td class="px-6 py-4">
 {{--                    @dd($service->category->name)--}}
                     <div class="font-medium text-gray-700">{{ $service->category?->name}}</div>
                 </td>
@@ -93,15 +92,15 @@
                 <td>
                     <div class="mt-5 ">
                         <a href="{{ route('view-service', ['slug' => $service->slug ])  }}">
-                            <x-button>
+                            <x-button class="m-2">
                                 {{ __('View') }}
                             </x-button>
 
                         </a>
-                        <x-button wire:click="confirmServiceEdit({{ $service->id }})" wire:loading.attr="disabled">
+                        <x-button class="m-2" wire:click="confirmServiceEdit({{ $service->id }})" wire:loading.attr="disabled">
                             {{ __('Edit') }}
                         </x-button>
-                        <x-danger-button wire:click="confirmServiceDeletion({{ $service->id }})" wire:loading.attr="disabled">
+                        <x-danger-button class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})" wire:loading.attr="disabled">
                             {{ __('Delete') }}
                         </x-danger-button>
 
