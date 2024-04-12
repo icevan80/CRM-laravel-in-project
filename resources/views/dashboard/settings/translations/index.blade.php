@@ -1,6 +1,6 @@
 <x-dashboard.shell>
 
-    <livewire:translation-settings />
+    <livewire:settings.translations />
 
 
 </x-dashboard.shell>

@@ -1,14 +1,14 @@
 <x-dashboard.shell>
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Менеджер ролей</h2>
-        <div x-data="{show: false}">
-            <x-button x-on:click="show = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+        <div x-data="{showCreateRole: false}">
+            <x-button x-on:click="showCreateRole = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
                 <p>Создать новую роль</p>
             </x-button>
             <form action="{{route('settings.roles.store')}}" method="post">
                 @csrf
                 @method('PUT')
-                <x-dialog.default>
+                <x-dialog.default listener="showCreateRole">
                     <x-slot name="title">
                         Создание новой роли
                     </x-slot>
@@ -22,7 +22,7 @@
                             <x-button>
                                 Сохранить
                             </x-button>
-                            <x-secondary-button x-on:click="show = false">
+                            <x-secondary-button x-on:click="showCreateRole = false">
                                 Отмена
                             </x-secondary-button>
                         </div>

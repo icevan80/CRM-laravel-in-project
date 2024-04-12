@@ -40,12 +40,12 @@
                 </th>
                 <th scope="col"
                     class="px-4 py-4 font-medium text-gray-900 border">
-                    <x-button
+                    <x-button.default
                         x-on:click="showPermissions{{$role->id}} = !showPermissions{{$role->id}}"
                         wire:click="buttonHidePermissions({{$role}})">
                         <p x-show="!showPermissions{{$role->id}}">Показать привелегии</p>
                         <p x-show="showPermissions{{$role->id}}">Скрыть привелегии</p>
-                    </x-button>
+                    </x-button.default>
                 </th>
             </tr>
         @endforeach
