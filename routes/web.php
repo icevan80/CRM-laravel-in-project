@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -64,40 +65,22 @@ Route::middleware([
                 }
                 return view('dashboard.translation-settings.index');
             })->name('settings.translation');
-//            Route::middleware([
-//                'validatePermission:new_style_access'
-//            ])->group(function () {
-//                Route::get('translation', function () {
-//                    return view('dashboard.settings.translation.index');
-//                })->name('settings.translation');
-//            });
         });
+
         Route::middleware([
             'validatePermission:edit_roles'
         ])->group(function () {
-            Route::controller(RoleController::class)->group(function() {
+            Route::controller(RoleController::class)->group(function () {
                 Route::get('/roles', 'index')->name('settings.roles');
                 Route::put('/roles/store', 'store')->name('settings.roles.store');
                 Route::put('/roles/{id}/update', 'update')->name('settings.roles.update');
             });
-//            Route::get('roles', function () {
-//                if (auth()->user()->hasPermission('new_style_access')) {
-//                    return view('dashboard.settings.roles.index');
-//                }
-//                return view('dashboard.role-settings.index');
-//            })->name('settings.roles');
-//            Route::middleware([
-//                'validatePermission:new_style_access'
-//            ])->group(function () {
-//                Route::get('appointments', function () {
-//                    return view('dashboard.settings.roles.index');
-//                })->name('settings.roles');
-//            });
         });
+
         Route::middleware([
             'validatePermission:edit_permissions'
         ])->group(function () {
-            Route::controller(PermissionController::class)->group(function() {
+            Route::controller(PermissionController::class)->group(function () {
                 Route::get('/permissions', 'index')->name('settings.permissions');
                 Route::put('/permissions/store', 'store')->name('settings.permissions.store');
                 Route::put('/permissions/{id}/update', 'update')->name('settings.permissions.update');
@@ -148,13 +131,11 @@ Route::middleware([
             Route::middleware([
                 'validatePermission:manage_categories'
             ])->group(function () {
-                Route::get('categories', function () {
-                    if (auth()->user()->hasPermission('new_style_access')) {
-                        return view('dashboard.manage.categories.index');
-                    }
-                    return view('dashboard.manage-categories.index');
-                })->name('manage.categories');
-
+                Route::controller(CategoriesController::class)->group(function () {
+                    Route::get('/categories', 'index')->name('manage.categories');
+                    Route::put('/categories/store', 'store')->name('manage.categories.store');
+                    Route::put('/categories/{id}/update', 'update')->name('manage.categories.update');
+                });
                 Route::get('categories/create', function () {
                     return view('dashboard.manage-categories.index');
                 })->name('managecategories.create');
