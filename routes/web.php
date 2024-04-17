@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -101,12 +102,12 @@ Route::middleware([
             Route::middleware([
                 'validatePermission:manage_locations'
             ])->group(function () {
-                Route::get('locations', function () {
-                    if (auth()->user()->hasPermission('new_style_access')) {
-                        return view('dashboard.manage.locations.index');
-                    }
-                    return view('dashboard.manage-locations.index');
-                })->name('manage.locations');
+                Route::controller(LocationsController::class)->group(function () {
+                    Route::get('/locations', 'index')->name('manage.locations');
+                    Route::put('/locations/store', 'store')->name('manage.locations.store');
+                    Route::put('/locations/{id}/update', 'update')->name('manage.locations.update');
+                    Route::put('/locations/{id}/destroy', 'destroy')->name('manage.locations.destroy');
+                });
             });
             Route::middleware([
                 'validatePermission:manage_services'
@@ -135,6 +136,7 @@ Route::middleware([
                     Route::get('/categories', 'index')->name('manage.categories');
                     Route::put('/categories/store', 'store')->name('manage.categories.store');
                     Route::put('/categories/{id}/update', 'update')->name('manage.categories.update');
+                    Route::put('/categories/{id}/destroy', 'destroy')->name('manage.categories.destroy');
                 });
                 Route::get('categories/create', function () {
                     return view('dashboard.manage-categories.index');
