@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Permission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -14,15 +13,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
         if (auth()->user()->hasPermission('new_style_access')) {
-            return view('dashboard.manage.categories.index', compact('categories'));
+            return view('dashboard.manage.categories.index');
         }
         return view('dashboard.manage-categories.index.index');
-
-
-        //
     }
 
     /**
@@ -42,19 +36,19 @@ class CategoriesController extends Controller
             'category_name' => 'required|string|min:1|max:255',
         ]);
         if ($validator->fails()) {
-            return redirect()->route('settings.permissions')->with('errormsg', 'Permission not created.');
+            return redirect()->route('manage.categories')->with('errormsg', 'Validation failed.');
         }
 
         try {
 
-            Permission::create([
-                'name' => $request['permission_name'],
+            Category::create([
+                'name' => $request['category_name'],
             ]);
         } catch (Exception $e) {
-            return redirect()->route('settings.permissions')->with('errormsg', 'Permission not created.');
+            return redirect()->route('manage.categories')->with('errormsg', 'Category  not created.');
         }
 
-        return redirect()->route('settings.permissions')->with('success', 'Permission created successfully.');
+        return redirect()->route('manage.categories')->with('success', 'Category created successfully.');
     }
 
     /**
@@ -78,14 +72,37 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'category_name' => 'required|string|min:1|max:255',
+        ]);
+        if ($validator->fails()) {
+            return redirect()->route('manage.categories')->with('errormsg', 'Validation failed.');
+        }
+
+        try {
+            $category = Category::all()->where('id', $id)->first();
+            $category->name = $request['category_name'];
+            $category->save();
+        } catch (Exception $e) {
+            return redirect()->route('manage.categories')->with('errormsg', 'Category not updated.');
+        }
+
+        return redirect()->route('manage.categories')->with('success', 'Category updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        try {
+            $category = Category::all()->where('id', $id)->first();
+            $category->status = false;
+            $category->save();
+        } catch (Exception $e) {
+            return redirect()->route('manage.categories')->with('errormsg', 'Category not disabled.');
+        }
+
+        return redirect()->route('manage.categories')->with('success', 'Category disabled successfully.');
     }
 }
