@@ -9,20 +9,17 @@
                           d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <input type="search" wire:model.debounce.500ms="search" id="default-search" name="search"
+            <x-input type="search" wire:model.debounce.500ms="search" id="default-search" name="search"
                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                   placeholder="Search Locations...">
-            <button type="submit"
-                    class="text-white absolute right-2.5 bottom-2.5 bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-4 py-2">
-                Search
-            </button>
+                   placeholder="Search Locations..."></x-input>
+            <x-button.default type="submit" class="text-white absolute right-2.5 bottom-2.5 ">Search</x-button.default>
         </div>
     </div>
 
     <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
-            <th scope="col" class="pl-6 py-4 font-medium text-gray-900">Id</th>
+            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Name</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900 w-full">Address</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Telephone Number</th>
@@ -34,19 +31,19 @@
 
         @foreach ($locations as $location)
             <tr class="hover:bg-gray-50">
-                <td class="pl-6 py-4  max-w-0">{{ $location->id }}</td>
+                <td class="px-4 py-4  max-w-0">{{ $location->id }}</td>
 
-                <td class="px-6 py-4 max-w-xs font-medium text-gray-700">{{ $location->name}}</td>
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->name}}</td>
 
-                <td class="px-6 py-4 max-w-xs font-medium text-gray-700">{{ $location->address}}</td>
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->address}}</td>
 
-                <td class="px-6 py-4 max-w-xs font-medium text-gray-700">{{ $location->telephone_number}}</td>
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->telephone_number}}</td>
 
-                <td class="px-6 py-4 max-w-xs font-medium text-gray-700">{{ $location->operate ? 'Yes' : 'No'}}</td>
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->operate ? 'Yes' : 'No'}}</td>
 
 
-                <td>
-                    <div class="flex gap-1 mt-5">
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">
+                    <div class="flex gap-1">
                         <x-button wire:click="confirmLocationEdit({{ $location->id }}, {{ $location }})">
                             {{ __('Edit') }}
                         </x-button>

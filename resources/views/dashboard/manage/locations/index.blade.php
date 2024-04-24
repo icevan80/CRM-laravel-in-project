@@ -37,7 +37,8 @@
                         </div>
 
                         <div>
-                            <label for="location_operate" class="block text-sm font-medium text-gray-700">Is Operating</label>
+                            <label for="location_operate" class="block text-sm font-medium text-gray-700">Is
+                                Operating</label>
                             <x-checkbox name="location_operate" id="location_operate"></x-checkbox>
                             @error('location_operate') <span class="text-red-500">{{ $message }}</span>@enderror
                         </div>
@@ -56,7 +57,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5 p-4">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
         <livewire:manage.locations/>
     </div>
 </x-dashboard.shell>

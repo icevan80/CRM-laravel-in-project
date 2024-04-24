@@ -1,5 +1,5 @@
 <div>
-    <div class="w-1/3 float-right">
+    <div class="w-1/3 float-right m-4">
         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -15,10 +15,11 @@
             <x-button.default type="submit" class="text-white absolute right-2.5 bottom-2.5 ">Search</x-button.default>
         </div>
     </div>
+
     <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
-            <th scope="col" class="pl-6 py-4 font-medium text-gray-900">Id</th>
+            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
             <th scope="col" class="px-4 py-4 w-full font-medium text-gray-900">Name</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Actions</th>
         </tr>
@@ -27,12 +28,12 @@
 
         @foreach ($categories as $category)
             <tr class="hover:bg-gray-50">
-                <td class="pl-6 py-4  max-w-0">{{ $category->id }}</td>
+                <td class="px-4 py-4  max-w-0">{{ $category->id }}</td>
 
-                <td class="px-6 py-4 max-w-xs font-medium text-gray-700">{{ $category->name}}</td>
+                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $category->name}}</td>
 
-                <td>
-                    <div class="flex gap-1 mt-5">
+                <td  class="px-4 py-4 max-w-xs font-medium text-gray-700">
+                    <div class="flex gap-1">
                         <x-button.default wire:click="confirmCategoryEdit({{ $category->id }})">
                             {{ __('Edit') }}
                         </x-button.default>

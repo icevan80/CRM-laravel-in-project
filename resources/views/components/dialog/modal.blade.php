@@ -2,6 +2,10 @@
 
 @php
     $dataParamName = 'show';
+    $dataBackRoute = 'none';
+    if ($attributes['back-route'] != null) {
+        $dataBackRoute = $attributes['back-route'];
+    }
     if ($attributes['listener'] != null) {
         $dataParamName = $attributes['listener'];
     }
@@ -25,16 +29,24 @@
     id="{{ $id }}"
     class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
     style="display: none;"
+
 >
-    <div x-show="{{$dataParamName}}" class="fixed inset-0 transform transition-all" x-on:click="{{$dataParamName}} = false"
-         x-transition:enter="ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0">
-        <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
+    @if($dataBackRoute != 'none')
+        <a href="{{$dataBackRoute}}">
+            @endif
+            <div x-show="{{$dataParamName}}" class="fixed inset-0 transform transition-all"
+                 x-on:click="{{$dataParamName}} = false"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            </div>
+            @if($dataBackRoute!='none')
+        </a>
+    @endif
 
     <div x-show="{{$dataParamName}}"
          class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full {{ $maxWidth }} sm:mx-auto"

@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -112,12 +113,13 @@ Route::middleware([
             Route::middleware([
                 'validatePermission:manage_services'
             ])->group(function () {
-                Route::get('services', function () {
-                    if (auth()->user()->hasPermission('new_style_access')) {
-                        return view('dashboard.manage.services.index');
-                    }
-                    return view('dashboard.manage-services.index');
-                })->name('manage.services');
+                Route::controller(ServicesController::class)->group(function () {
+                    Route::get('/services', 'index')->name('manage.services');
+                    Route::get('/services/create', 'create')->name('manage.services.create');
+                    Route::put('/services/store', 'store')->name('manage.services.store');
+                    Route::put('/services/{id}/update', 'update')->name('manage.services.update');
+                    Route::put('/services/{id}/destroy', 'destroy')->name('manage.services.destroy');
+                });
             });
             Route::middleware([
                 'validatePermission:manage_deals'

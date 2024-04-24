@@ -31,7 +31,7 @@ class LocationsController extends Controller
      */
     public function store(Request $request)
     {
-        if ($request['location_operate']) {
+        if ($request['location_operate'] || $request['location_operate'] == 'true') {
             $request['location_operate'] = true;
         } else {
             $request['location_operate'] = false;
