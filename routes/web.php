@@ -117,7 +117,10 @@ Route::middleware([
                     Route::get('/services', 'index')->name('manage.services');
                     Route::get('/services/create', 'create')->name('manage.services.create');
                     Route::put('/services/store', 'store')->name('manage.services.store');
-                    Route::put('/services/{id}/update', 'update')->name('manage.services.update');
+                    Route::get('/services/edit/{id}', 'edit')->name('manage.services.edit');
+                    Route::put('/services/update/{id}', 'update')->name('manage.services.update');
+
+//                    Route::put('/services/{id}/update', 'update')->name('manage.services.update');
                     Route::put('/services/{id}/destroy', 'destroy')->name('manage.services.destroy');
                 });
             });

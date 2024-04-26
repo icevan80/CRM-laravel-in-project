@@ -84,9 +84,11 @@
                             </x-button>
 
                         </a>
+                        <a href="{{route('manage.services.edit', ['id' =>$service->id])}}">
                         <x-button class="m-2" wire:click="confirmServiceEdit({{ $service->id }})" wire:loading.attr="disabled">
                             {{ __('Edit') }}
                         </x-button>
+                        </a>
                         <x-danger-button class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})" wire:loading.attr="disabled">
                             {{ __('Delete') }}
                         </x-danger-button>
