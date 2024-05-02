@@ -19,7 +19,7 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-forms.create.service :categories="$categories"/>
+                        <x-forms.create.service :categories="$categories" :masters="$masters"/>
                     </x-slot>
 
                     <x-slot name="footer">
@@ -53,7 +53,7 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-forms.edit.service :categories="$categories" :service="$service"/>
+                    <x-forms.edit.service :categories="$categories" :masters="$masters" :service="$service"/>
                 </x-slot>
 
                 <x-slot name="footer">

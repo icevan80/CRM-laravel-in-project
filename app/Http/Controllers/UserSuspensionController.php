@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use Exception;
 
@@ -48,8 +49,8 @@ class UserSuspensionController extends Controller
     {
         try {
             $user = User::findOrFail($id);
-            $user->role_id = $roleId;
-            $user->save();
+            $role = Role::findOrFail($roleId);
+            $user->updateRole($role);
             return redirect()->route('users.show', $user->id)->with('success', 'User role change successfully.');
 
         } catch (Exception $e) {

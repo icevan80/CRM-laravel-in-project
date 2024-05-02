@@ -21,30 +21,35 @@ class Service extends Model
 //        'uuid',
         'name',
         'slug',
-        'description',
         'image',
         'price',
+        'max_price',
         'notes',
-        'allergens',
-        'benefits',
-        'aftercare_tips',
-        'cautions',
-//        'duration_minutes',
+        'type',
+        'duration_minutes',
         'category_id',
         'is_hidden',
     ];
 
     protected $casts = [
         'is_hidden' => 'boolean',
-        'start_time' => 'time',
-        'end_time' => 'time',
     ];
+
+    public function masters()
+    {
+        return $this->belongsToMany(Master::class, 'services_masters', 'service_id', 'master_id');
+    }
+
+    public function getMasters() {
+        return $this->belongsToMany(Master::class, 'services_masters')->withPivot('service_id');
+    }
 
     // is visible
     public function scopeIsVisible($query)
     {
         return $query->where('is_hidden', false);
     }
+
     public function scopeOrderByPrice($query, $order)
     {
         if ($order === 'PriceLowToHigh') {
@@ -71,6 +76,7 @@ class Service extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+
     public function locations()
     {
         return $this->belongsToMany(Location::class, 'cart_service')
@@ -98,7 +104,6 @@ class Service extends Model
             }
         });
     }
-
 
 
 }

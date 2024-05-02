@@ -22,7 +22,7 @@
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Service</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Photo</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Description</th>
+            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Notes</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Price</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Category</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Visibility</th>
@@ -46,10 +46,10 @@
                     </div>
                 </td>
 
-                <td class="px-4 py-4 w-full">{{ $service->description }}</td>
+                <td class="px-4 py-4 w-full">{{ $service->notes }}</td>
 
                 <td class="px-4 py-4 ">
-                    <div class="font-medium text-gray-700">{{ $service->price}}</div>
+                    <div class="font-medium text-center text-gray-700">{{ $service->price }} @if(isset($service->max_price))- {{ $service->max_price }}@endif</div>
                 </td>
                 <td class="px-4 py-4">
                     {{--                    @dd($service->category->name)--}}

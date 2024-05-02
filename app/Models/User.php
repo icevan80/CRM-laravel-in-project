@@ -72,6 +72,11 @@ class User extends Authenticatable
 
     function updateRole($newRole) {
         $this->role_id = $newRole->id;
+        if ($newRole->name == 'Master') {
+            Master::create([
+                'user_id' => $this->id,
+            ]);
+        }
         return $this->save();
     }
 
@@ -147,7 +152,6 @@ class User extends Authenticatable
 
         static::creating(function ($user) {
             $user->permissions = json_encode(array());
-
         });
     }
 }

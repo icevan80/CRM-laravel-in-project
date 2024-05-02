@@ -80,6 +80,9 @@ class DisplayDeal extends Controller
         ]);
         Permission::create([
             'name' => 'Edit deals'
+        ]);
+        Permission::create([
+            'name' => 'New style access'
         ]);*/
 
 
