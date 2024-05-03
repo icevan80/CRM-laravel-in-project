@@ -7,29 +7,6 @@
                  value="{{$service->name}}"></x-input>
         @error('service_name') <span class="text-red-500">{{ $message }}</span>@enderror
     </div>
-    <div x-data="{inputRange: {{isset($service->max_price) ? 'true' : 'false'}}}">
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-                <label for="price" class="block text-sm font-medium text-gray-700"><span x-show="inputRange">Min </span>Price</label>
-                <x-input type="text" name="service_price" id="price" class="w-full"
-                         value="{{$service->price}}"></x-input>
-                @error('service_price') <span class="text-red-500">{{ $message }}</span>@enderror
-            </div>
-
-
-            <div x-show="inputRange">
-                <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
-                <x-input type="text" name="service_max_price" id="max_price" class="w-full"
-                         value="{{$service->max_price}}"></x-input>
-                @error('service_max_price') <span class="text-red-500">{{ $message }}</span>@enderror
-            </div>
-        </div>
-        <div class="flex">
-            <x-checkbox class="my-2" x-on:click="inputRange = !inputRange"
-                        checkIt="{{isset($service->max_price) ? 'true' : ''}}"></x-checkbox>
-            <p class="my-1 px-2">Input range</p>
-        </div>
-    </div>
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
             <label for="category_id"
@@ -67,6 +44,30 @@
             </div>
         </div>
     </div>
+    <div x-data="{inputRange: {{isset($service->max_price) ? 'true' : 'false'}}}">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700"><span x-show="inputRange">Min </span>Price</label>
+                <x-input type="text" name="service_price" id="price" class="w-full"
+                         value="{{$service->price}}"></x-input>
+                @error('service_price') <span class="text-red-500">{{ $message }}</span>@enderror
+            </div>
+
+
+            <div x-show="inputRange">
+                <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
+                <x-input type="text" name="service_max_price" id="max_price" class="w-full"
+                         value="{{$service->max_price}}"></x-input>
+                @error('service_max_price') <span class="text-red-500">{{ $message }}</span>@enderror
+            </div>
+        </div>
+        <div class="flex">
+            <x-checkbox class="my-2" x-on:click="inputRange = !inputRange"
+                        checkIt="{{isset($service->max_price) ? 'true' : ''}}"></x-checkbox>
+            <p class="my-1 px-2">Input range</p>
+        </div>
+    </div>
+
     <div>
         <label class="block text-sm font-medium text-gray-700">Duration</label>
         <div class="flex">
@@ -118,7 +119,24 @@
     </div>
     <div>
         <label>Masters</label>
-        <div x-data="{masterCount: {{$service->masters()->count()}}}">
+        <div x-data="{masterCount: 0}">
+            @foreach($service->masters as $selectedMaster)
+                <select name="service_masters[]" id="masters"
+                        class="block my-2 mr-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option>
+                        Убрать мастера
+                    </option>
+                    @foreach ($masters as $master)
+                        <option
+                            @if($master->id == $selectedMaster->id)
+                            selected
+                            @endif
+                            value="{{$master->id}}">{{ $master->user->name}}
+                        </option>
+                    @endforeach
+                    @error('service_masters') <span class="text-red-500">{{ $message }}</span>@enderror
+                </select>
+            @endforeach
             <template x-for="i in masterCount">
                 <select name="service_masters[]" id="masters"
                         class="block my-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -127,7 +145,8 @@
                     </option>
                     @foreach ($masters as $master)
                         <option
-                            value="{{$master->user_id}}">{{ $master->user->name}}
+
+                            value="{{$master->id}}">{{ $master->user->name}}
                         </option>
                     @endforeach
                     @error('service_masters') <span class="text-red-500">{{ $message }}</span>@enderror

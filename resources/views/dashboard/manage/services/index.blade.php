@@ -49,7 +49,7 @@
             @method('PUT')
             <x-dialog.default listener="showEditService" back-route="{{route('manage.services')}}">
                 <x-slot name="title">
-                    Создание новой услуги
+                    Редактирование услуги
                 </x-slot>
 
                 <x-slot name="content">

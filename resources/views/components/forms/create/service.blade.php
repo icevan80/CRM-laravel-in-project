@@ -6,26 +6,6 @@
         <x-input type="text" name="service_name" id="name" class="w-full"></x-input>
         @error('service_name') <span class="text-red-500">{{ $message }}</span>@enderror
     </div>
-    <div x-data="{inputRange: false}">
-        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
-            <div>
-                <label for="price" class="block text-sm font-medium text-gray-700"><span x-show="inputRange">Min </span>Price</label>
-                <x-input type="text" name="service_price" id="price" class="w-full"></x-input>
-                @error('service_price') <span class="text-red-500">{{ $message }}</span>@enderror
-            </div>
-
-
-            <div x-show="inputRange">
-                <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
-                <x-input type="text" name="service_max_price" id="max_price" class="w-full"></x-input>
-                @error('service_max_price') <span class="text-red-500">{{ $message }}</span>@enderror
-            </div>
-        </div>
-        <div class="flex">
-            <x-checkbox class="my-2" x-on:click="inputRange = !inputRange"></x-checkbox>
-            <p class="my-1 px-2">Input range</p>
-        </div>
-    </div>
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
             <label for="category_id"
@@ -54,6 +34,27 @@
             </div>
         </div>
     </div>
+    <div x-data="{inputRange: false}">
+        <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
+            <div>
+                <label for="price" class="block text-sm font-medium text-gray-700"><span x-show="inputRange">Min </span>Price</label>
+                <x-input type="text" name="service_price" id="price" class="w-full"></x-input>
+                @error('service_price') <span class="text-red-500">{{ $message }}</span>@enderror
+            </div>
+
+
+            <div x-show="inputRange">
+                <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
+                <x-input type="text" name="service_max_price" id="max_price" class="w-full"></x-input>
+                @error('service_max_price') <span class="text-red-500">{{ $message }}</span>@enderror
+            </div>
+        </div>
+        <div class="flex">
+            <x-checkbox class="my-2" x-on:click="inputRange = !inputRange"></x-checkbox>
+            <p class="my-1 px-2">Input range</p>
+        </div>
+    </div>
+
     <div>
         <label class="block text-sm font-medium text-gray-700">Duration</label>
         <div class="flex">
@@ -106,7 +107,7 @@
                         </option>
                     @foreach ($masters as $master)
                         <option
-                            value="{{$master->user_id}}">{{ $master->user->name}}
+                            value="{{$master->id}}">{{ $master->user->name}}
                         </option>
                     @endforeach
                     @error('service_masters') <span class="text-red-500">{{ $message }}</span>@enderror

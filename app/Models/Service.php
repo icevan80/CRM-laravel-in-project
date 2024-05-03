@@ -40,10 +40,6 @@ class Service extends Model
         return $this->belongsToMany(Master::class, 'services_masters', 'service_id', 'master_id');
     }
 
-    public function getMasters() {
-        return $this->belongsToMany(Master::class, 'services_masters')->withPivot('service_id');
-    }
-
     // is visible
     public function scopeIsVisible($query)
     {
