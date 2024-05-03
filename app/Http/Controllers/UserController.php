@@ -18,6 +18,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth()->user()->hasPermission('new_style_access')) {
+            return view('dashboard.manage.users.index');
+        }
+
         $request->validate([
             'search' => 'nullable|string|max:255',
         ]);
@@ -29,10 +33,6 @@ class UserController extends Controller
             ->orWhere('phone_number', 'LIKE', "%{$search}%")
             ->paginate(10);
 
-
-        if (auth()->user()->hasPermission('new_style_access')) {
-            return view('dashboard.manage.users.index', compact('users'), ['search' => $search]);
-        }
         return view('dashboard.manage-users.index', compact('users'), ['search' => $search]);
     }
 
@@ -41,6 +41,9 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->hasPermission('new_style_access')) {
+            return view('dashboard.manage.users.create');
+        }
         return view('dashboard.manage-users.create-user');
     }
 
@@ -100,7 +103,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-
+        if (auth()->user()->hasPermission('new_style_access')) {
+            return view('dashboard.manage.users.show');
+        }
         // find the appointments of the user
         $appointments = Appointment::where('implementer_id', $user->id)
                             ->orderBy('created_at', 'desc')

@@ -96,7 +96,7 @@ class ServicesController extends Controller
         $categories = Category::all();
         $masters = Master::all();
         $service = Service::where('id', $id)->first();
-        return view('dashboard.manage.services.view', compact('categories', 'id', 'service', 'masters'));
+        return view('dashboard.manage.services.show', compact('categories', 'id', 'service', 'masters'));
     }
 
 

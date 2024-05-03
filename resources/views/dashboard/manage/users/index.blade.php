@@ -1,15 +1,21 @@
 <x-dashboard.shell>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Manage Users') }}
-        </h2>
-    </x-slot>
-    <div class="ml-5">
-      <x-button>
-        <a href="{{ route('users.create') }}">Add User</a>
-      </x-button>
+    <div class="flex justify-between mx-7 pt-6">
+        <h2 class="text-2xl font-bold">Users</h2>
+        <div>
+            <a href="{{route('manage.users.create')}}">
+                <x-button.default
+                                  class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+                    Create user
+                </x-button.default>
+            </a>
+        </div>
     </div>
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
+        <livewire:manage.users/>
+    </div>
+
+    {{--
     <div x-data="{showModal:false}">
         <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
 
@@ -35,7 +41,7 @@
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900">Status</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900">Role</th>
                     <th scope="col" class="px-6 py-4 font-medium text-gray-900">Actions</th>
-{{--                    <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>--}}
+--}}{{--                    <th scope="col" class="px-6 py-4 font-medium text-gray-900"></th>--}}{{--
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 border-t border-gray-100">
@@ -51,7 +57,7 @@
                                     src={{ $user->profile_photo_url }}
                       alt=""
                                 />
-                                {{-- <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span> --}}
+                                --}}{{-- <span class="absolute right-0 bottom-0 h-2 w-2 rounded-full bg-green-400 ring ring-white"></span> --}}{{--
                             </div>
                             <div class="text-sm">
                                 <div class="font-medium text-gray-700">{{ $user->name}}</div>
@@ -169,6 +175,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>--}}
 
 </x-dashboard.shell>

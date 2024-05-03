@@ -34,7 +34,7 @@ class Services extends Component
 
         $categories = \App\Models\Category::all();
 
-        return view('livewire.manage.services', compact('services'), compact('categories'));
+        return view('livewire.manage.services', compact('services', 'categories'));
     }
 
     public function confirmServiceDeletion($id)

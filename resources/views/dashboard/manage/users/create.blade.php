@@ -1,19 +1,15 @@
 <x-dashboard.shell>
-
-    <x-slot name="header">
+    <div class="w-1/3 mx-auto bg-white rounded-lg p-5">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create User') }}
         </h2>
-    </x-slot>
-
-    <div>
-        <form action="{{ route('manage.users.store')}}" method="post" class="w-1/2 mx-auto bg-white rounded-lg p-5">
-            @csrf
-            <!-- Name -->
+        <form action="{{ route('manage.users.store')}}" method="post">
+        @csrf
+        <!-- Name -->
             <div class="col-span-6 sm:col-span-4 my-2">
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" type="text" class="mt-1 block w-full" name="name" />
-                <x-input-error for="name" class="mt-2" />
+                <x-label for="user_name" value="{{ __('Name') }}" />
+                <x-input id="user_name" type="text" class="mt-1 block w-full" name="user_name" />
+                <x-input-error for="user_name" class="mt-2" />
             </div>
 
             <!-- Email -->

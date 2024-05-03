@@ -36,7 +36,7 @@
             <tr class="hover:bg-gray-50">
                 <td class="px-4 py-4">{{ $service->id }}</td>
 
-                <td class="gap-3 px-6 py-4 font-medium text-gray-700 text-gray-900">
+                <td class="gap-3 px-4 py-4 font-medium text-gray-700 text-gray-900">
 
                     {{ $service->name}}
 
@@ -84,7 +84,7 @@
                 </td>
                 <td>
                     <div class="mt-5 ">
-                        <a href="{{ route('manage.services.view', ['id' => $service->id ])  }}">
+                        <a href="{{ route('manage.services.show', ['id' => $service->id ])  }}">
                             <x-button class="m-2">
                                 {{ __('View') }}
                             </x-button>
