@@ -22,14 +22,12 @@ class Categories extends Component
 
     public function render()
     {
-        $query = Category::when($this->search, function ($subQuery) {
+        $categories = Category::when($this->search, function ($subQuery) {
             $subQuery->where('name', 'like', '%' . $this->search . '%');
-        });
-        $this->categories = $query->where('status', true)->paginate(25);
+        })->where('status', true)
+            ->paginate(25);
 
-        return view('livewire.manage.categories', [
-            'categories' => $this->categories,
-        ]);
+        return view('livewire.manage.categories', compact('categories'));
     }
 
     public function confirmCategoryEdit($categoryId)

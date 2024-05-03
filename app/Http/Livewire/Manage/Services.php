@@ -9,6 +9,8 @@ class Services extends Component
 {
     public $search;
 
+    public $confirmingServiceDeletion = false;
+
     protected $queryString = [
         'search' => ['except' => ''],
     ];
@@ -27,10 +29,16 @@ class Services extends Component
         })
             ->orderByPrice('PriceLowToHigh')
             ->with('category')
+            ->where('status', true)
             ->paginate(10);
 
         $categories = \App\Models\Category::all();
 
         return view('livewire.manage.services', compact('services'), compact('categories'));
+    }
+
+    public function confirmServiceDeletion($id)
+    {
+        $this->confirmingServiceDeletion = $id;
     }
 }

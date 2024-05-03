@@ -93,7 +93,10 @@ class ServicesController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categories = Category::all();
+        $masters = Master::all();
+        $service = Service::where('id', $id)->first();
+        return view('dashboard.manage.services.view', compact('categories', 'id', 'service', 'masters'));
     }
 
 
@@ -174,7 +177,8 @@ class ServicesController extends Controller
         $service->save();
 
         }catch (Exception $e) {
-
+            return redirect()->route('manage.services')->with('errormsg', 'Service not deleted.');
         }
+        return redirect()->route('manage.services')->with('success', 'Service deleted successfully.');
     }
 }
