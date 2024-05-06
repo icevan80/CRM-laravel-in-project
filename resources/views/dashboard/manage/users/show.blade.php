@@ -14,7 +14,7 @@
                 </div>
                 <div>
                     @if(auth()->user()->hasPermission('edit_permissions'))
-                        <livewire:edit-user-permissions :user-id="$user->id" />
+                        <livewire:components.user-settings :user-id="$user->id" />
                     @endif
                     <div class="text-gray-700">
                         <div class="grid md:grid-cols-2 text-sm">

@@ -101,15 +101,17 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
+        $user = User::findOrFail($id);
+        $appointments = Appointment::where('implementer_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         if (auth()->user()->hasPermission('new_style_access')) {
-            return view('dashboard.manage.users.show');
+            return view('dashboard.manage.users.show', compact('user', 'appointments'));
         }
         // find the appointments of the user
-        $appointments = Appointment::where('implementer_id', $user->id)
-                            ->orderBy('created_at', 'desc')
-                            ->paginate(10);
+
         $permissions = Permission::all();
 
 //        return view('dashboard.manage-users.show-user', compact('user', 'appointments'));
@@ -137,6 +139,45 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            if ($id == 1) {
+                return redirect()->route('manage.users')->with('errormsg', 'You cannot suspend admin.');
+            }
+            $user = User::findOrFail($id);
+            // throw new Exception('test');
+
+            $user->status = 0;
+            $user->save();
+            return redirect()->route('manage.users')->with('success', 'User suspended successfully.');
+
+        } catch (Exception $e) {
+            return redirect()->route('manage.users')->with('errormsg', 'User suspension failed.');
+        }
+    }
+
+    public function restore(string $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->status = 1;
+            $user->save();
+            return redirect()->route('manage.users')->with('success', 'User activated successfully.');
+
+        } catch (Exception $e) {
+            return redirect()->route('manage.users')->with('errormsg', 'User activation failed.');
+        }
+    }
+
+    public function updateRole(Request $request, string $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $role = Role::findOrFail($request['roleId']);
+            $user->updateRole($role);
+            return redirect()->route('manage.users.show', $user->id)->with('success', 'User role change successfully.');
+
+        } catch (Exception $e) {
+            return redirect()->route('manage.users.show', $user->id)->with('errormsg', 'User role change failed.');
+        }
     }
 }

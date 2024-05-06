@@ -91,16 +91,6 @@ class Permissions extends Component
                 'permission' => $permission,
             );
         }
-
-        /*foreach ($permissions as $permission) {
-            $permissionsMap[$permission->id] = array(
-                'name' => $permission->name,
-                'code_name' => $permission->code_name,
-                'status' => array_key_exists($permission->id, $permissionsMap),
-                'permission' => $permission,
-            );
-
-        }*/
         $this->fill(['permissionsMap' => $permissionsMap]);
 
     }
@@ -118,6 +108,15 @@ class Permissions extends Component
             } else {
                 $this->role->removePermission($permission);
             }
+        } else if ($this->roleId == null && $this->userId != null) {
+            $permission = Permission::getPermission($id);
+            $status = null;
+            if ($this->permissionsMap[$id]['status'] == 'allow') {
+                $status = true;
+            } else if ($this->permissionsMap[$id]['status'] == 'reject') {
+                $status = false;
+            }
+            $this->user->addPermissionRule($permission, $status);
         }
     }
 

@@ -131,9 +131,9 @@ class User extends Authenticatable
         return $result;
     }
 
-    public function addPermissionRule($permission, bool $approve): bool
+    public function addPermissionRule($permission, $approve): bool
     {
-        if ($approve == null) {
+        if (is_null($approve)) {
             return $this->removePermissionRule($permission);
         }
         $result = false;

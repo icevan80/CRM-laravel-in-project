@@ -102,13 +102,9 @@ Route::middleware([
                     Route::get('/users/{id}/edit', 'edit')->name('manage.users.edit');
                     Route::put('/users/{id}/update', 'update')->name('manage.users.update');
                     Route::put('/users/{id}/destroy', 'destroy')->name('manage.users.destroy');
+                    Route::put('/users/{id}/restore', 'restore')->name('manage.users.restore');
+                    Route::put('/users/{id}/update_role', 'updateRole')->name('manage.users.updateRole');
                 });
-//                Route::resource('users', App\Http\Controllers\UserController::class)->name('index', 'manage.users');
-//                Route::resource('users/create', App\Http\Controllers\UserController::class,)->name('create', 'users.create');
-//                Route::resource('users/create/put', App\Http\Controllers\UserController::class)->name('store', 'manage.users.store');
-//                Route::put('users/{id}/suspend', [App\Http\Controllers\UserSuspensionController::class, 'suspend'])->name('manage.users.suspend');
-//                Route::put('users/{id}/activate', [App\Http\Controllers\UserSuspensionController::class, 'activate'])->name('manage.users.activate');
-//                Route::put('users/{id}/update_role/{roleId}', [App\Http\Controllers\UserSuspensionController::class, 'updateRole'])->name('users.updateRole');
             });
             Route::middleware([
                 'validatePermission:manage_locations'
