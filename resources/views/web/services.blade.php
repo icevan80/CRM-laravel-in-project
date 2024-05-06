@@ -30,6 +30,6 @@
 
     {{--    </div>--}}
     {{--    --}}
-    <livewire:customer-services-view />
+    <livewire:web.services />
 
 </x-app-layout>

@@ -26,7 +26,7 @@
         <x-banner />
 
         <div class="min-h-screen">
-            <x-navigation-menu>
+            <x-navlink.header-menu>
 
                 <!-- Pass the main logo from page to the nav menu component-->
                 <x-slot name="mainLogoRoute">
@@ -41,7 +41,7 @@
                         {{ $navlinks }}
                     @endif
             </x-slot>
-            </x-navigation-menu>
+            </x-navlink.header-menu>
 
             <!-- Page Heading -->
             @if (isset($header))

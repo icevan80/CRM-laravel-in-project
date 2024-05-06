@@ -25,8 +25,7 @@ Route::get('/', function () {
     return view('web.home');
 })->name('home');
 
-Route::get('/services', [App\Http\Controllers\DisplayService::class, 'index'])->name('services');
-Route::get('/services/{slug}', [App\Http\Controllers\DisplayService::class, 'show'])->name('view-service');
+
 
 // Route::get('/services/{id}', [App\Http\Controllers\ServiceDisplay::class, 'show'])->name('services.show');
 Route::get('/deals', [App\Http\Controllers\DisplayDeal::class, 'index'])->name('deals');
@@ -45,20 +44,19 @@ Route::get('/bot_create/save_appointment&key={key}'
 
 // Users needs to be logged in for these routes
 
+Route::prefix('services')->group(function() {
+    Route::get('/', [App\Http\Controllers\DisplayService::class, 'index'])->name('services');
+    Route::get('/{slug}', [App\Http\Controllers\DisplayService::class, 'show'])->name('services.view');
+});
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-//    Route::prefix('translation')->group(function () {
-
-//    });
-
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [App\Http\Controllers\DashboardHomeController::class, 'index'])->name('dashboard');
 
-        // middleware to give access only for admin
         Route::middleware([
             'validatePermission:edit_translations'
         ])->group(function () {
