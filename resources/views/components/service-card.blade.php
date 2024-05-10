@@ -3,7 +3,8 @@
     'service'
 ])
 
-<div {{ $attributes->class(['mx-auto w-80 min-w-[300px] mt-5 pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg']) }}>
+<div class="w-1/3 pb-6 px-6">
+<div {{ $attributes->class(['pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg']) }}>
     <img class="h-48 w-full object-cover object-center" src="{{ asset('storage/'. $service->image)}}"
          alt="Product Image"/>
     <div class="p-4">
@@ -21,4 +22,5 @@
             <a href="{{route('services.view', ['slug' => $service->slug])}}"><x-button>Book Now</x-button></a>
         </div>
     </div>
+</div>
 </div>

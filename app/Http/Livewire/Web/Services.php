@@ -31,7 +31,7 @@ class Services extends Component
         $this->categories = Category::all()->where('status', true);
 
         // Initialize categoryFilter with all category IDs
-        $this->categoryFilter = $this->categories->pluck('id')->toArray();
+//        $this->categoryFilter = $this->categories->pluck('id')->toArray();
     }
 
     public function render()
@@ -45,7 +45,7 @@ class Services extends Component
             });
         }
 
-        if (!in_array(0, $this->categoryFilter)) {
+        if (count($this->categoryFilter) > 0) {
             // Exclude 0 (which represents "All" category) from the filter
             $query->whereIn('category_id', $this->categoryFilter);
         }
@@ -60,5 +60,11 @@ class Services extends Component
             'categories' => $this->categories,
             'showCategoryNames' => $showCategoryNames, // Pass this variable to your view
         ]);
+    }
+
+    public function updatedCategoryFilter() {
+//        if (in_array(0, $this->categoryFilter) && count($this->categoryFilter) > 1) {
+//            unset($this->categoryFilter[0]);
+//        }
     }
 }
