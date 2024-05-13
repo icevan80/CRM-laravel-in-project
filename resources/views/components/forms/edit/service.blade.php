@@ -1,5 +1,3 @@
-{{--@props(['service', 'categories'])--}}
-{{--{{dd($service->getMasters()->count())}}--}}
 <div>
     <div>
         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>

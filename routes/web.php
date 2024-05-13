@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\PermissionController;
@@ -143,9 +144,15 @@ Route::middleware([
             Route::middleware([
                 'validatePermission:manage_appointment'
             ])->group(function () {
-                Route::get('appointments', function () {
-                    return view('dashboard.manage.appointments.index');
-                })->name('manage.appointments');
+                Route::controller(AppointmentsController::class)->group(function () {
+                    Route::get('/appointments', 'index')->name('manage.appointments');
+                    Route::get('/appointments/create', 'create')->name('manage.appointments.create');
+                    Route::put('/appointments/store', 'store')->name('manage.appointments.store');
+                    Route::get('/appointments/{id}', 'show')->name('manage.appointments.show');
+                    Route::get('/appointments/{id}/edit', 'edit')->name('manage.appointments.edit');
+                    Route::put('/appointments/{id}/update', 'update')->name('manage.appointments.update');
+                    Route::put('/appointments/{id}/destroy', 'destroy')->name('manage.appointments.destroy');
+                });
             });
         });
 
