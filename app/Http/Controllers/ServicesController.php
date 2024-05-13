@@ -17,10 +17,7 @@ class ServicesController extends Controller
         $categories = Category::all()->where('status', 1);
         $masters = Master::all();
 
-        if (auth()->user()->hasPermission('new_style_access')) {
             return view('dashboard.manage.services.index', compact('categories', 'masters'));
-        }
-        return view('dashboard.manage-services.index');
         //
     }
 

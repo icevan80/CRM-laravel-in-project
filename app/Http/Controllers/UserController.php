@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
-use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use Exception;
@@ -18,22 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        if (auth()->user()->hasPermission('new_style_access')) {
             return view('dashboard.manage.users.index');
-        }
-
-        $request->validate([
-            'search' => 'nullable|string|max:255',
-        ]);
-
-        $search = $request['search'];
-
-        $users = User::where('name', 'LIKE', "%{$search}%")
-            ->orWhere('email', 'LIKE', "%{$search}%")
-            ->orWhere('phone_number', 'LIKE', "%{$search}%")
-            ->paginate(10);
-
-        return view('dashboard.manage-users.index', compact('users'), ['search' => $search]);
     }
 
     /**
@@ -41,10 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        if (auth()->user()->hasPermission('new_style_access')) {
             return view('dashboard.manage.users.create');
-        }
-        return view('dashboard.manage-users.create-user');
     }
 
     /**
@@ -107,15 +88,9 @@ class UserController extends Controller
         $appointments = Appointment::where('implementer_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
-        if (auth()->user()->hasPermission('new_style_access')) {
             return view('dashboard.manage.users.show', compact('user', 'appointments'));
-        }
         // find the appointments of the user
 
-        $permissions = Permission::all();
-
-//        return view('dashboard.manage-users.show-user', compact('user', 'appointments'));
-        return view('dashboard.manage-users.show-user', ['user' => $user, 'appointments' => $appointments, 'permissions' => $permissions]);
     }
 
     /**

@@ -12,10 +12,7 @@ class LocationsController extends Controller
      */
     public function index()
     {
-        if (auth()->user()->hasPermission('new_style_access')) {
             return view('dashboard.manage.locations.index');
-        }
-        return view('dashboard.manage-locations.index.index');
     }
 
     /**

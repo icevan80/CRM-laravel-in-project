@@ -15,12 +15,8 @@ class PermissionController extends Controller
     {
         $permissions = Permission::all();
 
-        if (auth()->user()->hasPermission('new_style_access')) {
 
             return view('dashboard.settings.permissions.index', compact('permissions'));
-        }
-        return view('dashboard.permission-settings.index');
-
     }
 
     /**

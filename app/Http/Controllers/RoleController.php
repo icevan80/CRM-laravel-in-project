@@ -14,11 +14,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
-        if (auth()->user()->hasPermission('new_style_access')) {
-
             return view('dashboard.settings.roles.index', compact('roles'));
-        }
-        return view('dashboard.role-settings.index');
     }
 
     /**
