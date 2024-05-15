@@ -1,32 +1,39 @@
 <div>
     <div class="mobile-filters">
-        <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="viewFilter">
-            <option value="table_two_weeks">{{ __('Two weeks') }}</option>
-            <option value="table_one_week">{{ __('Week') }}</option>
-            <option value="table_today_tomorrow">{{ __('Today - tomorrow') }}</option>
-            <option value="rows">{{ __('Rows') }}</option>
+        <select wire:model="list" class="border text-gray-900  border-gray-300 rounded-lg">
+            <option
+                value="two_weeks">{{ __('Two weeks') }}</option>
+            <option
+                value="one_week">{{ __('Week') }}</option>
+            <option
+                value="today_tomorrow">{{ __('Today - tomorrow') }}</option>
+            <option
+                value="rows">{{ __('Rows') }}</option>
         </select>
-        @if($this->allowOthers)
+        {{-- TODO: добавить разрешение view_other_appointemnt --}}
+        @if(auth()->user()->hasPermission('edit_other_appointment'))
             <h2 class="text-2xl font-bold px-4">-</h2>
-            <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="followFilter">
+            <select wire:model="view" class="border text-gray-900  border-gray-300 rounded-lg">
                 <option value="salon">{{ __('Salon') }}</option>
                 <option value="master">{{ __('Current master') }}</option>
                 <option value="self">{{ __('My appointments') }}</option>
                 <option value="all">{{ __('Without filters') }}</option>
             </select>
-            @if($this->followFilter == 'salon')
+            @if($view == 'salon' && $locations)
                 <h2 class="text-2xl font-bold px-4">-</h2>
-                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="locationFilter">
+                <select wire:model="follow" class="border text-gray-900  border-gray-300 rounded-lg">
                     @foreach ($locations as $location)
-                        <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                        <option
+                            value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
                     @endforeach
                 </select>
-            @elseif($this->followFilter == 'master')
+            @elseif($view == 'master' && $masters)
                 <h2 class="text-2xl font-bold px-4">-</h2>
-                <select class="border text-gray-900  border-gray-300 rounded-lg" wire:model="masterFilter">
+                <select wire:model="follow" class="border text-gray-900  border-gray-300 rounded-lg">
                     <option value="0">{{ __('All masters') }}</option>
                     @foreach ($masters as $master)
-                        <option value="{{$master->id}}">{{$master->name}}</option>
+                        <option
+                            value="{{$master->id}}">{{$master->user->name}}</option>
                     @endforeach
                 </select>
             @endif
@@ -107,14 +114,10 @@
                                                         <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
                                                         <p class="appointment-slot-info last">{{\Carbon\Carbon::parse($appointmentData['data']->end_time)->isoFormat('HH:mm') }}</p>
                                                     </div>
-
-
                                                 @endforeach
                                             </div>
                                         </th>
-
                                     @endif
-                                    {{--                                    @endif--}}
                                 @endif
                             @endforeach
                         @endforeach
@@ -124,6 +127,285 @@
             @endforeach
             </tbody>
         </table>
+        <x-dialog-modal wire:model="confirmingAppointmentSelect">
+            <x-slot name="title">
+                @if($appointment != null) <h1>{{ $appointment->service->name }}
+                    - {{ today()->setTimeFrom($appointment->start_time)->isoFormat('HH:mm') }}</h1>@endif
+            </x-slot>
+            <x-slot name="content">
+                @if($appointment != null)
+                    <div>
+                        <h2>{{ $appointment->date }}
+                            - {{ today()->setTimeFrom($appointment->start_time)->isoFormat('HH:mm') }}</h2>
+                        <h2>Создатель: {{ $appointment->creator->name}} - По реферальной
+                            ссылке? {{ $appointment->referral ? 'Да' : 'Нет' }} </h2>
+                        @if($this->allowOthers && $appointment->complete == 0)
+                            <label>
+                                Исполнитель:
+                                <select class="border text-gray-900  border-gray-300 rounded-lg"
+                                        wire:model="implementer">
+                                    @foreach ($masters as $master)
+                                        <option value={{$master->id}}>{{$master->name}}</option>
+                                    @endforeach
+                                </select>
+                                <x-button
+                                    wire:click="changeImplementer({{ $appointment->id }})"
+                                    wire:loading.attr="disabled">
+                                    Подтвердить
+                                </x-button>
+                            </label>
+                        @else
+                            <h2>Исполнитель: {{ $appointment->implementer->name}}</h2>
+                        @endif
+                        <h3>Где: {{ $appointment->location->name}} - {{ $appointment->location->address}}</h3>
+                        <h3>Кого: {{ $appointment->receiving_name}}</h3>
+                        <p>Описание: {{ $appointment->receiving_description}}</p>
+                    </div>
+                @endif
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    @if ($appointment != null && $this->user->role->delete_appointment)
+                        <x-danger-button
+                            wire:click="confirmAppointmentDelete({{ $appointment->id }})"
+                            wire:loading.attr="disabled">
+                            {{ __('Delete') }}
+                        </x-danger-button>
+                    @endif
+                    @if ($appointment != null && $appointment->complete == 0 && $appointment->status == 1 && $this->allowOthers)
+                        <x-danger-button
+                            wire:click="confirmAppointmentCancellation({{ $appointment->id }})"
+                            wire:loading.attr="disabled">
+                            {{ __('Cancel') }}
+                        </x-danger-button>
+                    @endif
+                    <x-secondary-button wire:click="$set('confirmingAppointmentSelect', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Back') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+
+        <x-dialog-modal wire:model="notificationAppointmentCreated">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment created successfully') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentCreated', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <x-dialog-modal wire:model="notificationAppointmentCreatedError">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment has not been created because the selected time slot is already occupied') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentCreatedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <div class="p-5">
+            {{ $appointments->links() }}
+        </div>
+
+        <x-dialog-modal wire:model="notificationAppointmentSwapped">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment was scheduled for another time!') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentSwapped', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <div class="p-5">
+            {{ $appointments->links() }}
+        </div>
+
+        <x-dialog-modal wire:model="notificationAppointmentSwappedError">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment has not been moved because the selected time slot is already occupied') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('notificationAppointmentSwappedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-secondary-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <div class="p-5">
+            {{ $appointments->links() }}
+        </div>
+
+        <x-dialog-modal wire:model="confirmingAppointmentCreate">
+            <x-slot name="title">
+                {{ __('Create Appointment') }}
+            </x-slot>
+            <x-slot name="content">
+                @if($this->newAppointment['creator_id'] != null)
+                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
+                    <x-input id="name" type="text" wire:model.debounce.500ms="newAppointment.receiving_name"
+                             class="border text-gray-900  border-gray-300 rounded-lg">
+                    </x-input>
+                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
+                    <textarea id="description" wire:model.debounce.500ms="newAppointment.receiving_description"
+                              class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
+
+                    <label for="implementer" class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                    @if($this->allowOthers)
+                        <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="newAppointment.implementer_id">
+                            @foreach ($masters as $master)
+                                <option value={{$master->id}}>{{$master->user->name}}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <p>{{ $this->user->name }}</p>
+                    @endif
+                    <label for="service" class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
+                    <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
+                            wire:model="newAppointment.service_id">
+                        @foreach ($services as $service)
+                            <option value={{$service->id}}>{{$service->name}}</option>
+                        @endforeach
+                    </select>
+
+                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
+                    <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
+                             wire:model="newAppointment.date"
+                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                             max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
+                    </x-input>
+                    <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
+                    <div class="time-block">
+                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="newAppointment.start_time">
+                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->hour(8); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                @if($i->lessThan(now()))
+                                    @continue
+                                @endif
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
+                                wire:model="newAppointment.end_time">
+                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->setTimeFrom($this->newAppointment['start_time'])->addMinutes(15); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
+                    <select id="location"
+                            class="border text-gray-900  border-gray-300 rounded-lg"
+                            wire:model="newAppointment.location_id">
+                        @foreach ($locations as $location)
+                            <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                        @endforeach
+                    </select>
+                @endif
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('confirmingAppointmentCreate', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Back') }}
+                    </x-secondary-button>
+                    <x-button
+                        wire:click="createAppointment">
+                        Create
+                    </x-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <x-dialog-modal wire:model="confirmingAppointmentDelete">
+            <x-slot name="title">
+                {{ __('Delete appointment') }}
+            </x-slot>
+
+            <x-slot name="content">
+                {{ __('Are you sure you want to delete the appointment?') }}
+
+            </x-slot>
+
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('confirmingAppointmentDelete', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Back') }}
+                    </x-secondary-button>
+
+                    <x-danger-button wire:click="deleteAppointment({{ $appointment }})"
+                                     wire:loading.attr="disabled">
+                        {{ __('Delete') }}
+                    </x-danger-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
+
+        <x-dialog-modal wire:model="confirmingAppointmentCancellation">
+            <x-slot name="title">
+                {{ __('Cancel appointment') }}
+            </x-slot>
+
+            <x-slot name="content">
+                {{ __('Are you sure you want to cancel the appointment?') }}
+
+            </x-slot>
+
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-secondary-button wire:click="$set('confirmingAppointmentCancellation', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Back') }}
+                    </x-secondary-button>
+
+                    <x-danger-button wire:click="cancelAppointment({{ $appointment }})"
+                                     wire:loading.attr="disabled">
+                        {{ __('Cancel') }}
+                    </x-danger-button>
+                </div>
+
+            </x-slot>
+        </x-dialog-modal>
     </div>
 </div>
 
@@ -178,7 +460,8 @@
             idTo = e.target.getAttribute('drag-item')
         }
 
-    @this.call('reorder', idForm, idTo, currentAppointment)
+        @this.
+        call('reorder', idForm, idTo, currentAppointment)
     }
     let eventDragenter = e => {
         if (e.target.tagName !== 'P') {

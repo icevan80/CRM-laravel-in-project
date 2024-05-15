@@ -23,11 +23,19 @@ class Appointments extends Component
 
     public $search;
 
+    public string $list = 'one_week'; // two_weeks one_week today_tomorrow rows
+    public string $view = 'salon'; // salon master self
+    public $follow;
+    public $filter;
+
     protected $queryString = [
         'search' => ['except' => ''],
+        'list' => ['except' => 'one_week'],
+        'view' => ['except' => ''],
+        'filter' => ['except' => ''],
     ];
 
-    public $appointment;
+    public $appointment = false;
 
     public bool $confirmAppointmentCancellation = false;
     public bool $confirmingAppointmentCancellation = false;
@@ -62,52 +70,38 @@ class Appointments extends Component
         'total' => null,
     );
 
-    public string $selectFilter = 'upcoming'; // can be 'upcoming' , 'previous' , 'cancelled'
-    public string $viewFilter = 'table_one_week'; // table_two_weeks table_one_week table_today_tomorrow rows
-    public string $followFilter = 'salon'; // salon master self
-    public $locationFilter = 0;
-    public $masterFilter = "0";
     public $implementer;
 
-//    public string $locationFilter = 'table_one_week';
 
     public $userId;
     public $user;
-
-    protected $rules = [
-//        "appointment.name" => "required|string|max:255",
-    ];
 
     protected $casts = [
         'selectedDay' => 'date:Y-m-d'
     ];
 
-    public function mount($userId = null, $selectFilter = 'upcoming')
+    public function mount($locations = array(), $masters = array(), $services = array(), $userId = null)
     {
 
-        $user = auth()->user();
+        $this->locations = $locations;
+        $this->masters = $masters;
+        $this->services = $services;
 
-//        if ($userId != null) {
-//            $user = User::all()->where('id', $userId)->first();
-//        }
+        if (count($locations) > 0) {
+            $this->follow = $locations->first()->id;
+        }
+
+
+        if ($userId != null) {
+            $user = User::findOrFail('id', $userId);
+        } else {
+            $user = auth()->user();
+        }
 
         $this->user = $user;
-        $this->allowOthers = $user->hasPermission('edit_other_appointment');
-        $this->allowChangeDate = $user->hasPermission('edit_date_appointment');
-        $this->allowChangeAppointments = $user->hasPermission('edit_appointment');
-
-        if (!$this->allowOthers) {
-            $this->viewFilter = 'table_today_tomorrow';
-            $this->followFilter = 'master';
-            $this->masterFilter = $user->id;
-        }
-//        if (auth()->user()->role->name == "Customer") {
-//            $this->userId = auth()->user()->id;
-//        } else if (auth()->user()->role->name == ("Employee" || "Admin")) {
-//            $this->userId = $userId;
-//        }
-
-        $selectFilter ? $this->selectFilter = $selectFilter : $this->selectFilter = 'upcoming';
+        $this->allowOthers = auth()->user()->hasPermission('edit_other_appointment');
+        $this->allowChangeDate = auth()->user()->hasPermission('edit_date_appointment');
+        $this->allowChangeAppointments = auth()->user()->hasPermission('edit_appointment');
 
         $this->selectedDay = Carbon::today()->format('Y-m-d');
     }
@@ -146,66 +140,33 @@ class Appointments extends Component
             });
         }
 
-
-//        if ($this->userId) {
-//
-//            $query->where('creator_id', $this->userId);
-//        }
-//        dd($this->selectFilter);
-
-
-//        dd($this->appointments);
-
-        if ($this->services == null) {
-            $this->services = Service::all();
-        }
-
-        if ($this->locations == null) {
-            $this->locations = Location::all();
-            if ($this->locations->count()  > 0) {
-                $this->locationFilter = $this->locations->first()->id;
-            }
-        }
-
-        if ($this->masters == null) {
-            $this->masters = User::all()->filter(function ($master) {
-                return in_array($master->role_id, array(3, 5, 8, 10, 11));
-            });
-        }
-
-
-        switch ($this->viewFilter) {
-            case 'table_today_tomorrow':
-            case 'table_two_weeks':
-            case 'table_one_week':
+        switch ($this->list) {
+            case 'today_tomorrow':
+            case 'two_weeks':
+            case 'one_week':
 //            $query->whereDate('date', '>=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1))->whereDate('date', '<=', Carbon::today()->setDateFrom($this->selectedDay)->setDaysFromStartOfWeek(1)->addWeeks(2))
 //                ->where('status', 1);
                 break;
             case 'rows':
-                if ($this->selectFilter === 'previous') {
+                if ($this->filter === 'previous') {
                     $query->whereDate('date', '<', Carbon::today())->where('status', 1);
 
-                } else if ($this->selectFilter === 'upcoming') {
+                } else if ($this->filter === 'upcoming') {
                     $query->whereDate('date', '>', Carbon::today())->where('status', 1);
 
-                } else if ($this->selectFilter === 'cancelled') {
+                } else if ($this->filter === 'cancelled') {
                     $query->where('status', 0);
                 }
                 break;
         }
 
-//        if (!$this->allowOthers) {
-//            $query->where('implementer_id', $this->user->id);
-//        } else {
-        if ($this->followFilter == 'salon') {
-            $query->where('location_id', $this->locationFilter);
-        } elseif ($this->followFilter == 'master' && $this->masterFilter != 0) {
-            $query->where('implementer_id', $this->masterFilter);
-        } elseif ($this->followFilter == 'self') {
+        if ($this->view == 'salon') {
+            $query->where('location_id', $this->follow);
+        } elseif ($this->view == 'master' && $this->follow != 0) {
+            $query->where('implementer_id', $this->follow);
+        } elseif ($this->view == 'self') {
             $query->where('creator_id', auth()->user()->id);
         }
-//        }
-
 
         $this->appointments = $query
             ->orderBy('date')
@@ -213,10 +174,10 @@ class Appointments extends Component
             ->paginate(50);
 
 
-        switch ($this->viewFilter) {
-            case 'table_today_tomorrow':
-            case 'table_two_weeks':
-            case 'table_one_week':
+        switch ($this->list) {
+            case 'today_tomorrow':
+            case 'two_weeks':
+            case 'one_week':
                 if ($this->generateDateRange($this->selectedDay) || $this->forceGenerate) {
                     $query->whereDate('date', '>=', $this->dateRange['start'])
                         ->whereDate('date', '<=', $this->dateRange['end'])
@@ -230,6 +191,11 @@ class Appointments extends Component
                     'locations' => $this->locations,
                     'masters' => $this->masters,
                     'tableCells' => $this->tableCells,
+                    'list' => $this->list,
+                    'view' => $this->view,
+                    'follow' => $this->follow,
+                    'filter' => $this->filter,
+
                 ]);
             case 'rows':
                 return view('livewire.manage-appointments-rows', [
@@ -238,6 +204,24 @@ class Appointments extends Component
                     'locations' => $this->locations,
                     'masters' => $this->masters,
                 ]);
+        }
+    }
+
+    public function updatedView($value)
+    {
+        // TODO: добавить разрешение view_other_appointemnt
+        if (auth()->user()->hasPermission('edit_other_appointment')) {
+            if ($value == 'salon' && $this->locations) {
+                $this->follow = $this->locations->first()->id;
+            } else if ($value == 'master' && $this->masters) {
+                $this->follow = $this->masters->first()->id;
+            } else if ($value == 'self') {
+                $this->follow = auth()->user()->id;
+            } else {
+                $this->follow = '';
+            }
+        } else {
+            $this->follow = auth()->user()->id;
         }
     }
 
@@ -294,16 +278,16 @@ class Appointments extends Component
         $start = Carbon::parse($date);
         $end = Carbon::parse($date)->setDaysFromStartOfWeek(0);
 
-        switch ($this->viewFilter) {
-            case 'table_two_weeks':
+        switch ($this->list) {
+            case 'two_weeks':
                 $start->setDaysFromStartOfWeek(0);
                 $end = $start->copy()->addWeeks(2);
                 break;
-            case 'table_one_week':
+            case 'one_week':
                 $start->setDaysFromStartOfWeek(0);
                 $end = $start->copy()->addWeeks(1);
                 break;
-            case 'table_today_tomorrow':
+            case 'today_tomorrow':
                 $end = $start->copy()->addDays(2);
                 break;
         }
@@ -439,14 +423,14 @@ class Appointments extends Component
 
     public function confirmAppointmentCreate(
         string $time,
-        bool $onAppointment,
+        bool   $onAppointment,
     )
     {
         if (!$onAppointment) {
             $carbonTime = Carbon::create($time);
             $this->newAppointment['creator_id'] = $this->user->id;
             if ($this->allowOthers) {
-                $this->newAppointment['implementer_id'] = $this->masters->first()->id;
+                $this->newAppointment['implementer_id'] = $this->masters->first()->user_id;
             } else {
                 $this->newAppointment['implementer_id'] = $this->masterFilter;
             }

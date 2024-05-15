@@ -71,12 +71,19 @@ class User extends Authenticatable
     }
 
     function updateRole($newRole) {
-        $this->role_id = $newRole->id;
+        // TODO: как-то это оптимизировать потом
         if ($newRole->name == 'Master') {
-            Master::create([
-                'user_id' => $this->id,
-            ]);
+            if (Master::all()->where('user_id', $this->id)->count() == 0) {
+                Master::create([
+                    'user_id' => $this->id,
+                ]);
+            }
+        } else if ($this->role->name == 'Master' && $newRole->name != 'Master' ) {
+            if (Master::all()->where('user_id', $this->id)->count() != 0) {
+                Master::all()->where('user_id', $this->id)->first()->delete();
+            }
         }
+        $this->role_id = $newRole->id;
         return $this->save();
     }
 

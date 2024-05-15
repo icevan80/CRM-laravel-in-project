@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Location;
+use App\Models\Master;
+use App\Models\Service;
 use Illuminate\Http\Request;
 
 class AppointmentsController extends Controller
@@ -11,7 +14,14 @@ class AppointmentsController extends Controller
      */
     public function index()
     {
-        return view('dashboard.manage.appointments.index');
+        $masters = Master::all();
+        $locations = Location::all()->where('status', 1);
+        $services = Service::all()->where('status', 1);
+
+        return view('dashboard.manage.appointments.index',
+            compact('masters', 'locations', 'services'));
+
+//        return view('dashboard.manage.appointments.index', compact('masters', 'locations', 'services'));
     }
 
     /**
