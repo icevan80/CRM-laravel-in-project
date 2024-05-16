@@ -452,7 +452,19 @@ class Appointments extends Component
 
         if ($this->masterSlotValidate($this->newAppointment['date'], $this->newAppointment['start_time'], $this->newAppointment['end_time'], $this->newAppointment['implementer_id'])) {
 
-            Appointment::create([
+//            Appointment::create([
+//                'creator_id' => $this->newAppointment['creator_id'],
+//                'implementer_id' => $this->newAppointment['implementer_id'],
+//                'receiving_name' => $this->newAppointment['receiving_name'],
+//                'receiving_description' => $this->newAppointment['receiving_description'],
+//                'date' => $this->newAppointment['date'],
+//                'start_time' => $this->newAppointment['start_time'],
+//                'end_time' => $this->newAppointment['end_time'],
+//                'location_id' => $this->newAppointment['location_id'],
+//                'service_id' => $this->newAppointment['service_id'],
+//                'total' => $this->newAppointment['total'],
+//            ]);
+            /*$request = Request::create(route('manage.appointments.store'), 'POST', [
                 'creator_id' => $this->newAppointment['creator_id'],
                 'implementer_id' => $this->newAppointment['implementer_id'],
                 'receiving_name' => $this->newAppointment['receiving_name'],
@@ -463,7 +475,10 @@ class Appointments extends Component
                 'location_id' => $this->newAppointment['location_id'],
                 'service_id' => $this->newAppointment['service_id'],
                 'total' => $this->newAppointment['total'],
-            ]);
+            ]);*/
+//            $request = request();
+//            $request['abiba'] = 'ABOBA';
+//            redirect()->action("AppointmentsController@store", [$request]);
             $this->notificationAppointmentCreated = true;
         } else {
             $this->notificationAppointmentCreatedError = true;
