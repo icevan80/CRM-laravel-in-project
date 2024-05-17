@@ -151,6 +151,8 @@ Route::middleware([
                     Route::get('/appointments/{id}', 'show')->name('manage.appointments.show');
                     Route::get('/appointments/{id}/edit', 'edit')->name('manage.appointments.edit');
                     Route::put('/appointments/{id}/update', 'update')->name('manage.appointments.update');
+                    Route::put('/appointments/{id}/update_implementer', 'updateImplementer')->name('manage.appointments.updateImplementer');
+                    Route::put('/appointments/{id}/cancel', 'cancel')->name('manage.appointments.cancel');
                     Route::put('/appointments/{id}/destroy', 'destroy')->name('manage.appointments.destroy');
                 });
             });

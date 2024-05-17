@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('appointment_code')->unique();
             $table->foreignId('creator_id')->constrained('users');
+            //TODO: поменять на зависиммость от таблицы master
             $table->foreignId('implementer_id')->constrained('users');
             $table->string('receiving_name');
             $table->string('receiving_description')->default('');

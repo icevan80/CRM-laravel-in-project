@@ -27,22 +27,23 @@ class Appointments extends Component
     public string $view = 'salon'; // salon master self
     public $follow;
     public $filter;
+    public $select;
 
     protected $queryString = [
         'search' => ['except' => ''],
         'list' => ['except' => 'one_week'],
         'view' => ['except' => ''],
         'filter' => ['except' => ''],
+        'select' => ['except' => ''],
     ];
 
     public $appointment = false;
 
-    public bool $confirmAppointmentCancellation = false;
+
+    public $confirmSelectAppointment = false;
     public bool $confirmingAppointmentCancellation = false;
-    public bool $confirmAppointmentDelete = false;
     public bool $confirmingAppointmentDelete = false;
-    public bool $confirmingAppointmentCreate = false;
-    public bool $confirmingAppointmentSelect = false;
+    public $confirmingAppointmentCreate = false;
     public bool $notificationAppointmentCreated = false;
     public bool $notificationAppointmentCreatedError = false;
     public bool $notificationAppointmentSwapped = false;
@@ -80,6 +81,11 @@ class Appointments extends Component
         'selectedDay' => 'date:Y-m-d'
     ];
 
+    protected $rules = [
+        'confirmSelectAppointment' => '',
+        'confirmingAppointmentCreate' => '',
+    ];
+
     public function mount($locations = array(), $masters = array(), $services = array(), $userId = null)
     {
 
@@ -91,6 +97,12 @@ class Appointments extends Component
             $this->follow = $locations->first()->id;
         }
 
+        if($this->select != '') {
+            $this->confirmSelectAppointment = Appointment::where('id', $this->select)->where('status', true)->first();
+            if ($this->confirmSelectAppointment == null) {
+                $this->select = '';
+            }
+        }
 
         if ($userId != null) {
             $user = User::findOrFail('id', $userId);
@@ -171,6 +183,7 @@ class Appointments extends Component
         $this->appointments = $query
             ->orderBy('date')
             ->orderBy('start_time')
+            ->where('status', true)
             ->paginate(50);
 
 
@@ -372,20 +385,20 @@ class Appointments extends Component
         $this->confirmingAppointmentDelete = true;
     }
 
-    public function deleteAppointment(Appointment $appointment)
+    public function deleteAppointment()
     {
-        $this->appointment = $appointment;
+//        $this->appointment = $appointment;
 
 
 //        if (auth()->user()->id == $this->appointment->user->id
 //            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
 
-        $this->appointment->status = 0;
+//        $this->appointment->status = 0;
 //        $this->appointment->cancelled_by = auth()->user()->id;
         // TODO add reason
-        $this->appointment->save();
-        $this->confirmingAppointmentDelete = false;
-        $this->confirmingAppointmentSelect = false;
+//        $this->appointment->save();
+//        $this->confirmingAppointmentDelete = false;
+//        $this->confirmSelectAppointment = false;
 
 
     }
@@ -403,22 +416,24 @@ class Appointments extends Component
         // TODO add reason
         $this->appointment->save();
         $this->confirmingAppointmentCancellation = false;
-        $this->confirmingAppointmentSelect = false;
+        $this->confirmSelectAppointment = false;
 //        }
     }
 
     public function setSelectedAppointment(Appointment $appointment)
     {
-        $this->appointment = $appointment;
-        $this->implementer = $appointment->implementer_id;
-        $this->confirmingAppointmentSelect = true;
+        $this->confirmSelectAppointment = $appointment;
+        $this->select = $appointment->id;
+
     }
 
-    public function changeImplementer(Appointment $appointment)
+    public function unsetSelectedAppointment()
     {
-        $this->appointment = $appointment;
-        $this->appointment->implementer_id = $this->implementer;
-        $this->appointment->save();
+        $this->confirmSelectAppointment = false;
+        $this->select = '';
+
+        $this->confirmingAppointmentDelete = false;
+        $this->confirmingAppointmentCancellation = false;
     }
 
     public function confirmAppointmentCreate(
@@ -427,6 +442,7 @@ class Appointments extends Component
     )
     {
         if (!$onAppointment) {
+
             $carbonTime = Carbon::create($time);
             $this->newAppointment['creator_id'] = $this->user->id;
             if ($this->allowOthers) {
@@ -439,7 +455,7 @@ class Appointments extends Component
             $this->newAppointment['end_time'] = $carbonTime->addMinutes(15)->toTimeString();
             $this->newAppointment['location_id'] = $this->locations->first()->id;
             $this->newAppointment['service_id'] = $this->services->first()->id;
-            $this->confirmingAppointmentCreate = true;
+            $this->confirmingAppointmentCreate = Carbon::create($time);
         }
     }
 

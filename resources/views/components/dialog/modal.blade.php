@@ -3,11 +3,15 @@
 @php
     $dataParamName = 'show';
     $dataBackRoute = 'none';
+    $onLeaveMethod = '';
     if ($attributes['back-route'] != null) {
         $dataBackRoute = $attributes['back-route'];
     }
     if ($attributes['listener'] != null) {
         $dataParamName = $attributes['listener'];
+    }
+    if ($attributes['onLeaveMethod'] != null) {
+        $onLeaveMethod = $attributes['onLeaveMethod'];
     }
     $id = $id ?? md5($attributes->wire('model'));
     $maxWidth = [
@@ -17,14 +21,15 @@
         'xl' => 'sm:max-w-xl',
         '2xl' => 'sm:max-w-2xl',
     ][$maxWidth ?? '2xl'];
+
 @endphp
 
 <div
     @if($attributes['wire:model'] != null)
     x-data="{ {{$dataParamName}}: @entangle($attributes->wire('model')).defer }"
     @endif
-    x-on:close.stop="{{$dataParamName}} = false"
-    x-on:keydown.escape.window="{{$dataParamName}} = false"
+    x-on:close.stop="{{$dataParamName}} = false; {{$onLeaveMethod}}"
+    x-on:keydown.escape.window="{{$dataParamName}} = false; {{$onLeaveMethod}}"
     x-show="{{$dataParamName}}"
     id="{{ $id }}"
     class="jetstream-modal fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
@@ -35,7 +40,10 @@
         <a href="{{$dataBackRoute}}">
             @endif
             <div x-show="{{$dataParamName}}" class="fixed inset-0 transform transition-all"
-                 x-on:click="{{$dataParamName}} = false"
+{{--                 x-on:click="{{$dataParamName}} = false"--}}
+{{--                 x-on:click="{{$dataParamName}} = false; $wire.call('sayAboba')"--}}
+{{--                 x-on:click="{{$dataParamName}} = false; $wire.set({{$dataParamName}}, false)"--}}
+                 x-on:click=" {{$dataParamName}} = false; {{$onLeaveMethod}}"
                  x-transition:enter="ease-out duration-300"
                  x-transition:enter-start="opacity-0"
                  x-transition:enter-end="opacity-100"

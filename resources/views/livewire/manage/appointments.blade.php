@@ -127,153 +127,168 @@
             @endforeach
             </tbody>
         </table>
-        <x-dialog-modal wire:model="confirmingAppointmentSelect">
+
+        <x-dialog.default wire:model="confirmSelectAppointment" onLeaveMethod="$wire.unsetSelectedAppointment()">
             <x-slot name="title">
-                @if($appointment != null) <h1>{{ $appointment->service->name }}
-                    - {{ today()->setTimeFrom($appointment->start_time)->isoFormat('HH:mm') }}</h1>@endif
+                @if($confirmSelectAppointment) <h1>{{ $confirmSelectAppointment->service->name }}
+                    - {{ today()->setTimeFrom($confirmSelectAppointment->start_time)->isoFormat('HH:mm') }}</h1>@endif
             </x-slot>
             <x-slot name="content">
-                @if($appointment != null)
+                @if($confirmSelectAppointment)
                     <div>
-                        <h2>{{ $appointment->date }}
-                            - {{ today()->setTimeFrom($appointment->start_time)->isoFormat('HH:mm') }}</h2>
-                        <h2>Создатель: {{ $appointment->creator->name}} - По реферальной
-                            ссылке? {{ $appointment->referral ? 'Да' : 'Нет' }} </h2>
-                        @if($this->allowOthers && $appointment->complete == 0)
-                            <label>
-                                Исполнитель:
-                                <select class="border text-gray-900  border-gray-300 rounded-lg"
-                                        wire:model="implementer">
-                                    @foreach ($masters as $master)
-                                        <option value={{$master->id}}>{{$master->name}}</option>
-                                    @endforeach
-                                </select>
-                                <x-button
-                                    wire:click="changeImplementer({{ $appointment->id }})"
-                                    wire:loading.attr="disabled">
-                                    Подтвердить
-                                </x-button>
-                            </label>
+                        <h2>{{ $confirmSelectAppointment->date }}
+                            - {{ today()->setTimeFrom($confirmSelectAppointment->start_time)->isoFormat('HH:mm') }}</h2>
+                        <h2>Создатель: {{ $confirmSelectAppointment->creator->name}} - По реферальной
+                            ссылке? {{ $confirmSelectAppointment->referral ? 'Да' : 'Нет' }} </h2>
+                        @if($this->allowOthers && $confirmSelectAppointment->complete == 0)
+                            <form
+                                action="{{route('manage.appointments.updateImplementer', ['id' => $confirmSelectAppointment->id])}}"
+                                method="post">
+                                @csrf
+                                @method('PUT')
+                                <label>
+                                    Исполнитель:
+                                    <select class="border text-gray-900  border-gray-300 rounded-lg"
+                                            name="implementer_id">
+                                        @foreach ($masters as $master)
+                                            <option
+                                                @if($confirmSelectAppointment->implementer_id == $master->user->id)
+                                                selected="selected"
+                                                @endif
+                                                value={{$master->user->id}}>{{$master->user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <x-button.default>
+                                        Изменить
+                                    </x-button.default>
+                                </label>
+                            </form>
                         @else
-                            <h2>Исполнитель: {{ $appointment->implementer->name}}</h2>
+                            <h2>Исполнитель: {{ $confirmSelectAppointment->implementer->name}}</h2>
                         @endif
-                        <h3>Где: {{ $appointment->location->name}} - {{ $appointment->location->address}}</h3>
-                        <h3>Кого: {{ $appointment->receiving_name}}</h3>
-                        <p>Описание: {{ $appointment->receiving_description}}</p>
+                        <h3>Где: {{ $confirmSelectAppointment->location->name}}
+                            - {{ $confirmSelectAppointment->location->address}}</h3>
+                        <h3>Кого: {{ $confirmSelectAppointment->receiving_name}}</h3>
+                        <p>Описание: {{ $confirmSelectAppointment->receiving_description}}</p>
                     </div>
                 @endif
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    @if ($appointment != null && $this->user->role->delete_appointment)
-                        <x-danger-button
-                            wire:click="confirmAppointmentDelete({{ $appointment->id }})"
-                            wire:loading.attr="disabled">
-                            {{ __('Delete') }}
-                        </x-danger-button>
+                    @if($confirmSelectAppointment)
+                        @if($confirmSelectAppointment && $confirmSelectAppointment->status == true && ($confirmSelectAppointment->implementer_id == auth()->user()->id || $this->allowOthers))
+                            <x-button.danger
+                                wire:click="confirmAppointmentDelete"
+                                wire:loading.attr="disabled">
+                                {{ __('Delete') }}
+                            </x-button.danger>
+                        @endif
+                        @if($confirmSelectAppointment && $confirmSelectAppointment->complete == false && ($confirmSelectAppointment->implementer_id == auth()->user()->id || $this->allowOthers))
+                            <x-button.default
+                                wire:click="confirmAppointmentCancellation"
+                                wire:loading.attr="disabled">
+                                {{ __('Close') }}
+                            </x-button.default>
+                        @endif
                     @endif
-                    @if ($appointment != null && $appointment->complete == 0 && $appointment->status == 1 && $this->allowOthers)
-                        <x-danger-button
-                            wire:click="confirmAppointmentCancellation({{ $appointment->id }})"
-                            wire:loading.attr="disabled">
-                            {{ __('Cancel') }}
-                        </x-danger-button>
-                    @endif
-                    <x-secondary-button wire:click="$set('confirmingAppointmentSelect', false)"
+                    <x-button.secondary wire:click="unsetSelectedAppointment"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
-                    </x-secondary-button>
+                    </x-button.secondary>
                 </div>
 
             </x-slot>
-        </x-dialog-modal>
+        </x-dialog.default>
 
-
-        <x-dialog-modal wire:model="notificationAppointmentCreated">
+        <x-dialog.default wire:model="confirmingAppointmentCreate">
             <x-slot name="title">
-                {{ __('Creation status') }}
+                {{ __('Create Appointment') }}
             </x-slot>
             <x-slot name="content">
-                <p>{{ __('Appointment created successfully') }}</p>
+                @if($confirmingAppointmentCreate)
+                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
+                    <x-input id="name" type="text" name="appointment_name"
+                             >
+                    </x-input>
+                    <label for="description"
+                           class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
+                    <textarea id="description" name="appointment_description"
+                              class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
+
+                    <label for="implementer"
+                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                    @if($this->allowOthers)
+                        <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
+                                name="appointment_implementer_id">
+                            @foreach ($masters as $master)
+                                <option value={{$master->user->id}}>{{$master->user->name}}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <x-input type="hidden" id="implementer" name="appointment_implementer_id" value="{{auth()->user()->id}}"></x-input>
+                        <p>{{ auth()->user()->name }}</p>
+                    @endif
+                <div x-data="{serviceDuration: 15}">
+                    <label for="service" class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
+                    <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
+                            name="appointment_service_id">
+                        @foreach ($services as $service)
+                            <option x-on:click="serviceDuration = $service->duration_minutes" value={{$service->id}}>{{$service->name}}</option>
+                        @endforeach
+                    </select>
+
+                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
+                    <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
+                             value="{{$confirmingAppointmentCreate->format('Y-m-d')}}"
+                             name="appointment_date"
+                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                             max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
+                    </x-input>
+                    <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
+                    <div class="time-block">
+                        <select id="time_start" class="border text-gray-900  border-gray-300 rounded-lg"
+                                name="appointment_start_time">
+                            @for ($i = today()->setDateFrom($confirmingAppointmentCreate)->hour(8); $i <= today()->setDateFrom($confirmingAppointmentCreate)->hour(20); $i->addMinutes(15))
+                                @if($i->lessThan(now()))
+                                    @continue
+                                @endif
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+                        <select id="time_end" class="border text-gray-900  border-gray-300 rounded-lg"
+                                name="appointment_end_time">
+                            @for ($i = today()->setDateFrom($confirmingAppointmentCreate)->setTimeFrom($this->newAppointment['start_time'])->addMinutes(15); $i <= today()->setDateFrom($confirmingAppointmentCreate)->hour(20); $i->addMinutes(15))
+                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                </div>
+                    <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
+                    <select id="location"
+                            class="border text-gray-900  border-gray-300 rounded-lg"
+                            name="appointment_location_id">
+                        @foreach ($locations as $location)
+                            <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                        @endforeach
+                    </select>
+                @endif
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('notificationAppointmentCreated', false)"
+                    <x-button.secondary wire:click="$set('confirmingAppointmentCreate', false)"
                                         wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-secondary-button>
+                        {{ __('Back') }}
+                    </x-button.secondary>
+                    <x-button.default
+                        wire:click="createAppointment">
+                        Create
+                    </x-button.default>
                 </div>
 
             </x-slot>
-        </x-dialog-modal>
+        </x-dialog.default>
 
-        <x-dialog-modal wire:model="notificationAppointmentCreatedError">
-            <x-slot name="title">
-                {{ __('Creation status') }}
-            </x-slot>
-            <x-slot name="content">
-                <p>{{ __('Appointment has not been created because the selected time slot is already occupied') }}</p>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('notificationAppointmentCreatedError', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-secondary-button>
-                </div>
-
-            </x-slot>
-        </x-dialog-modal>
-
-        <div class="p-5">
-            {{ $appointments->links() }}
-        </div>
-
-        <x-dialog-modal wire:model="notificationAppointmentSwapped">
-            <x-slot name="title">
-                {{ __('Creation status') }}
-            </x-slot>
-            <x-slot name="content">
-                <p>{{ __('Appointment was scheduled for another time!') }}</p>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('notificationAppointmentSwapped', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-secondary-button>
-                </div>
-
-            </x-slot>
-        </x-dialog-modal>
-
-        <div class="p-5">
-            {{ $appointments->links() }}
-        </div>
-
-        <x-dialog-modal wire:model="notificationAppointmentSwappedError">
-            <x-slot name="title">
-                {{ __('Creation status') }}
-            </x-slot>
-            <x-slot name="content">
-                <p>{{ __('Appointment has not been moved because the selected time slot is already occupied') }}</p>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('notificationAppointmentSwappedError', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-secondary-button>
-                </div>
-
-            </x-slot>
-        </x-dialog-modal>
-
-        <div class="p-5">
-            {{ $appointments->links() }}
-        </div>
-
-        <x-dialog-modal wire:model="confirmingAppointmentCreate">
+        {{--<x-dialog.default wire:model="confirmingAppointmentCreate">
             <x-slot name="title">
                 {{ __('Create Appointment') }}
             </x-slot>
@@ -283,11 +298,13 @@
                     <x-input id="name" type="text" wire:model.debounce.500ms="newAppointment.receiving_name"
                              class="border text-gray-900  border-gray-300 rounded-lg">
                     </x-input>
-                    <label for="description" class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
+                    <label for="description"
+                           class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
                     <textarea id="description" wire:model.debounce.500ms="newAppointment.receiving_description"
                               class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
 
-                    <label for="implementer" class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                    <label for="implementer"
+                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
                     @if($this->allowOthers)
                         <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
                                 wire:model="newAppointment.implementer_id">
@@ -342,20 +359,21 @@
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('confirmingAppointmentCreate', false)"
+                    <x-button.secondary wire:click="$set('confirmingAppointmentCreate', false)"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
-                    </x-secondary-button>
-                    <x-button
+                    </x-button.secondary>
+                    <x-button.default
                         wire:click="createAppointment">
                         Create
-                    </x-button>
+                    </x-button.default>
                 </div>
 
             </x-slot>
-        </x-dialog-modal>
+        </x-dialog.default>--}}
 
-        <x-dialog-modal wire:model="confirmingAppointmentDelete">
+        <x-dialog.default wire:model="confirmingAppointmentDelete"
+                          onLeaveMethod="$wire.unsetSelectedAppointment()">
             <x-slot name="title">
                 {{ __('Delete appointment') }}
             </x-slot>
@@ -367,21 +385,29 @@
 
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('confirmingAppointmentDelete', false)"
+                    @if($confirmSelectAppointment)
+                        <form
+                            action="{{route('manage.appointments.destroy', ['id' => $confirmSelectAppointment->id])}}"
+                            method="post">
+                            @csrf
+                            @method('PUT')
+                            <x-button.danger type="submit" wire:click="unsetSelectedAppointment"
+                                             wire:loading.attr="disabled">
+                                {{ __('Delete') }}
+                            </x-button.danger>
+                        </form>
+                    @endif
+                    <x-button.secondary wire:click="unsetSelectedAppointment"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
-                    </x-secondary-button>
-
-                    <x-danger-button wire:click="deleteAppointment({{ $appointment }})"
-                                     wire:loading.attr="disabled">
-                        {{ __('Delete') }}
-                    </x-danger-button>
+                    </x-button.secondary>
                 </div>
 
             </x-slot>
-        </x-dialog-modal>
+        </x-dialog.default>
 
-        <x-dialog-modal wire:model="confirmingAppointmentCancellation">
+        <x-dialog.default wire:model="confirmingAppointmentCancellation"
+                          onLeaveMethod="$wire.unsetSelectedAppointment()">
             <x-slot name="title">
                 {{ __('Cancel appointment') }}
             </x-slot>
@@ -393,19 +419,99 @@
 
             <x-slot name="footer">
                 <div class="flex gap-3">
-                    <x-secondary-button wire:click="$set('confirmingAppointmentCancellation', false)"
+
+                    @if($confirmSelectAppointment)
+                        <form
+                            action="{{route('manage.appointments.cancel', ['id' => $confirmSelectAppointment->id])}}"
+                            method="post">
+                            @csrf
+                            @method('PUT')
+                            <x-button.danger type="submit" wire:click="unsetSelectedAppointment"
+                                             wire:loading.attr="disabled">
+                                {{ __('Close') }}
+                            </x-button.danger>
+                        </form>
+                    @endif
+                    <x-button.secondary wire:click="unsetSelectedAppointment"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
-                    </x-secondary-button>
-
-                    <x-danger-button wire:click="cancelAppointment({{ $appointment }})"
-                                     wire:loading.attr="disabled">
-                        {{ __('Cancel') }}
-                    </x-danger-button>
+                    </x-button.secondary>
                 </div>
 
             </x-slot>
-        </x-dialog-modal>
+        </x-dialog.default>
+
+        <x-dialog.default wire:model="notificationAppointmentSwapped">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment was scheduled for another time!') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.secondary wire:click="$set('notificationAppointmentSwapped', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-button.secondary>
+                </div>
+
+            </x-slot>
+        </x-dialog.default>
+
+        <x-dialog.default wire:model="notificationAppointmentSwappedError">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment has not been moved because the selected time slot is already occupied') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.secondary wire:click="$set('notificationAppointmentSwappedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-button.secondary>
+                </div>
+
+            </x-slot>
+        </x-dialog.default>
+
+        <x-dialog.default wire:model="notificationAppointmentCreated">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment created successfully') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.secondary wire:click="$set('notificationAppointmentCreated', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-button.secondary>
+                </div>
+
+            </x-slot>
+        </x-dialog.default>
+
+        <x-dialog.default wire:model="notificationAppointmentCreatedError">
+            <x-slot name="title">
+                {{ __('Creation status') }}
+            </x-slot>
+            <x-slot name="content">
+                <p>{{ __('Appointment has not been created because the selected time slot is already occupied') }}</p>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.secondary wire:click="$set('notificationAppointmentCreatedError', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Ok') }}
+                    </x-button.secondary>
+                </div>
+
+            </x-slot>
+        </x-dialog.default>
     </div>
 </div>
 

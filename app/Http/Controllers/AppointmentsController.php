@@ -114,11 +114,29 @@ class AppointmentsController extends Controller
         //
     }
 
+    public function updateImplementer(Request $request, string $id)
+    {
+        $appointment = Appointment::where('id', $id)->first();
+        $appointment->implementer_id = $request['implementer_id'];
+        $appointment->save();
+        return redirect()->back();
+    }
+
+    public function cancel(string $id)
+    {
+        $appointment = Appointment::where('id', $id)->first();
+        $appointment->complete = true;
+        $appointment->save();
+        return redirect()->back();
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $appointment = Appointment::where('id', $id)->first();
+        $appointment->status = false;
+        $appointment->save();
+        return redirect()->back();
     }
 }
