@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Manage;
 
 use App\Models\Appointment;
-use App\Models\Location;
-use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -88,7 +86,6 @@ class Appointments extends Component
 
     public function mount($locations = array(), $masters = array(), $services = array(), $userId = null)
     {
-
         $this->locations = $locations;
         $this->masters = $masters;
         $this->services = $services;
@@ -220,6 +217,14 @@ class Appointments extends Component
         }
     }
 
+    public function getSelectedServiceDuration(): int {
+        return $this->services->where('id', $this->newAppointment['service_id'])->first()->duration_minutes;
+    }
+
+    public function getSelectedServiceTotal(): int {
+        return $this->services->where('id', $this->newAppointment['service_id'])->first()->price;
+    }
+
     public function updatedView($value)
     {
         // TODO: добавить разрешение view_other_appointemnt
@@ -240,8 +245,6 @@ class Appointments extends Component
 
     private function generateArray($appointments): array
     {
-
-
         $arrayWeek = array();
         $available = $this->allowChangeDate;
         for ($i = $this->dateRange['start']; $i < $this->dateRange['end']->copy(); $i->addDay()) {
@@ -283,6 +286,7 @@ class Appointments extends Component
 
         return $arrayByNeedle;
     }
+
 
     private function generateDateRange(string $date): bool
     {
@@ -346,12 +350,6 @@ class Appointments extends Component
                     $currentAppointment = $appointment;
                 }
             }
-
-//            dd($currentAppointment);
-
-//            $is_available = DB::table('appointments')
-//                ->whereDate('date', '=', Carbon::parse($dayTo)->toDateString())
-//                ->whereBetween('start_time', [Carbon::parse($cellTo['minutes'])->toTimeString(), Carbon::parse($cellTo['minutes'])->addMinutes($cellFrom['range'] * 15)->subMinute()->toTimeString()]);
             if ($currentAppointment != null) {
                 if ($this->masterSlotValidate(Carbon::parse($dayTo)->toDateString(),
                     Carbon::parse($cellTo['minutes'])->toTimeString(),
@@ -368,8 +366,6 @@ class Appointments extends Component
                     $this->notificationAppointmentSwappedError = true;
                 }
             }
-
-
         } else {
             $this->notificationAppointmentSwappedError = true;
         }
@@ -385,46 +381,10 @@ class Appointments extends Component
         $this->confirmingAppointmentDelete = true;
     }
 
-    public function deleteAppointment()
-    {
-//        $this->appointment = $appointment;
-
-
-//        if (auth()->user()->id == $this->appointment->user->id
-//            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
-
-//        $this->appointment->status = 0;
-//        $this->appointment->cancelled_by = auth()->user()->id;
-        // TODO add reason
-//        $this->appointment->save();
-//        $this->confirmingAppointmentDelete = false;
-//        $this->confirmSelectAppointment = false;
-
-
-    }
-
-    public function cancelAppointment(Appointment $appointment)
-    {
-        $this->appointment = $appointment;
-
-
-//        if (auth()->user()->id == $this->appointment->user->id
-//            || auth()->user()->role->name == (UserRolesEnum::Employee->name || UserRolesEnum::Admin->name)) {
-
-        $this->appointment->complete = 1;
-//        $this->appointment->cancelled_by = auth()->user()->id;
-        // TODO add reason
-        $this->appointment->save();
-        $this->confirmingAppointmentCancellation = false;
-        $this->confirmSelectAppointment = false;
-//        }
-    }
-
     public function setSelectedAppointment(Appointment $appointment)
     {
         $this->confirmSelectAppointment = $appointment;
         $this->select = $appointment->id;
-
     }
 
     public function unsetSelectedAppointment()
@@ -442,89 +402,16 @@ class Appointments extends Component
     )
     {
         if (!$onAppointment) {
-
             $carbonTime = Carbon::create($time);
-            $this->newAppointment['creator_id'] = $this->user->id;
-            if ($this->allowOthers) {
-                $this->newAppointment['implementer_id'] = $this->masters->first()->user_id;
-            } else {
-                $this->newAppointment['implementer_id'] = $this->masterFilter;
-            }
             $this->newAppointment['date'] = $carbonTime->toDateString();
             $this->newAppointment['start_time'] = $carbonTime->toTimeString();
-            $this->newAppointment['end_time'] = $carbonTime->addMinutes(15)->toTimeString();
-            $this->newAppointment['location_id'] = $this->locations->first()->id;
             $this->newAppointment['service_id'] = $this->services->first()->id;
-            $this->confirmingAppointmentCreate = Carbon::create($time);
+            $this->confirmingAppointmentCreate = $carbonTime;
         }
-    }
-
-    public function createAppointment()
-    {
-        $this->newAppointment['total'] = $this->serviceConverter($this->newAppointment['service_id'])->price;
-        if ($this->newAppointment['receiving_description'] == null) {
-            $this->newAppointment['receiving_description'] = '';
-        }
-
-        if ($this->masterSlotValidate($this->newAppointment['date'], $this->newAppointment['start_time'], $this->newAppointment['end_time'], $this->newAppointment['implementer_id'])) {
-
-            Appointment::create([
-                'creator_id' => $this->newAppointment['creator_id'],
-                'implementer_id' => $this->newAppointment['implementer_id'],
-                'receiving_name' => $this->newAppointment['receiving_name'],
-                'receiving_description' => $this->newAppointment['receiving_description'],
-                'date' => $this->newAppointment['date'],
-                'start_time' => $this->newAppointment['start_time'],
-                'end_time' => $this->newAppointment['end_time'],
-                'location_id' => $this->newAppointment['location_id'],
-                'service_id' => $this->newAppointment['service_id'],
-                'total' => $this->newAppointment['total'],
-            ]);
-            $this->notificationAppointmentCreated = true;
-        } else {
-            $this->notificationAppointmentCreatedError = true;
-        }
-        $this->confirmingAppointmentCreate = false;
-        $this->newAppointment = array(
-            'creator_id' => null,
-            'implementer_id' => null,
-            'receiving_name' => null,
-            'receiving_description' => null,
-            'date' => null,
-            'start_time' => null,
-            'end_time' => null,
-            'location_id' => null,
-            'service_id' => null,
-            'total' => null,
-        );
-    }
-
-    protected function serviceConverter($serviceId): Service
-    {
-        foreach ($this->services as $service) {
-            if ($serviceId . '' == $service->id . '') {
-                return $service;
-            }
-        }
-        return $this->services->first();
-    }
-
-    protected function locationConverter($locationId): Location
-    {
-        foreach ($this->locations as $location) {
-
-            if ($locationId . '' == $location->id . '') {
-                return $location;
-            }
-        }
-        return $this->locations->first();
     }
 
     protected function masterSlotValidate(string $date, string $timeStart, string $timeEnd, int $masterId, string $appointmentCode = ''): bool
     {
-
-//        dd($date.'\n'.$timeStart.'\n'.$timeEnd);
-
         $is_available_first = DB::table('appointments')
             ->whereNot('appointment_code', $appointmentCode)
             ->where('implementer_id', $masterId)
