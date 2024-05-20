@@ -42,8 +42,6 @@ class Appointments extends Component
     public bool $confirmingAppointmentCancellation = false;
     public bool $confirmingAppointmentDelete = false;
     public $confirmingAppointmentCreate = false;
-    public bool $notificationAppointmentCreated = false;
-    public bool $notificationAppointmentCreatedError = false;
     public bool $notificationAppointmentSwapped = false;
     public bool $notificationAppointmentSwappedError = false;
 
