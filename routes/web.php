@@ -91,6 +91,8 @@ Route::middleware([
             ])->group(function () {
                 Route::controller(UserController::class)->group(function () {
                     Route::get('/users', 'index')->name('manage.users');
+                    Route::get('/users/clients', 'indexClients')->name('manage.users.clients');
+                    Route::get('/users/staff', 'indexStaff')->name('manage.users.staff');
                     Route::get('/users/create', 'create')->name('manage.users.create');
                     Route::put('/users/store', 'store')->name('manage.users.store');
                     Route::get('/users/{id}', 'show')->name('manage.users.show');

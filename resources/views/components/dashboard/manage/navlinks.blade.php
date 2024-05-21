@@ -1,7 +1,8 @@
 <ul>
     @if(Auth::user()->hasPermission('manage_appointment'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.appointments') }}" :active="request()->routeIs('manage.appointments')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.appointments') }}"
+                            :active="request()->routeIs('manage.appointments')">
             <span class="pr-2">
                 <svg fill="currentColor" class="w-5 h-5" viewBox="0 0 24 24" data-name="Layer 1"
                      id="Layer_1" xmlns="http://www.w3.org/2000/svg">
@@ -9,13 +10,13 @@
                         d="M18,5V3a1,1,0,0,0-2,0V5H8V3A1,1,0,0,0,6,3V5H2V21H22V5Zm2,14H4V7H20Zm-7-9H11v2h2Zm4,0H15v2h2ZM9,14H7v2H9Zm4,0H11v2h2Z"/>
                 </svg>
             </span>
-            <p>{{ __('Appointments') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Appointments') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
     @if(Auth::user()->hasPermission('manage_users'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.users') }}" :active="request()->routeIs('manage.users')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.users.clients') }}" :active="request()->routeIs('manage.users.clients')">
             <span class="pr-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
@@ -24,13 +25,28 @@
                           d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                 </svg>
             </span>
-            <p>{{ __('Users') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Clients') }}</p>
+            </x-navlink.menu>
+        </li>
+    @endif
+    @if(Auth::user()->hasPermission('manage_users'))
+        <li>
+            <x-navlink.menu href="{{ route('manage.users.staff') }}" :active="request()->routeIs('manage.users.staff')">
+            <span class="pr-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round" stroke-width="2"
+                          d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+            </span>
+                <p>{{ __('Staff') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
     @if(Auth::user()->hasPermission('manage_locations'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.locations') }}" :active="request()->routeIs('manage.locations')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.locations') }}" :active="request()->routeIs('manage.locations')">
             <span class="pr-2">
                 <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"
                      xmlns="http://www.w3.org/2000/svg">
@@ -40,13 +56,13 @@
                         stroke-linejoin="round"/>
                 </svg>
             </span>
-            <p>{{ __('Locations') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Locations') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
     @if(Auth::user()->hasPermission('manage_services'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.services') }}" :active="request()->routeIs('manage.services')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.services') }}" :active="request()->routeIs('manage.services')">
             <span class="pr-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
@@ -55,13 +71,13 @@
                           d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                 </svg>
             </span>
-            <p>{{ __('Services') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Services') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
     @if(Auth::user()->hasPermission('manage_categories'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.categories') }}" :active="request()->routeIs('manage.categories')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.categories') }}" :active="request()->routeIs('manage.categories')">
             <span class="pr-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                      xmlns="http://www.w3.org/2000/svg">
@@ -70,13 +86,13 @@
                           d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
                 </svg>
             </span>
-            <p>{{ __('Categories') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Categories') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
     @if(Auth::user()->hasPermission('manage_deals'))
-    <li>
-        <x-navlink.menu href="{{ route('manage.deals') }}" :active="request()->routeIs('manage.deals')">
+        <li>
+            <x-navlink.menu href="{{ route('manage.deals') }}" :active="request()->routeIs('manage.deals')">
             <span class="pr-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                      class="bi bi-award" viewBox="0 0 16 16">
@@ -86,8 +102,8 @@
                         d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
                 </svg>
             </span>
-            <p>{{ __('Deals') }}</p>
-        </x-navlink.menu>
-    </li>
+                <p>{{ __('Deals') }}</p>
+            </x-navlink.menu>
+        </li>
     @endif
 </ul>

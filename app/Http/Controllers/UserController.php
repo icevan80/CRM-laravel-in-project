@@ -15,9 +15,19 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
             return view('dashboard.manage.users.index');
+    }
+
+    public function indexClients()
+    {
+        return view('dashboard.manage.users.index');
+    }
+
+    public function indexStaff()
+    {
+        return view('dashboard.manage.users.index');
     }
 
     /**
