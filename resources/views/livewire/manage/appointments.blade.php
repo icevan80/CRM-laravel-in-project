@@ -38,6 +38,15 @@
                 </select>
             @endif
         @endif
+        <div class="w-full" x-data="{appDataFalse: false}">
+            <div style="float:right;">
+                <x-button.default
+                    wire:click="confirmAppointmentCreate('{{ \Carbon\Carbon::now() }}', '{{ false }}')"
+                    class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+                    Create
+                </x-button.default>
+            </div>
+        </div>
     </div>
     <div class="overflow-auto rounded-lg border border-gray-200 shadow-md my-4">
         <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
@@ -200,7 +209,6 @@
             </x-slot>
         </x-dialog.default>
 
-
         <form action="{{route('manage.appointments.store')}}" method="POST">
             @csrf
             @method('PUT')
@@ -304,7 +312,6 @@
 
                 </x-slot>
             </x-dialog.default>
-
         </form>
 
         <x-dialog.default wire:model="confirmingAppointmentDelete"
@@ -465,8 +472,7 @@
             idTo = e.target.getAttribute('drag-item')
         }
 
-        @this.
-        call('reorder', idForm, idTo, currentAppointment)
+    @this.call('reorder', idForm, idTo, currentAppointment)
     }
     let eventDragenter = e => {
         if (e.target.tagName !== 'P') {

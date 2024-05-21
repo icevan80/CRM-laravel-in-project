@@ -397,10 +397,12 @@ class Appointments extends Component
     public function confirmAppointmentCreate(
         string $time,
         bool   $onAppointment,
-    )
-    {
+    ) {
         if (!$onAppointment) {
             $carbonTime = Carbon::create($time);
+            if ($carbonTime->minute % 15 != 0) {
+                $carbonTime->addMinutes(15 - $carbonTime->minute % 15);
+            }
             $this->newAppointment['date'] = $carbonTime->toDateString();
             $this->newAppointment['start_time'] = $carbonTime->toTimeString();
             $this->newAppointment['service_id'] = $this->services->first()->id;
