@@ -6,7 +6,9 @@ use App\Models\Appointment;
 use App\Models\Location;
 use App\Models\Master;
 use App\Models\Service;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentsController extends Controller
 {
@@ -19,7 +21,6 @@ class AppointmentsController extends Controller
         $locations = Location::all()->where('status', 1);
         $appointments = Appointment::all()->where('status', 1);
         $services = Service::all()->where('status', 1);
-
 
         return view('dashboard.manage.appointments.index',
             compact('masters', 'locations', 'appointments', 'services'));
@@ -40,54 +41,44 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        /*if ($request['appointment_is_hidden'] || $request['appointment_is_hidden'] == 'true') {
-               $request['appointment_is_hidden'] = true;
-           } else {
-               $request['appointment_is_hidden'] = false;
-           }
+        if ($request['appointment_description'] == null) {
+            $request['appointment_description'] = '';
+        }
 
-           $request['appointment_duration_minutes'] += $request['appointment_duration_hours'];
-           if ($request['appointment_masters']) {
-               $request['appointment_masters'] = array_values(array_unique($request['appointment_masters']));
-           }
+        $request->validate([
+            'appointment_name' => 'required|string|min:1|max:255',
+            'appointment_description' => 'nullable|string',
+        ]);
 
-           $request->validate([
-               'appointment_name' => 'required|string|min:1|max:255',
-   //            'appointment_slug' => 'unique:appointments,slug,' . ($this->newAppointment['id'] ?? ''),
-               'appointment_price' => 'required|numeric|min:0',
-               'appointment_max_price' => 'nullable|numeric|min:0|gte:appointment_price',
-               'appointment_category_id' => 'required|integer|min:1|exists:categories,id',
-               'appointment_duration_minutes' => 'required|integer|min:15|max:1440|multiple_of:15',
-               'appointment_notes' => 'nullable|string|min:1|max:255',
-               'appointment_masters' => 'min:1',
-               'appointment_is_hidden' => 'boolean',
-           ]);
+        if ($this->masterSlotValidate(
+            $request['appointment_date'],
+            $request['appointment_start_time'],
+            $request['appointment_end_time'],
+            $request['appointment_implementer_id'])) {
+            try {
+                Appointment::create([
+                    'creator_id' => $request['appointment_creator_id'],
+                    'implementer_id' => $request['appointment_implementer_id'],
+                    'receiving_name' => $request['appointment_name'],
+                    'receiving_description' => $request['appointment_description'],
+                    'date' => $request['appointment_date'],
+                    'start_time' => $request['appointment_start_time'],
+                    'end_time' => $request['appointment_end_time'],
+                    'location_id' => $request['appointment_location_id'],
+                    'service_id' => $request['appointment_service_id'],
+                    'total' => $request['appointment_total'],
+                ]);
 
-           if (!$request['appointment_max_price']) {
-               $request['appointment_max_price'] = null;
-           }
+                return redirect()->route('manage.appointments')->with('success', 'Appointment created successfully');
 
-           try {
+            } catch (\Exception $e) {
+                return redirect()->route('manage.appointments')->with('errormsg', 'Appointment was not created');
 
-               $appointment = Appointment::create([
-                   'name' => $request['appointment_name'],
-                   'slug' => \Str::slug($request['appointment_name']),
-                   'image' => $request['appointment_image'],
-                   'price' => $request['appointment_price'],
-                   'max_price' => $request['appointment_max_price'],
-                   'notes' => $request['appointment_notes'],
-                   'type' => $request['appointment_type'],
-                   'duration_minutes' => $request['appointment_duration_minutes'],
-                   'category_id' => $request['appointment_category_id'],
-                   'is_hidden' => $request['appointment_is_hidden'],
-               ]);
-               $appointment->masters()->attach($request['appointment_masters']);
-           } catch (Exception $e) {
-               return redirect()->route('manage.appointments')->with('errormsg', 'Appointment not created.');
-           }
+            }
+        }
 
-           return redirect()->route('manage.appointments')->with('success', 'Appointment created successfully.');*/
+//        dd($request);
+        return redirect()->route('manage.appointments')->with('errormsg', 'Appointment was not created');
     }
 
     /**
@@ -119,6 +110,7 @@ class AppointmentsController extends Controller
         $appointment = Appointment::where('id', $id)->first();
         $appointment->implementer_id = $request['implementer_id'];
         $appointment->save();
+
         return redirect()->back();
     }
 
@@ -129,6 +121,7 @@ class AppointmentsController extends Controller
         $appointment->save();
         return redirect()->back();
     }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -138,5 +131,25 @@ class AppointmentsController extends Controller
         $appointment->status = false;
         $appointment->save();
         return redirect()->back();
+    }
+
+    protected function masterSlotValidate(string $date, string $timeStart, string $timeEnd, int $masterId, string $appointmentCode = ''): bool
+    {
+
+//        dd($date.'\n'.$timeStart.'\n'.$timeEnd);
+
+        $is_available_first = DB::table('appointments')
+            ->whereNot('appointment_code', $appointmentCode)
+            ->where('implementer_id', $masterId)
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($date))
+            ->whereBetween('start_time', [$timeStart, today()->setTimeFrom($timeEnd)->subMinute()->toTimeString()]);
+
+        $is_available_second = DB::table('appointments')
+            ->whereNot('appointment_code', $appointmentCode)
+            ->where('implementer_id', $masterId)
+            ->whereDate('date', '=', Carbon::today()->setDateFrom($date))
+            ->whereBetween('end_time', [$timeStart, today()->setTimeFrom($timeEnd)->subMinute()->toTimeString()]);
+
+        return $is_available_first->count() == 0 && $is_available_second->count() == 0;
     }
 }

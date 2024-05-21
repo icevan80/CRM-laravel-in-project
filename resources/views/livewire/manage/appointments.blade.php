@@ -200,177 +200,112 @@
             </x-slot>
         </x-dialog.default>
 
-        <x-dialog.default wire:model="confirmingAppointmentCreate">
-            <x-slot name="title">
-                {{ __('Create Appointment') }}
-            </x-slot>
-            <x-slot name="content">
-                @if($confirmingAppointmentCreate)
-                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
-                    <x-input id="name" type="text" name="appointment_name"
-                             >
-                    </x-input>
-                    <label for="description"
-                           class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
-                    <textarea id="description" name="appointment_description"
-                              class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
 
-                    <label for="implementer"
-                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
-                    @if($this->allowOthers)
-                        <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
-                                name="appointment_implementer_id">
-                            @foreach ($masters as $master)
-                                <option value={{$master->user->id}}>{{$master->user->name}}</option>
+        <form action="{{route('manage.appointments.store')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <x-dialog.default wire:model="confirmingAppointmentCreate">
+                <x-slot name="title">
+                    {{ __('Create Appointment') }}
+                </x-slot>
+                <x-slot name="content">
+                    @if($confirmingAppointmentCreate)
+                        <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
+                        <x-input id="name" type="text" name="appointment_name"
+                        >
+                        </x-input>
+                        <label for="description"
+                               class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
+                        <textarea id="description" name="appointment_description"
+                                  class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
+
+                        <label for="implementer"
+                               class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                        @if($this->allowOthers)
+                            <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
+                                    name="appointment_implementer_id">
+                                @foreach ($masters as $master)
+                                    <option value={{$master->user->id}}>{{$master->user->name}}</option>
+                                @endforeach
+                            </select>
+                        @else
+                            <x-input type="hidden" id="implementer" name="appointment_implementer_id"
+                                     value="{{auth()->user()->id}}"></x-input>
+                            <p>{{ auth()->user()->name }}</p>
+                        @endif
+                        <label for="service"
+                               class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
+                        <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
+                                name="appointment_service_id"
+                                wire:model="newAppointment.service_id">
+                            @foreach ($services as $service)
+                                <option value={{$service->id}}>{{$service->name}}</option>
                             @endforeach
                         </select>
-                    @else
-                        <x-input type="hidden" id="implementer" name="appointment_implementer_id" value="{{auth()->user()->id}}"></x-input>
-                        <p>{{ auth()->user()->name }}</p>
-                    @endif
-                <div x-data="{serviceDuration: 15}">
-                    <label for="service" class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
-                    <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
-                            name="appointment_service_id">
-                        @foreach ($services as $service)
-                            <option x-on:click="serviceDuration = $service->duration_minutes" value={{$service->id}}>{{$service->name}}</option>
-                        @endforeach
-                    </select>
+                        <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
+                        <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
+                                 value="{{$confirmingAppointmentCreate->format('Y-m-d')}}"
+                                 name="appointment_date"
+                                 wire:model="newAppointment.date"
+                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                 max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
+                        </x-input>
+                        <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
+                        <div class="time-block">
+                            <select id="time_start" class="border text-gray-900  border-gray-300 rounded-lg"
+                                    name="appointment_start_time"
+                                    wire:model="newAppointment.start_time">
+                                @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                    @if($i->lessThan(now()))
+                                        @continue
+                                    @endif
+                                    <option
+                                        value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                @endfor
+                            </select>
+                            <select id="time_end" class="border text-gray-900  border-gray-300 rounded-lg"
+                                    name="appointment_end_time">
+                                @for ($i = today()->setDateFrom($newAppointment['date'])->setTimeFrom($newAppointment['start_time'])->addMinutes($this->getSelectedServiceDuration()); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                    @if($i->lessThan(now()->addMinutes($this->getSelectedServiceDuration())))
+                                        @continue
+                                    @endif
+                                    <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                @endfor
+                            </select>
+                        </div>
 
-                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
-                    <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
-                             value="{{$confirmingAppointmentCreate->format('Y-m-d')}}"
-                             name="appointment_date"
-                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                             max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
-                    </x-input>
-                    <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
-                    <div class="time-block">
-                        <select id="time_start" class="border text-gray-900  border-gray-300 rounded-lg"
-                                name="appointment_start_time">
-                            @for ($i = today()->setDateFrom($confirmingAppointmentCreate)->hour(8); $i <= today()->setDateFrom($confirmingAppointmentCreate)->hour(20); $i->addMinutes(15))
-                                @if($i->lessThan(now()))
-                                    @continue
-                                @endif
-                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                            @endfor
-                        </select>
-                        <select id="time_end" class="border text-gray-900  border-gray-300 rounded-lg"
-                                name="appointment_end_time">
-                            @for ($i = today()->setDateFrom($confirmingAppointmentCreate)->setTimeFrom($this->newAppointment['start_time'])->addMinutes(15); $i <= today()->setDateFrom($confirmingAppointmentCreate)->hour(20); $i->addMinutes(15))
-                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                            @endfor
-                        </select>
-                    </div>
-                </div>
-                    <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
-                    <select id="location"
-                            class="border text-gray-900  border-gray-300 rounded-lg"
-                            name="appointment_location_id">
-                        @foreach ($locations as $location)
-                            <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
-                        @endforeach
-                    </select>
-                @endif
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-button.secondary wire:click="$set('confirmingAppointmentCreate', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Back') }}
-                    </x-button.secondary>
-                    <x-button.default
-                        wire:click="createAppointment">
-                        Create
-                    </x-button.default>
-                </div>
-
-            </x-slot>
-        </x-dialog.default>
-
-        {{--<x-dialog.default wire:model="confirmingAppointmentCreate">
-            <x-slot name="title">
-                {{ __('Create Appointment') }}
-            </x-slot>
-            <x-slot name="content">
-                @if($this->newAppointment['creator_id'] != null)
-                    <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
-                    <x-input id="name" type="text" wire:model.debounce.500ms="newAppointment.receiving_name"
-                             class="border text-gray-900  border-gray-300 rounded-lg">
-                    </x-input>
-                    <label for="description"
-                           class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
-                    <textarea id="description" wire:model.debounce.500ms="newAppointment.receiving_description"
-                              class="border text-gray-900  border-gray-300 rounded-lg"></textarea>
-
-                    <label for="implementer"
-                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
-                    @if($this->allowOthers)
-                        <select id="implementer" class="border text-gray-900  border-gray-300 rounded-lg"
-                                wire:model="newAppointment.implementer_id">
-                            @foreach ($masters as $master)
-                                <option value={{$master->id}}>{{$master->user->name}}</option>
+                        <label for="location"
+                               class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
+                        <select id="location"
+                                class="border text-gray-900  border-gray-300 rounded-lg"
+                                name="appointment_location_id">
+                            @foreach ($locations as $location)
+                                <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
                             @endforeach
                         </select>
-                    @else
-                        <p>{{ $this->user->name }}</p>
+                        <x-input type="hidden" id="creator" name="appointment_creator_id"
+                                 value="{{auth()->user()->id}}"></x-input>
+                        <x-input type="hidden" id="total" name="appointment_total"
+                                 value="{{$this->getSelectedServiceTotal()}}"></x-input>
                     @endif
-                    <label for="service" class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
-                    <select id="service" class="border text-gray-900  border-gray-300 rounded-lg"
-                            wire:model="newAppointment.service_id">
-                        @foreach ($services as $service)
-                            <option value={{$service->id}}>{{$service->name}}</option>
-                        @endforeach
-                    </select>
+                </x-slot>
+                <x-slot name="footer">
+                    <div class="flex gap-3">
+                        <x-button.default
+                            type="submit">
+                            Create
+                        </x-button.default>
+                        <x-button.secondary wire:click="$set('confirmingAppointmentCreate', false)"
+                                            wire:loading.attr="disabled">
+                            {{ __('Back') }}
+                        </x-button.secondary>
 
-                    <label for="date" class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
-                    <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
-                             wire:model="newAppointment.date"
-                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                             max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
-                    </x-input>
-                    <label for="time" class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
-                    <div class="time-block">
-                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
-                                wire:model="newAppointment.start_time">
-                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->hour(8); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                @if($i->lessThan(now()))
-                                    @continue
-                                @endif
-                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                            @endfor
-                        </select>
-                        <select id="time" class="border text-gray-900  border-gray-300 rounded-lg"
-                                wire:model="newAppointment.end_time">
-                            @for ($i = today()->setDateFrom($this->newAppointment['date'])->setTimeFrom($this->newAppointment['start_time'])->addMinutes(15); $i <= today()->setDateFrom($this->newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                            @endfor
-                        </select>
                     </div>
-                    <label for="location" class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
-                    <select id="location"
-                            class="border text-gray-900  border-gray-300 rounded-lg"
-                            wire:model="newAppointment.location_id">
-                        @foreach ($locations as $location)
-                            <option value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
-                        @endforeach
-                    </select>
-                @endif
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-button.secondary wire:click="$set('confirmingAppointmentCreate', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Back') }}
-                    </x-button.secondary>
-                    <x-button.default
-                        wire:click="createAppointment">
-                        Create
-                    </x-button.default>
-                </div>
 
-            </x-slot>
-        </x-dialog.default>--}}
+                </x-slot>
+            </x-dialog.default>
+
+        </form>
 
         <x-dialog.default wire:model="confirmingAppointmentDelete"
                           onLeaveMethod="$wire.unsetSelectedAppointment()">
@@ -469,42 +404,6 @@
             <x-slot name="footer">
                 <div class="flex gap-3">
                     <x-button.secondary wire:click="$set('notificationAppointmentSwappedError', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-button.secondary>
-                </div>
-
-            </x-slot>
-        </x-dialog.default>
-
-        <x-dialog.default wire:model="notificationAppointmentCreated">
-            <x-slot name="title">
-                {{ __('Creation status') }}
-            </x-slot>
-            <x-slot name="content">
-                <p>{{ __('Appointment created successfully') }}</p>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-button.secondary wire:click="$set('notificationAppointmentCreated', false)"
-                                        wire:loading.attr="disabled">
-                        {{ __('Ok') }}
-                    </x-button.secondary>
-                </div>
-
-            </x-slot>
-        </x-dialog.default>
-
-        <x-dialog.default wire:model="notificationAppointmentCreatedError">
-            <x-slot name="title">
-                {{ __('Creation status') }}
-            </x-slot>
-            <x-slot name="content">
-                <p>{{ __('Appointment has not been created because the selected time slot is already occupied') }}</p>
-            </x-slot>
-            <x-slot name="footer">
-                <div class="flex gap-3">
-                    <x-button.secondary wire:click="$set('notificationAppointmentCreatedError', false)"
                                         wire:loading.attr="disabled">
                         {{ __('Ok') }}
                     </x-button.secondary>
