@@ -1,8 +1,8 @@
 <div>
     <div class="col-span-6 sm:col-span-4 my-2">
-        <x-label for="name" value="{{ __('Name') }}" />
-        <x-input id="name" type="text" class="mt-1 block w-full" name="name" />
-        <x-input-error for="name" class="mt-2" />
+        <x-label for="user_name" value="{{ __('Name') }}" />
+        <x-input id="user_name" type="text" class="mt-1 block w-full" name="user_name" />
+        <x-input-error for="user_name" class="mt-2" />
     </div>
 
     <!-- Email -->
@@ -36,17 +36,12 @@
 
     <!-- Role -->
     <div class="col-span-6 sm:col-span-4 my-2">
-        <x-label for="role" value="{{ __('Role') }}" />
-        <select name="role" id="role" class="border-gray-300 focus:border-pink-500 focus:ring-pink-500 rounded-md shadow-sm">
-            <option value="employee">Employee</option>
-            <option value="customer">Customer</option>
+        <x-label for="role_id" value="{{ __('Role') }}" />
+        <select name="role_id" id="role_id" class="border-gray-300 focus:border-pink-500 focus:ring-pink-500 rounded-md shadow-sm">
+            @foreach($roles as $role)
+                <option value="{{$role->id}}">{{ $role->name }}</option>
+            @endforeach
         </select>
         <x-input-error for="role" class="mt-2" />
-    </div>
-
-    <div class="flex items-center justify-end mt-4">
-        <x-button class="ml-4">
-            {{ __('Create User') }}
-        </x-button>
     </div>
 </div>

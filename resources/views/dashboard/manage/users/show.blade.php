@@ -68,6 +68,29 @@
                                 @endif
                             </li>
                             <li class="flex items-center py-3">
+                                <span>Name</span>
+                                <span class="ml-auto">{{ $user->name }}</span>
+                            </li>
+                            <li class="flex items-center py-3">
+                                <span>Last name</span>
+                                <span class="ml-auto">Last name</span>
+                            </li>
+                            @if($user->role->name == 'Customer')
+                            <li class="flex items-center py-3">
+                                <span>Age</span>
+                                <span class="ml-auto">20+</span>
+                            </li>
+                            <li class="flex items-center py-3">
+                                <span>Birth day</span>
+                                <span class="ml-auto">01.01.1970</span>
+                            </li>
+                            @else
+                                <li class="flex items-center py-3">
+                                    <span>Birth day</span>
+                                    <span class="ml-auto">01.01</span>
+                                </li>
+                            @endif
+                            <li class="flex items-center py-3">
                                 <span>Joined Date</span>
                                 <span class="ml-auto">{{ $user->created_at->toDateString() }}</span>
                             </li>

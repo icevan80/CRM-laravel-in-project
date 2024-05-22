@@ -110,9 +110,9 @@
 
         </tbody>
     </table>
-{{--    <div class=" pl-6 pt-4">--}}
-{{--        {{ $users->links() }}--}}
-{{--    </div>--}}
+        <div class=" pl-6 pt-4">
+            {{ $users->links() }}
+        </div>
 
     <form action="{{route('manage.users.destroy', ['id' => $this->confirmingUserDeletion])}}" method="post">
         @csrf

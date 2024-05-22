@@ -2,13 +2,17 @@
 
 namespace App\Http\Livewire\Manage;
 
+use App\Models\Role;
 use App\Models\User;
-use Illuminate\View\Component;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class Users extends Component
 {
+    use WithPagination;
+
     public $search;
-    public $showType = '';
+//    public $showType = '';
 
     public $confirmingUserDeletion = false;
     public $confirmingUserRestore = false;
@@ -31,25 +35,20 @@ class Users extends Component
 
     public function render()
     {
-//        $users = User::all();
-//        if ($this->search) {
-//            $users->where(function ($subQuery) {
-//                $subQuery
-//                    ->where('name', 'like', '%' . $this->search . '%')
-//                    ->orWhere('email', 'like', '%' . $this->search . '%')
-//                    ->orWhere('phone_number', 'like', '%' . $this->search . '%');
-//            });
-//        }
-        $users = User::when($this->search, function ($query) {
-            $query->where('name', 'like', '%' . $this->search . '%')
+        $users = User::when($this->showType, function ($query) {
+            if ($this->showType == 'clients') {
+                $query->where('role_id', '=', Role::getRole('Customer')->id)
+                    ->orWhere('role_id', '=', Role::getRole('Admin')->id);
+            } else if ($this->showType == 'staff') {
+                $query->where('role_id', '!=', Role::getRole('Customer')->id);
+            }
+        })->where(function ($subQuery) {
+            $subQuery->where('name', 'like', '%' . $this->search . '%')
                 ->orWhere('email', 'like', '%' . $this->search . '%')
                 ->orWhere('phone_number', 'like', '%' . $this->search . '%');
         })->paginate(20);
 
-//        $users->paginate(20);
-
-//        return view('livewire.manage.users', ['users' => $users]);
-        return view('livewire.manage.users', compact('users'));
+        return view('livewire.manage.users', ['users' => $users]);
     }
 
     public function confirmUserDeletion($id)
