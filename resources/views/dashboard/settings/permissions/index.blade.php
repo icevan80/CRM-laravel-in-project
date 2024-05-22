@@ -31,7 +31,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5 p-4">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-4 p-4">
         <livewire:settings.permissions :permissions="$permissions"/>
     </div>
 </x-dashboard.shell>

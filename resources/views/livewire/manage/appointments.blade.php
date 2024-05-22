@@ -48,9 +48,9 @@
             </div>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md my-4">
-        <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
-            <thead class="bg-gray-50">
+    <div class="w-full rounded-lg border border-gray-200 shadow-md my-4">
+        <table class="w-full border bg-white text-left text-sm text-gray-500 min-w-screen">
+            <thead class="table-header bg-gray-50">
             <tr>
                 <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
                     <x-input wire:model="selectedDay" type="date"
@@ -199,7 +199,13 @@
                                 {{ __('Close') }}
                             </x-button.default>
                         @endif
+                        <a href="{{route('manage.appointments.show', $confirmSelectAppointment->id)}}">
+                            <x-button.default>
+                                {{ __('Show') }}
+                            </x-button.default>
+                        </a>
                     @endif
+
                     <x-button.secondary wire:click="unsetSelectedAppointment"
                                         wire:loading.attr="disabled">
                         {{ __('Back') }}
@@ -472,7 +478,8 @@
             idTo = e.target.getAttribute('drag-item')
         }
 
-    @this.call('reorder', idForm, idTo, currentAppointment)
+        @this.
+        call('reorder', idForm, idTo, currentAppointment)
     }
     let eventDragenter = e => {
         if (e.target.tagName !== 'P') {
@@ -539,6 +546,12 @@
 </script>
 
 <style>
+    .table-header {
+        position: sticky;
+        z-index: 11;
+        top: 64px;
+    }
+
     .day-column {
         position: relative;
     }

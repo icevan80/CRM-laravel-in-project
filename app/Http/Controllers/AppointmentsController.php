@@ -86,7 +86,7 @@ class AppointmentsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return view('dashboard.manage.appointments.show');
     }
 
     /**

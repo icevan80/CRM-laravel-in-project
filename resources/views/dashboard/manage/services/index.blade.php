@@ -39,7 +39,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-4">
         <livewire:manage.services/>
     </div>
     @if(request()->routeIs('manage.services.edit'))
