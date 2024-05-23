@@ -223,6 +223,28 @@
                     {{ __('Create Appointment') }}
                 </x-slot>
                 <x-slot name="content">
+                    <div>
+                        <div style="width: 100%; position: relative">
+                            <x-input type="search" wire:click="startsearch" wire:model.debounce.500ms="searchService"></x-input>
+                            @if($this->searchService != '')
+                                <div style="position: absolute; width: 500px; max-height: 500px; background-color: white; left: 0;">
+                                    @forelse($searchedServices as $service)
+                                        <div>
+                                            <h1 wire:click="changeName('{{$service->name}}')">
+                                                {{$service->name}}
+                                            </h1>
+                                        </div>
+                                        @empty
+                                            <div>
+                                                <h1>
+                                                    Пусто
+                                                </h1>
+                                            </div>
+                                    @endforelse
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                     @if($confirmingAppointmentCreate)
                         <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
                         <x-input id="name" type="text" name="appointment_name"

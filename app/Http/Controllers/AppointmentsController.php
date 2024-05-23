@@ -86,7 +86,9 @@ class AppointmentsController extends Controller
      */
     public function show(string $id)
     {
-        return view('dashboard.manage.appointments.show');
+        $appointment = Appointment::findOrFail($id);
+        $masters = Master::all();
+        return view('dashboard.manage.appointments.show', compact('appointment', 'masters'));
     }
 
     /**
@@ -107,7 +109,7 @@ class AppointmentsController extends Controller
 
     public function updateImplementer(Request $request, string $id)
     {
-        $appointment = Appointment::where('id', $id)->first();
+        $appointment = Appointment::findOrFail($id);
         $appointment->implementer_id = $request['implementer_id'];
         $appointment->save();
 
@@ -116,7 +118,7 @@ class AppointmentsController extends Controller
 
     public function cancel(string $id)
     {
-        $appointment = Appointment::where('id', $id)->first();
+        $appointment = Appointment::findOrFail($id);
         $appointment->complete = true;
         $appointment->save();
         return redirect()->back();
@@ -127,7 +129,7 @@ class AppointmentsController extends Controller
      */
     public function destroy(string $id)
     {
-        $appointment = Appointment::where('id', $id)->first();
+        $appointment = Appointment::findOrFail($id);
         $appointment->status = false;
         $appointment->save();
         return redirect()->back();

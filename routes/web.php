@@ -157,7 +157,7 @@ Route::middleware([
                     Route::put('/appointments/{id}/cancel', 'cancel')->name('manage.appointments.cancel');
                     Route::put('/appointments/{id}/destroy', 'destroy')->name('manage.appointments.destroy');
                 });
-            });
+            })->name('manage.appointments.route');
         });
 
 //        Route::prefix('manage')->group(function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Manage;
 
 use App\Models\Appointment;
+use App\Models\Service;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,9 @@ class Appointments extends Component
     public $tableCells = [];
     public $dateRange = array('now' => null, 'start' => null, 'end' => null);
     private $forceGenerate = false;
+
+    public $searchService;
+//    public $searchedServices;
 
     public $services;
     public $locations;
@@ -182,6 +186,21 @@ class Appointments extends Component
             ->paginate(50);
 
 
+        $searchedServices = Service::when($this->searchService, function ($query) {
+            $query->where('name', 'like', '%'.$this->searchService.'%')
+                ->orWhere('slug', 'like', '%'.$this->searchService.'%')
+                ->orWhere('notes', 'like', '%'.$this->searchService.'%')
+                ->orWhere('price', 'like', '%'.$this->searchService.'%')
+                ->orWhere('max_price', 'like', '%'.$this->searchService.'%')
+                ->orWhereHas('category', function ($query) {
+                    $query->where('name', 'like', '%'.$this->searchService.'%');
+                });
+        })
+            ->orderByPrice('PriceLowToHigh')
+            ->with('category')
+            ->where('status', true)
+            ->paginate(10);
+
         switch ($this->list) {
             case 'today_tomorrow':
             case 'two_weeks':
@@ -196,6 +215,7 @@ class Appointments extends Component
                 return view('livewire.manage.appointments', [
                     'appointments' => $this->appointments,
                     'services' => $this->services,
+                    'searchedServices' => $searchedServices,
                     'locations' => $this->locations,
                     'masters' => $this->masters,
                     'tableCells' => $this->tableCells,
@@ -425,5 +445,25 @@ class Appointments extends Component
             ->whereBetween('end_time', [$timeStart, today()->setTimeFrom($timeEnd)->subMinute()->toTimeString()]);
 
         return $is_available_first->count() == 0 && $is_available_second->count() == 0;
+    }
+
+//    public function updatedSearchService ($value) {
+//        $this->searchedServices = Service::where(function ($query) {
+//            $query->where('name', 'like', '%'.$this->searchService.'%')
+//                ->orWhere('slug', 'like', '%'.$this->searchService.'%')
+//                ->orWhere('notes', 'like', '%'.$this->searchService.'%')
+//                ->orWhereHas('category', function ($query) {
+//                    $query->where('name', 'like', '%'.$this->searchService.'%');
+//                });
+//        })
+//            ->where('status', true);
+//    }
+
+    public function changeName($value) {
+        $this->searchService = $value;
+    }
+
+    public function startSearch() {
+        dd('ABOBA');
     }
 }
