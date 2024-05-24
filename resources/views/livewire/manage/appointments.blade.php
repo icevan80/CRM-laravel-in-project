@@ -223,33 +223,28 @@
                     {{ __('Create Appointment') }}
                 </x-slot>
                 <x-slot name="content">
-                    <div>
-                        <div style="width: 100%; position: relative">
-                            <x-input type="search" wire:click="startsearch" wire:model.debounce.500ms="searchService"></x-input>
-                            @if($this->searchService != '')
-                                <div style="position: absolute; width: 500px; max-height: 500px; background-color: white; left: 0;">
-                                    @forelse($searchedServices as $service)
-                                        <div>
-                                            <h1 wire:click="changeName('{{$service->name}}')">
-                                                {{$service->name}}
-                                            </h1>
-                                        </div>
-                                        @empty
-                                            <div>
-                                                <h1>
-                                                    Пусто
+
+                    @if($confirmingAppointmentCreate)
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
+                            <div style="width: 600px; position: relative">
+                                <x-input class="w-full" id="name" type="text" name="appointment_name"
+                                         wire:focusout="endSearch"
+                                         wire:focusin="startSearch"
+                                         wire:model.debounce.500ms="searchService"></x-input>
+                                @if($this->searchProcess)
+                                    <div class="search-result-list">
+                                        @foreach($searchedServices as $service)
+                                            <div class="search-result-item">
+                                                <h1 wire:click="changeName('{{$service->name}}')">
+                                                    {{$service->name}}
                                                 </h1>
                                             </div>
-                                    @endforelse
-                                </div>
-                            @endif
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                    </div>
-                    @if($confirmingAppointmentCreate)
-                        <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
-                        <x-input id="name" type="text" name="appointment_name"
-                        >
-                        </x-input>
                         <label for="description"
                                class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
                         <textarea id="description" name="appointment_description"
@@ -500,8 +495,7 @@
             idTo = e.target.getAttribute('drag-item')
         }
 
-        @this.
-        call('reorder', idForm, idTo, currentAppointment)
+    @this.call('reorder', idForm, idTo, currentAppointment)
     }
     let eventDragenter = e => {
         if (e.target.tagName !== 'P') {
@@ -675,6 +669,27 @@
 
     .mobile-filters {
         display: flex;
+    }
+
+    .search-result-list {
+        position: absolute;
+        width: calc(100% + 2px);
+        max-height: 300px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        background-color: white;
+        left: -1px;
+        top: 36px;
+    }
+
+    .search-result-item {
+        cursor: pointer;
+        padding: 6px 12px;
+    }
+
+    .search-result-item:hover {
+        background-color: darkgray;
+
     }
 
     @media (max-width: 640px) {

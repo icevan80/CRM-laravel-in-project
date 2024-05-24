@@ -17,7 +17,7 @@ class Appointments extends Component
     private $forceGenerate = false;
 
     public $searchService;
-//    public $searchedServices;
+    public $searchProcess = false;
 
     public $services;
     public $locations;
@@ -447,23 +447,15 @@ class Appointments extends Component
         return $is_available_first->count() == 0 && $is_available_second->count() == 0;
     }
 
-//    public function updatedSearchService ($value) {
-//        $this->searchedServices = Service::where(function ($query) {
-//            $query->where('name', 'like', '%'.$this->searchService.'%')
-//                ->orWhere('slug', 'like', '%'.$this->searchService.'%')
-//                ->orWhere('notes', 'like', '%'.$this->searchService.'%')
-//                ->orWhereHas('category', function ($query) {
-//                    $query->where('name', 'like', '%'.$this->searchService.'%');
-//                });
-//        })
-//            ->where('status', true);
-//    }
-
     public function changeName($value) {
         $this->searchService = $value;
     }
 
     public function startSearch() {
-        dd('ABOBA');
+        $this->searchProcess = true;
+    }
+
+    public function endSearch() {
+        $this->searchProcess = false;
     }
 }
