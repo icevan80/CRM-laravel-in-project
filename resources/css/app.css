@@ -6,6 +6,10 @@
     display: none;
 }
 
+:root {
+    --main-background: green;
+}
+
 .main-color-aboba {
     background-color: red;
 }
