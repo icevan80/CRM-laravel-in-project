@@ -6,10 +6,14 @@
     display: none;
 }
 
-:root {
-    --main-background: green;
+.store-primary-color {
+    background-color: var(--store-primary-color);
 }
 
-.main-color-aboba {
-    background-color: red;
+.store-secondary-color {
+    background-color: var(--store-secondary-color);
+}
+
+.store-surface-color {
+    background-color: var(--store-surface-color);
 }

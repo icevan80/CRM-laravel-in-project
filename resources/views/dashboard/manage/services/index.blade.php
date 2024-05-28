@@ -1,11 +1,9 @@
 <x-dashboard.shell>
-
-
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Services</h2>
         <h2 class="bg-pink-500 text-2xl font-bold">Services</h2>
-        <h2 class="bg-primary-color text-2xl font-bold">Services</h2>
-        <h2 class="bg-primary-color-test(red) text-2xl font-bold">Services</h2>
+        <h2 class="primary-color text-2xl font-bold">Services</h2>
+        <h2 class="store-primary-color text-2xl font-bold">Services</h2>
 
 
         <div x-data="{showCreateServices: {{request()->routeIs('manage.services.create') ? 'true' : 'false'}}}">
@@ -34,7 +32,7 @@
                             </x-button.default>
                             <a href="{{route('manage.services')}}">
                                 <x-button.secondary x-on:click="showCreateServices = false">
-                                    Отмена
+                                    {{ __('Cancel') }}
                                 </x-button.secondary>
                             </a>
                         </div>
@@ -48,40 +46,34 @@
         <livewire:manage.services/>
     </div>
     @if(request()->routeIs('manage.services.edit'))
-    <div x-data="{showEditService: {{request()->routeIs('manage.services.edit') ? 'true' : 'false'}}}">
-        <form action="{{route('manage.services.update', ['id'=> $id])}}" method="post">
-            @csrf
-            @method('PUT')
-            <x-dialog.default listener="showEditService" back-route="{{route('manage.services')}}">
-                <x-slot name="title">
-                    Редактирование услуги
-                </x-slot>
+        <div x-data="{showEditService: {{request()->routeIs('manage.services.edit') ? 'true' : 'false'}}}">
+            <form action="{{route('manage.services.update', ['id'=> $id])}}" method="post">
+                @csrf
+                @method('PUT')
+                <x-dialog.default listener="showEditService" back-route="{{route('manage.services')}}">
+                    <x-slot name="title">
+                        Редактирование услуги
+                    </x-slot>
 
-                <x-slot name="content">
-                    <x-forms.edit.service :categories="$categories" :masters="$masters" :service="$service"/>
-                </x-slot>
+                    <x-slot name="content">
+                        <x-forms.edit.service :categories="$categories" :masters="$masters" :service="$service"/>
+                    </x-slot>
 
-                <x-slot name="footer">
-                    <div class="flex gap-3">
-                        <x-button.default>
-                            Сохранить
-                        </x-button.default>
-                        <a href="{{route('manage.services')}}">
-                            <x-button.secondary x-on:click="showEditService = false">
-                                Отмена
-                            </x-button.secondary>
-                        </a>
-                    </div>
-                </x-slot>
+                    <x-slot name="footer">
+                        <div class="flex gap-3">
+                            <x-button.default>
+                                Сохранить
+                            </x-button.default>
+                            <a href="{{route('manage.services')}}">
+                                <x-button.secondary x-on:click="showEditService = false">
+                                    {{ __('Cancel') }}
+                                </x-button.secondary>
+                            </a>
+                        </div>
+                    </x-slot>
 
-            </x-dialog.default>
-        </form>
-    </div>
+                </x-dialog.default>
+            </form>
+        </div>
     @endif
 </x-dashboard.shell>
-
-<style>
-    .bg-primary-color-test {
-        background-color: var();
-    }
-</style>

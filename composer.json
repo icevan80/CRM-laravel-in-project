@@ -13,6 +13,7 @@
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^2.11",
+        "outl1ne/nova-settings": "^2.4",
         "rappasoft/laravel-livewire-tables": "^2.14"
     },
     "require-dev": {

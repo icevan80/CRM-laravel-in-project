@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Deal;
-use App\Models\Permission;
 
 class DisplayDeal extends Controller
 {
@@ -16,11 +15,11 @@ class DisplayDeal extends Controller
 //        auth()->user()->addPermissionRule($permission, false);
 //        $role = Role::getRole(3);
 //        dd(auth()->user()->updateRole($role));
-        $permissions = Permission::all();
-        $array = array();
-        foreach ($permissions as $permission) {
-            $array[$permission->id] = $permission->code_name;
-        }
+//        $permissions = Permission::all();
+//        $array = array();
+//        foreach ($permissions as $permission) {
+//            $array[$permission->id] = $permission->code_name;
+//        }
 
 //        auth()->user()->updateRole(Role::getRole(1));
 

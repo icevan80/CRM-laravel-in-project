@@ -17,7 +17,7 @@
 
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/colorScheme.css'])
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         <!-- Styles -->
         @livewireStyles
@@ -63,3 +63,17 @@
         @livewireScripts
     </body>
 </html>
+
+@php
+    // \Illuminate\Support\Facades\App::setLocale(getStore()->default_lang);
+    $theme = getTheme();
+@endphp
+
+
+<style>
+    :root {
+        --store-primary-color: {{ $theme['primary_color'] }};
+        --store-secondary-color: {{ $theme['secondary_color'] }};
+        --store-surface-color: {{ $theme['surface_color'] }};
+    }
+</style>

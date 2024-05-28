@@ -5,6 +5,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LocationsController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +73,17 @@ Route::middleware([
                 Route::get('/roles', 'index')->name('settings.roles');
                 Route::put('/roles/store', 'store')->name('settings.roles.store');
                 Route::put('/roles/{id}/update', 'update')->name('settings.roles.update');
+            });
+        });
+
+        Route::middleware([
+            'validatePermission:edit_salon_settings'
+        ])->group(function () {
+            Route::controller(SalonController::class)->group(function () {
+                Route::get('/salon', 'index')->name('settings.salon');
+                Route::put('/salon/update', 'update')->name('settings.salon.update');
+//                Route::put('/salon/store', 'store')->name('settings.roles.store');
+//                Route::put('/salon/{id}/update', 'update')->name('settings.roles.update');
             });
         });
 
