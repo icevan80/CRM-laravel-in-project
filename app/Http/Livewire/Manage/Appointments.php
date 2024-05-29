@@ -226,7 +226,7 @@ class Appointments extends Component
 
                 ]);
             case 'rows':
-                return view('livewire.manage-appointments-rows', [
+                return view('livewire.appointments-rows', [
                     'appointments' => $this->appointments,
                     'services' => $this->services,
                     'locations' => $this->locations,

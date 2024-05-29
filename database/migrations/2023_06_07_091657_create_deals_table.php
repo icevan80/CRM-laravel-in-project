@@ -19,6 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->boolean('is_hidden')->default(false);
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
