@@ -1,10 +1,6 @@
 <x-dashboard.shell>
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Services</h2>
-        <h2 class="bg-pink-500 text-2xl font-bold">Services</h2>
-        <h2 class="primary-color text-2xl font-bold">Services</h2>
-        <h2 class="store-primary-color text-2xl font-bold">Services</h2>
-
 
         <div x-data="{showCreateServices: {{request()->routeIs('manage.services.create') ? 'true' : 'false'}}}">
             <a href="{{route('manage.services.create')}}">

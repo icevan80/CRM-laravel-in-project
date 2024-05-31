@@ -72,8 +72,8 @@
 
 <style>
     :root {
-        --primary-color: {{$theme['primary_variant_color']}};
-        --primary-variant-color: {{$theme['primary_color']}};
+        --primary-variant-color: {{$theme['primary_variant_color']}};
+        --primary-color: {{$theme['primary_color']}};
         --primary-unselect-color: {{$theme['primary_unselect_color']}};
         --on-primary-color: {{$theme['on_primary_color']}};
         --secondary-variant-color: {{$theme['secondary_variant_color']}};
