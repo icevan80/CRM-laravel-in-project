@@ -48,15 +48,16 @@ class SalonController extends Controller
      */
     public function update(Request $request)
     {
-
-        $jsonArray = array();
-            $jsonArray['primary_color'] = $request['primary_color'];
-            $jsonArray['secondary_color'] = $request['secondary_color'];
-            $jsonArray['surface_color'] = $request['surface_color'];
-        $jsonString = utf8_encode(json_encode($jsonArray, JSON_PRETTY_PRINT));
+        $scheme = $request->all();
+        unset($scheme['_token']);
+        unset($scheme['_method']);
+        $jsonString = utf8_encode(json_encode($scheme, JSON_PRETTY_PRINT));
         $fp = fopen(resource_path('/settings/default.json'), 'w');
         fwrite($fp, $jsonString);
         fclose($fp);
+        $settings = getStore();
+        $settings->color_scheme = json_encode($scheme);
+        $settings->save();
         return redirect()->back();
     }
 

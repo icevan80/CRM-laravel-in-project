@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('store_settings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+            $table->json('color_scheme')->default('[]');
             $table->string('default_lang');
             $table->string('default_color_primary');
             $table->string('default_color_secondary');
