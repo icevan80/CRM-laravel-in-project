@@ -59,16 +59,9 @@ class Appointments extends Component
     public $selectedDay;
 
     public array $newAppointment = array(
-        'creator_id' => null,
-        'implementer_id' => null,
-        'receiving_name' => null,
-        'receiving_description' => null,
         'date' => null,
         'start_time' => null,
         'end_time' => null,
-        'location_id' => null,
-        'service_id' => null,
-        'total' => null,
     );
 
     public $implementer;
@@ -226,7 +219,7 @@ class Appointments extends Component
 
                 ]);
             case 'rows':
-                return view('livewire.appointments-rows', [
+                return view('livewire.manage.appointments-rows', [
                     'appointments' => $this->appointments,
                     'services' => $this->services,
                     'locations' => $this->locations,

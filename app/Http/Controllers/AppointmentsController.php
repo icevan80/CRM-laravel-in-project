@@ -45,6 +45,8 @@ class AppointmentsController extends Controller
             $request['appointment_description'] = '';
         }
 
+        $request['appointment_name'] = Service::findOrFail($request['appointment_service_id'])->name;
+
         $request->validate([
             'appointment_name' => 'required|string|min:1|max:255',
             'appointment_description' => 'nullable|string',
