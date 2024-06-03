@@ -10,39 +10,31 @@
                         <td>
                             <div style="display: flex; position: relative" class="text-left">
                                 <h2 style="width: 50%;  " class="pl-6">{{$permission->name}}</h2>
-                                <div style="margin-right: 0; align-content: end">
-                                    <label>
-                                        <x-input type="radio"
-                                                 wire:click="updateStatus('{{$permission->id}}')"
-                                                 wire:model="permissionsMap.{{$permission->id}}.status"
-                                                 value="allow"></x-input>
-                                        Allow
-                                    </label>
-                                    <label>
-                                        <x-input type="radio"
-                                                 wire:click="updateStatus('{{$permission->id}}')"
-                                                 wire:model="permissionsMap.{{$permission->id}}.status"
-                                                 value="reject"></x-input>
-                                        Reject
-                                    </label>
-                                    <label>
-                                        <x-input type="radio"
-                                                 wire:click="updateStatus('{{$permission->id}}')"
-                                                 wire:model="permissionsMap.{{$permission->id}}.status"
-                                                 value="default"></x-input>
-                                        Role
-                                        ({{ $this->permissionsMap[$permission->id]['roleStatus'] == 'allow' ? 'Allow' : 'Reject' }})
-                                    </label>
+                                <div style="margin-right: 0; align-content: end" class="flex">
+                                    <x-inputs.radio
+                                        wire:click="updateStatus('{{$permission->id}}')"
+                                        wire:model="permissionsMap.{{$permission->id}}.status"
+                                        value="allow"
+                                        label="{{__('Allow')}}"></x-inputs.radio>
+                                    <x-inputs.radio
+                                        wire:click="updateStatus('{{$permission->id}}')"
+                                        wire:model="permissionsMap.{{$permission->id}}.status"
+                                        value="reject"
+                                        label="{{__('Reject')}}"></x-inputs.radio>
+                                    <x-inputs.radio
+                                        wire:click="updateStatus('{{$permission->id}}')"
+                                        wire:model="permissionsMap.{{$permission->id}}.status"
+                                        value="default"
+                                        label="Role
+                                        ({{ $this->permissionsMap[$permission->id]['roleStatus'] == 'allow' ? 'Allow' : 'Reject' }})"></x-inputs.radio>
                                 </div>
                             </div>
                         </td>
                     @else
                         <td>
-                            <div style="display: flex" class="text-left">
-                                <x-checkbox wire:click="updateStatus('{{$permission->id}}')"
-                                            wire:model="permissionsMap.{{$permission->id}}.status"></x-checkbox>
-                                <h2 class="pl-6">{{$permission->name}}</h2>
-                            </div>
+                            <x-inputs.checkbox wire:click="updateStatus('{{$permission->id}}')"
+                                               wire:model="permissionsMap.{{$permission->id}}.status"
+                                               label="{{$permission->name}}"></x-inputs.checkbox>
                         </td>
                     @endif
                     @if($loop->index % $this->elementsInRow == $this->elementsInRow - 1 || $loop->last)

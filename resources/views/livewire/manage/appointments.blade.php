@@ -227,15 +227,14 @@
                     @if($confirmingAppointmentCreate)
                         <div class="flex space-x-4">
                             <div class="w-full">
-                                <label for="service"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Service') }}</label>
-                                <select id="service" class="w-full border text-gray-900  border-gray-300 rounded-lg"
-                                        name="appointment_service_id"
-                                        wire:model="newAppointment.service_id">
-                                    @foreach ($services as $service)
-                                        <option value={{$service->id}}>{{$service->name}}</option>
-                                    @endforeach
-                                </select>
+                                <x-inputs.select id="service" name="appointment_service_id"
+                                                 class="w-full"
+                                                 label="{{ __('Service') }}"
+                                                 wire:model="newAppointment.service_id">
+                                        @foreach ($services as $service)
+                                            <option value={{$service->id}}>{{$service->name}}</option>
+                                        @endforeach
+                                </x-inputs.select>
                                 {{--<div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
                                     <div style="width: 600px; position: relative">
@@ -256,77 +255,75 @@
                                         @endif
                                     </div>
                                 </div>--}}
-                                <label for="description"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Description') }}</label>
-                                <textarea id="description" name="appointment_description"
-                                          class="w-full border text-gray-900  border-gray-300 rounded-lg"></textarea>
+                                <x-inputs.textarea id="description" name="appointment_description"
+                                                   class="w-full"
+                                                   label="{{ __('Description') }}">
+                                </x-inputs.textarea>
 
-                                <label for="implementer"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
                                 @if($this->allowOthers)
-                                    <select id="implementer" class="w-full border text-gray-900  border-gray-300 rounded-lg"
-                                            name="appointment_implementer_id">
-                                        @foreach ($masters as $master)
-                                            <option value={{$master->user->id}}>{{$master->user->name}}</option>
-                                        @endforeach
-                                    </select>
+                                    <x-inputs.select id="implementer" name="appointment_implementer_id"
+                                                     class="w-full"
+                                                     label="{{ __('Location') }}">
+                                            @foreach ($masters as $master)
+                                                <option value={{$master->user->id}}>{{$master->user->name}}</option>
+                                            @endforeach
+                                    </x-inputs.select>
                                 @else
-                                    <x-input type="hidden" id="implementer" name="appointment_implementer_id"
-                                             value="{{auth()->user()->id}}"></x-input>
+                                    <label for="implementer"
+                                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                                    <x-inputs.default type="hidden" id="implementer" name="appointment_implementer_id"
+                                             value="{{auth()->user()->id}}"></x-inputs.default>
                                     <p>{{ auth()->user()->name }}</p>
                                 @endif
 
-                                <label for="date"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Date') }}</label>
-                                <x-input id="date" type="date" class="border text-gray-900  border-gray-300 rounded-lg"
-                                         value="{{$confirmingAppointmentCreate->format('Y-m-d')}}"
-                                         name="appointment_date"
-                                         wire:model="newAppointment.date"
-                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                         max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
-                                </x-input>
+                                <x-inputs.date id="date"
+                                               label="{{ __('Date') }}"
+                                               value="{{$confirmingAppointmentCreate->format('Y-m-d')}}"
+                                               name="appointment_date"
+                                               wire:model="newAppointment.date"
+                                               min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                               max="{{ \Carbon\Carbon::now()->addDays(30)->format('Y-m-d') }}">
+
+                                </x-inputs.date>
+
                                 <label for="time"
                                        class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
                                 <div class="time-block">
-                                    <select id="time_start" class="border text-gray-900  border-gray-300 rounded-lg"
-                                            name="appointment_start_time"
-                                            wire:model="newAppointment.start_time">
-                                        @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                            @if($i->lessThan(now()))
-                                                @continue
-                                            @endif
-                                            <option
-                                                value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                                        @endfor
-                                    </select>
-                                    <select id="time_end" class="border text-gray-900  border-gray-300 rounded-lg"
-                                            name="appointment_end_time">
-                                        @for ($i = today()->setDateFrom($newAppointment['date'])->setTimeFrom($newAppointment['start_time'])->addMinutes($this->getSelectedServiceDuration()); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                            @if($i->lessThan(now()->addMinutes($this->getSelectedServiceDuration())))
-                                                @continue
-                                            @endif
-                                            <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                                        @endfor
-                                    </select>
+                                    <x-inputs.select id="time_start" name="appointment_start_time" wire:model="newAppointment.start_time">
+                                            @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                                @if($i->lessThan(now()))
+                                                    @continue
+                                                @endif
+                                                <option
+                                                    value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                            @endfor
+                                    </x-inputs.select>
+                                    <x-inputs.select id="time_end" name="appointment_end_time">
+                                            @for ($i = today()->setDateFrom($newAppointment['date'])->setTimeFrom($newAppointment['start_time'])->addMinutes($this->getSelectedServiceDuration()); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                                @if($i->lessThan(now()->addMinutes($this->getSelectedServiceDuration())))
+                                                    @continue
+                                                @endif
+                                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                            @endfor
+                                    </x-inputs.select>
                                 </div>
 
-                                <label for="location"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Location') }}</label>
-                                <select id="location"
-                                        class="w-full border text-gray-900  border-gray-300 rounded-lg"
-                                        name="appointment_location_id">
-                                    @foreach ($locations as $location)
-                                        <option value={{$location->id}}>{{$location->name}}
-                                            - {{$location->address}}</option>
-                                    @endforeach
-                                </select>
-                                <x-input type="hidden" id="creator" name="appointment_creator_id"
-                                         value="{{auth()->user()->id}}"></x-input>
-                                <x-input type="hidden" id="total" name="appointment_total"
-                                         value="{{$this->getSelectedServiceTotal()}}"></x-input>
+                                <x-inputs.select id="location" name="appointment_location_id"
+                                                 class="w-full"
+                                                 label="{{ __('Location') }}">
+                                        @foreach ($locations as $location)
+                                            <option value={{$location->id}}>{{$location->name}}
+                                                - {{$location->address}}</option>
+                                        @endforeach
+                                </x-inputs.select>
+
+                                <x-inputs.default type="hidden" id="creator" name="appointment_creator_id"
+                                         value="{{auth()->user()->id}}"></x-inputs.default>
+                                <x-inputs.default type="hidden" id="total" name="appointment_total"
+                                         value="{{$this->getSelectedServiceTotal()}}"></x-inputs.default>
                             </div>
                             <div class="w-full">
-
+                                <h1>Client data</h1>
 
                             </div>
                         </div>
