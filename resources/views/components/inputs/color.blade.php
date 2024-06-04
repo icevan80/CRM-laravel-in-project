@@ -14,19 +14,19 @@
         <div style="margin: auto 0">
                 @if(str_starts_with($color, 'text_on_'))
                     <div class="rounded mx-6"
-                         style="min-width: 32px; height: 32px; background-color: {{ $this->scheme[str_replace('text_on_', '', $color)] }}">
-                        <p style="padding: 3px 8px; color: {{ $this->scheme[$color] }}">Hello world!</p>
+                         style="min-width: 32px; height: 32px; background-color: rgb({{ $this->scheme[str_replace('text_on_', '', $color)] }})">
+                        <p style="padding: 3px 8px; color: rgb({{ $this->scheme[$color] }})">Hello world!</p>
                     </div>
                 @elseif(str_starts_with($color, 'on_'))
                     <div class="rounded mx-6 p-1"
-                         style="min-width: 32px; height: 32px; background-color: {{ $this->scheme[str_replace('on_', '', $color)] }}">
+                         style="min-width: 32px; height: 32px; background-color: rgb({{ $this->scheme[str_replace('on_', '', $color)] }})">
                         <div class="w-full h-full rounded"
-                             style="background-color: {{ $this->scheme[$color] }}">
+                             style="background-color: rgb({{ $this->scheme[$color] }})">
                         </div>
                     </div>
                 @else
                     <div class="rounded mx-6"
-                         style="min-width: 32px; height: 32px; background-color: {{ $this->scheme[$color] }}">
+                         style="min-width: 32px; height: 32px; background-color: rgb({{ $this->scheme[$color] }})">
                     </div>
                 @endif
         </div>

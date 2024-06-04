@@ -51,6 +51,22 @@ class SalonController extends Controller
         $scheme = $request->all();
         unset($scheme['_token']);
         unset($scheme['_method']);
+        foreach ($scheme as $key => $color) {
+
+            $str = $color;
+            if (str_starts_with($color,'rgb(')) {
+                $str = str_replace('rgb(', '', $color);
+                $str = str_replace(')', '', $str);
+                $str = str_replace(',', '', $str);
+            } else if (str_starts_with($color,'#')) {
+                $str = '';
+                foreach (sscanf($color, "#%02x%02x%02x") as $code) {
+                    $str .= $code.' ';
+                }
+                $str = rtrim($str, " ");
+            }
+            $scheme[$key] = $str;
+        }
         $jsonString = utf8_encode(json_encode($scheme, JSON_PRETTY_PRINT));
         $fp = fopen(resource_path('/settings/default.json'), 'w');
         fwrite($fp, $jsonString);
@@ -67,5 +83,9 @@ class SalonController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function fillBD() {
+
     }
 }
