@@ -41,8 +41,7 @@
         <div class="w-full" x-data="{appDataFalse: false}">
             <div style="float:right;">
                 <x-button.default
-                    wire:click="confirmAppointmentCreate('{{ \Carbon\Carbon::now() }}', '{{ false }}')"
-                    class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+                    wire:click="confirmAppointmentCreate('{{ \Carbon\Carbon::now() }}', '{{ false }}')">
                     Create
                 </x-button.default>
             </div>

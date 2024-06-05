@@ -65,7 +65,10 @@ class SalonController extends Controller
                 }
                 $str = rtrim($str, " ");
             }
-            $scheme[$key] = $str;
+            $arr = explode(' ', $str);
+//            dd($this->rgbToHsl($arr[0], $arr[1], $arr[2]));
+            $arr = rgbToHsl($arr);
+            $scheme[$key] = array('h' => $arr[0], 's' => $arr[1], 'l' => $arr[2]);
         }
         $jsonString = utf8_encode(json_encode($scheme, JSON_PRETTY_PRINT));
         $fp = fopen(resource_path('/settings/default.json'), 'w');
