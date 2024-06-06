@@ -7,20 +7,20 @@
                 {{ __($translate) }}
             </label>
         @endforeach
-        <x-button wire:click="changeTranslation('{{$this->temp_lang}}')" wire:loading.attr="disabled">
+        <x-button.default wire:click="changeTranslation('{{$this->temp_lang}}')" wire:loading.attr="disabled">
             <p>{{ __('Choose') }}</p>
-        </x-button>
-        <x-button wire:click="$set('createNewTranslation', true)"
+        </x-button.default>
+        <x-button.default wire:click="$set('createNewTranslation', true)"
                   wire:loading.attr="disabled">
             {{ __('Create') }}
-        </x-button>
+        </x-button.default>
     </div>
-    <x-button wire:click="saveTranslationConfig">
+    <x-button.default wire:click="saveTranslationConfig">
         <p>{{ __('Save changes') }}</p>
-    </x-button>
-    <x-button wire:click="syncTranslationKeys">
+    </x-button.default>
+    <x-button.default wire:click="syncTranslationKeys">
         <p>{{ __('Sync keys') }}</p>
-    </x-button>
+    </x-button.default>
         <table class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5 p-4">
             <thead class="bg-gray-50">
             <tr>
@@ -61,10 +61,10 @@
 
         <x-slot name="footer">
             <div class="flex gap-3">
-                <x-secondary-button wire:click="$set('notificationChangesComplete', false)"
+                <x-button.secondary wire:click="$set('notificationChangesComplete', false)"
                                     wire:loading.attr="disabled">
                     {{ __('Ok') }}
-                </x-secondary-button>
+                </x-button.secondary>
 
 
             </div>
@@ -93,15 +93,15 @@
         <x-slot name="footer">
 
             <div class="flex gap-3">
-                <x-button wire:click="createNewTranslation('{{ $code }}', '{{ $name }}')">
+                <x-button.default wire:click="createNewTranslation('{{ $code }}', '{{ $name }}')">
                     {{ __('Create') }}
-                </x-button>
+                </x-button.default>
             </div>
             <div class="flex gap-3">
-                <x-secondary-button wire:click="$set('createNewTranslation', false)"
+                <x-button.secondary wire:click="$set('createNewTranslation', false)"
                                     wire:loading.attr="disabled">
                     {{ __('Ok') }}
-                </x-secondary-button>
+                </x-button.secondary>
 
 
             </div>

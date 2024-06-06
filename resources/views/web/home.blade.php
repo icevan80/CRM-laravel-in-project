@@ -105,7 +105,7 @@ Book Now      </a>
                   <p class="ml-auto text-lg font-medium text-green-500">10% off</p>
                 </div>
                   <a href="{{route('services')}}">
-                      <x-button>Book Now</x-button>
+                      <x-button.default>Book Now</x-button.default>
                   </a>
               </div>
             </div>
@@ -127,7 +127,7 @@ Book Now      </a>
                   <p class="ml-auto text-lg font-medium text-green-500">10% off</p>
                 </div>
                   <a href="{{route('services')}}">
-                      <x-button>Book Now</x-button>
+                      <x-button.default>Book Now</x-button.default>
                   </a>
               </div>
             </div>
@@ -148,7 +148,7 @@ Book Now      </a>
                   <p class="ml-auto text-lg font-medium text-green-500">10% off</p>
                 </div>
                   <a href="{{route('services')}}">
-                      <x-button>Book Now</x-button>
+                      <x-button.default>Book Now</x-button.default>
                   </a>
               </div>
             </div>
@@ -158,14 +158,14 @@ Book Now      </a>
 
       <div class="flex justify-end mx-auto pb-5 gap-3 md:w-3/4">
 
-        <x-secondary-button>View price list </x-secondary-button>
+        <x-button.secondary>View price list </x-button.secondary>
         <a href="{{route('services')}}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded">
           View All Services
         </a>
       </div>
 {{--
       <div class="m-8 text-center w-2"> --}}
-        {{-- <x-button>View all services</x-button>   --}}
+        {{-- <x-button.default>View all services</x-button.default>   --}}
         {{-- <a
           href="#"
           class="block w-full rounded bg-pink-500 px-12 py-3 text-lg font-medium text-white shadow hover:bg-pink-700 focus:outline-none focus:ring active:bg-pink-500 sm:w-auto"

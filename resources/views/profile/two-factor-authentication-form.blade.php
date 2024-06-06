@@ -79,42 +79,42 @@
         <div class="mt-5">
             @if (! $this->enabled)
                 <x-confirms-password wire:then="enableTwoFactorAuthentication">
-                    <x-button type="button" wire:loading.attr="disabled">
+                    <x-button.default type="button" wire:loading.attr="disabled">
                         {{ __('Enable') }}
-                    </x-button>
+                    </x-button.default>
                 </x-confirms-password>
             @else
                 @if ($showingRecoveryCodes)
                     <x-confirms-password wire:then="regenerateRecoveryCodes">
-                        <x-secondary-button class="mr-3">
+                        <x-button.secondary class="mr-3">
                             {{ __('Regenerate Recovery Codes') }}
-                        </x-secondary-button>
+                        </x-button.secondary>
                     </x-confirms-password>
                 @elseif ($showingConfirmation)
                     <x-confirms-password wire:then="confirmTwoFactorAuthentication">
-                        <x-button type="button" class="mr-3" wire:loading.attr="disabled">
+                        <x-button.default type="button" class="mr-3" wire:loading.attr="disabled">
                             {{ __('Confirm') }}
-                        </x-button>
+                        </x-button.default>
                     </x-confirms-password>
                 @else
                     <x-confirms-password wire:then="showRecoveryCodes">
-                        <x-secondary-button class="mr-3">
+                        <x-button.secondary class="mr-3">
                             {{ __('Show Recovery Codes') }}
-                        </x-secondary-button>
+                        </x-button.secondary>
                     </x-confirms-password>
                 @endif
 
                 @if ($showingConfirmation)
                     <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-secondary-button wire:loading.attr="disabled">
+                        <x-button.secondary wire:loading.attr="disabled">
                             {{ __('Cancel') }}
-                        </x-secondary-button>
+                        </x-button.secondary>
                     </x-confirms-password>
                 @else
                     <x-confirms-password wire:then="disableTwoFactorAuthentication">
-                        <x-danger-button wire:loading.attr="disabled">
+                        <x-button.danger wire:loading.attr="disabled">
                             {{ __('Disable') }}
-                        </x-danger-button>
+                        </x-button.danger>
                     </x-confirms-password>
                 @endif
 

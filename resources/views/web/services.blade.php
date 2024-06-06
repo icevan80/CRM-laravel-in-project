@@ -21,7 +21,7 @@
     {{--                    </div>--}}
     {{--                    <p class="ml-auto text-lg font-medium text-green-500">10% off</p>--}}
     {{--                    </div>                --}}
-    {{--                    <x-button >Book Now</x-button>--}}
+    {{--                    <x-button.default >Book Now</x-button.default>--}}
     {{--                </div>--}}
     {{--                </div>--}}
     {{--            </div>--}}

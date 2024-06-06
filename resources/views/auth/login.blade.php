@@ -1,6 +1,6 @@
 <x-guest-layout>
     <x-authentication-card>
-        
+
         <x-slot name="logo">
             <x-authentication-card-logo />
         </x-slot>
@@ -47,10 +47,10 @@
                     </a>
                 @endif
 
-                <x-button class="ml-4">
+                <x-button.default class="ml-4">
                     {{ __('Log in') }}
-                </x-button>
-      
+                </x-button.default>
+
             </div>
             <div class="text-center pt-10">
                 <span class="text-sm text-gray-600">Don't have an account?</span>

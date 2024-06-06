@@ -47,10 +47,12 @@
         </div>
         <div class="flex justify-end mt-4 gap-2">
 
-            <x-secondary-button wire:click="$set('confirmingDealAdd', false)" wire:loading.attr="disabled">
+            <x-button.secondary wire:click="$set('confirmingDealAdd', false)" wire:loading.attr="disabled">
                 {{ __('Cancel') }}
-            </x-secondary-button>
-            <x-button wire:click="saveDeal">Save</x-button>
+            </x-button.secondary>
+            <x-button.default wire:click="saveDeal">
+                Save
+            </x-button.default>
         </div>
     </div>
 </div>

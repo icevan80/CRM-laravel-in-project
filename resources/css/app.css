@@ -6,6 +6,10 @@
     display: none;
 }
 
+/*
+    Background color scheme
+*/
+
 .primary-color {
     --tw-bg-opacity: 1;
     --bg-color-s: var(--primary-s);
@@ -104,56 +108,6 @@
     background-color: hsl(var(--on-error-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
 }
 
-.text-on-primary-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--text-on-primary-s);
-    --text-color-l: var(--text-on-primary-l);
-    color: hsl(var(--text-on-primary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-on-secondary-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--text-on-secondary-s);
-    --text-color-l: var(--text-on-secondary-l);
-    color: hsl(var(--text-on-secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-on-surface-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--text-on-surface-s);
-    --text-color-l: var(--text-on-surface-l);
-    color: hsl(var(--text-on-surface-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-primary-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--primary-s);
-    --text-color-l: var(--primary-l);
-    color: hsl(var(--primary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-secondary-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--secondary-s);
-    --text-color-l: var(--secondary-l);
-    color: hsl(var(--secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-error-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--error-s);
-    --text-color-l: var(--error-l);
-    color: hsl(var(--error-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-.text-success-color {
-    --tw-text-opacity: 1;
-    --text-color-s: var(--success-s);
-    --text-color-l: var(--success-l);
-    color: hsl(var(--success-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
-}
-
-
 .bg-lighter-65 {
     --bg-color-l: 65;
 }
@@ -232,5 +186,484 @@
 
 .hover\:bg-dimmer-25:hover {
     --bg-color-s: 25;
+}
+
+/*
+    Text color scheme
+*/
+
+.text-on-primary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-primary-s);
+    --text-color-l: var(--text-on-primary-l);
+    color: hsl(var(--text-on-primary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-on-secondary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-secondary-s);
+    --text-color-l: var(--text-on-secondary-l);
+    color: hsl(var(--text-on-secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-on-surface-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-surface-s);
+    --text-color-l: var(--text-on-surface-l);
+    color: hsl(var(--text-on-surface-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-primary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--primary-s);
+    --text-color-l: var(--primary-l);
+    color: hsl(var(--primary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-secondary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--secondary-s);
+    --text-color-l: var(--secondary-l);
+    color: hsl(var(--secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-error-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--error-s);
+    --text-color-l: var(--error-l);
+    color: hsl(var(--error-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-on-error-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--on-error-s);
+    --text-color-l: var(--on-error-l);
+    color: hsl(var(--on-error-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-success-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--success-s);
+    --text-color-l: var(--success-l);
+    color: hsl(var(--success-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-on-success-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--on-success-s);
+    --text-color-l: var(--on-success-l);
+    color: hsl(var(--on-success-h) var(--text-color-s) var(--text-color-l) / var(--tw-bg-opacity));
+}
+
+.text-lighter-65 {
+    --text-color-l: 65;
+}
+
+.text-lighter-75 {
+    --text-color-l: 75;
+}
+
+.text-lighter-85 {
+    --text-color-l: 85;
+}
+
+.text-lighter-white {
+    --text-color-l: 100;
+}
+
+.text-darken-35 {
+    --text-color-l: 35;
+}
+
+.text-darken-25 {
+    --text-color-l: 25;
+}
+
+.text-darken-15 {
+    --text-color-l: 15;
+}
+
+.text-darken-black {
+    --text-color-l: 0;
+}
+
+.hover\:text-lighter-65:hover {
+    --text-color-l: 65;
+}
+
+.hover\:text-lighter-75:hover {
+    --text-color-l: 75;
+}
+
+.hover\:text-lighter-85:hover {
+    --text-color-l: 85;
+}
+
+.hover\:text-lighter-white:hover {
+    --text-color-l: 100;
+}
+
+.hover\:text-darken-35:hover {
+    --text-color-l: 35;
+}
+
+.hover\:text-darken-25:hover {
+    --text-color-l: 25;
+}
+
+.hover\:text-darken-15:hover {
+    --text-color-l: 15;
+}
+
+.hover\:text-darken-black:hover {
+    --text-color-l: 0;
+}
+
+.text-dimmer-50 {
+    --text-color-s: 50;
+}
+
+.text-dimmer-25 {
+    --text-color-s: 25;
+}
+
+.hover\:text-dimmer-50:hover {
+    --text-color-s: 50;
+}
+
+.hover\:text-dimmer-25:hover {
+    --text-color-s: 25;
+}
+
+/*
+    Border color scheme
+*/
+
+.border-primary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-s);
+    --border-color-l: var(--primary-l);
+    border-color: hsl(var(--primary-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-primary-variant-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-variant-s);
+    --border-color-l: var(--primary-variant-l);
+    border-color: hsl(var(--primary-variant-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-secondary-variant-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--secondary-variant-s);
+    --border-color-l: var(--secondary-variant-l);
+    border-color: hsl(var(--secondary-variant-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-secondary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--secondary-s);
+    --border-color-l: var(--secondary-l);
+    border-color: hsl(var(--secondary-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-success-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--success-s);
+    --border-color-l: var(--success-l);
+    border-color: hsl(var(--success-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-error-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--error-s);
+    --border-color-l: var(--error-l);
+    border-color: hsl(var(--error-h) var(--border-color-s) var(--border-color-l) / var(--tw-border-opacity));
+}
+
+.border-lighter-65 {
+    --border-color-l: 65;
+}
+
+.border-lighter-75 {
+    --border-color-l: 75;
+}
+
+.border-lighter-85 {
+    --border-color-l: 85;
+}
+
+.border-lighter-white {
+    --border-color-l: 100;
+}
+
+.border-darken-35 {
+    --border-color-l: 35;
+}
+
+.border-darken-25 {
+    --border-color-l: 25;
+}
+
+.border-darken-15 {
+    --border-color-l: 15;
+}
+
+.border-darken-black {
+    --border-color-l: 0;
+}
+
+.hover\:border-lighter-65:hover {
+    --border-color-l: 65;
+}
+
+.hover\:border-lighter-75:hover {
+    --border-color-l: 75;
+}
+
+.hover\:border-lighter-85:hover {
+    --border-color-l: 85;
+}
+
+.hover\:border-lighter-white:hover {
+    --border-color-l: 100;
+}
+
+.hover\:border-darken-35:hover {
+    --border-color-l: 35;
+}
+
+.hover\:border-darken-25:hover {
+    --border-color-l: 25;
+}
+
+.hover\:border-darken-15:hover {
+    --border-color-l: 15;
+}
+
+.hover\:border-darken-black:hover {
+    --border-color-l: 0;
+}
+
+.focus\:border-lighter-65:focus {
+    --border-color-l: 65;
+}
+
+.focus\:border-lighter-75:focus {
+    --border-color-l: 75;
+}
+
+.focus\:border-lighter-85:focus {
+    --border-color-l: 85;
+}
+
+.focus\:border-lighter-white:focus {
+    --border-color-l: 100;
+}
+
+.focus\:border-darken-35:focus {
+    --border-color-l: 35;
+}
+
+.focus\:border-darken-25:focus {
+    --border-color-l: 25;
+}
+
+.focus\:border-darken-15:focus {
+    --border-color-l: 15;
+}
+
+.focus\:border-darken-black:focus {
+    --border-color-l: 0;
+}
+
+.border-dimmer-50 {
+    --border-color-s: 50;
+}
+
+.border-dimmer-25 {
+    --border-color-s: 25;
+}
+
+.hover\:border-dimmer-50:hover {
+    --border-color-s: 50;
+}
+
+.hover\:border-dimmer-25:hover {
+    --border-color-s: 25;
+}
+
+.focus\:border-dimmer-50:focus {
+    --border-color-s: 50;
+}
+
+.focus\:border-dimmer-25:focus {
+    --border-color-s: 25;
+}
+
+/*
+    Ring color scheme
+*/
+
+.ring-primary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--primary-s);
+    --ring-color-l: var(--primary-l);
+    --tw-ring-color: hsl(var(--primary-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-primary-variant-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--primary-variant-s);
+    --ring-color-l: var(--primary-variant-l);
+    --tw-ring-color: hsl(var(--primary-variant-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-secondary-variant-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--secondary-variant-s);
+    --ring-color-l: var(--secondary-variant-l);
+    --tw-ring-color: hsl(var(--secondary-variant-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-secondary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--secondary-s);
+    --ring-color-l: var(--secondary-l);
+    --tw-ring-color: hsl(var(--secondary-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-success-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--success-s);
+    --ring-color-l: var(--success-l);
+    --tw-ring-color: hsl(var(--success-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-error-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--error-s);
+    --ring-color-l: var(--error-l);
+    --tw-ring-color: hsl(var(--error-h) var(--ring-color-s) var(--ring-color-l) / var(--tw-ring-opacity));
+}
+
+.ring-lighter-65 {
+    --ring-color-l: 65;
+}
+
+.ring-lighter-75 {
+    --ring-color-l: 75;
+}
+
+.ring-lighter-85 {
+    --ring-color-l: 85;
+}
+
+.ring-lighter-white {
+    --ring-color-l: 100;
+}
+
+.ring-darken-35 {
+    --ring-color-l: 35;
+}
+
+.ring-darken-25 {
+    --ring-color-l: 25;
+}
+
+.ring-darken-15 {
+    --ring-color-l: 15;
+}
+
+.ring-darken-black {
+    --ring-color-l: 0;
+}
+
+.hover\:ring-lighter-65:hover {
+    --ring-color-l: 65;
+}
+
+.hover\:ring-lighter-75:hover {
+    --ring-color-l: 75;
+}
+
+.hover\:ring-lighter-85:hover {
+    --ring-color-l: 85;
+}
+
+.hover\:ring-lighter-white:hover {
+    --ring-color-l: 100;
+}
+
+.hover\:ring-darken-35:hover {
+    --ring-color-l: 35;
+}
+
+.hover\:ring-darken-25:hover {
+    --ring-color-l: 25;
+}
+
+.hover\:ring-darken-15:hover {
+    --ring-color-l: 15;
+}
+
+.hover\:ring-darken-black:hover {
+    --ring-color-l: 0;
+}
+
+.focus\:ring-lighter-65:focus {
+    --ring-color-l: 65;
+}
+
+.focus\:ring-lighter-75:focus {
+    --ring-color-l: 75;
+}
+
+.focus\:ring-lighter-85:focus {
+    --ring-color-l: 85;
+}
+
+.focus\:ring-lighter-white:focus {
+    --ring-color-l: 100;
+}
+
+.focus\:ring-darken-35:focus {
+    --ring-color-l: 35;
+}
+
+.focus\:ring-darken-25:focus {
+    --ring-color-l: 25;
+}
+
+.focus\:ring-darken-15:focus {
+    --ring-color-l: 15;
+}
+
+.focus\:ring-darken-black:focus {
+    --ring-color-l: 0;
+}
+
+.ring-dimmer-50 {
+    --ring-color-s: 50;
+}
+
+.ring-dimmer-25 {
+    --ring-color-s: 25;
+}
+
+.hover\:ring-dimmer-50:hover {
+    --ring-color-s: 50;
+}
+
+.hover\:ring-dimmer-25:hover {
+    --ring-color-s: 25;
+}
+
+.focus\:ring-dimmer-50:focus {
+    --ring-color-s: 50;
+}
+
+.focus\:ring-dimmer-25:focus {
+    --ring-color-s: 25;
 }
 

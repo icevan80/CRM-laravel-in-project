@@ -102,17 +102,17 @@
 
                     <td>
                         <div class="flex gap-1 mt-5">
-                            {{--                            <x-button wire:click="confirmAppointmentEdit({{ $appointment->id }})"--}}
+                            {{--                            <x-button.default wire:click="confirmAppointmentEdit({{ $appointment->id }})"--}}
                             {{--                                      wire:loading.attr="disabled">--}}
                             {{--                                {{ __('Edit') }}--}}
-                            {{--                            </x-button>--}}
+                            {{--                            </x-button.default>--}}
 
                             @if ($appointment->date >= today())
-                                <x-danger-button
+                                <x-button.danger
                                     wire:click="confirmAppointmentCancellation({{ $appointment->id }})"
                                     wire:loading.attr="disabled">
                                     {{ __('Cancel') }}
-                                </x-danger-button>
+                                </x-button.danger>
                             @endif
 
 

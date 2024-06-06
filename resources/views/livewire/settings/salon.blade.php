@@ -7,11 +7,9 @@
         @method('PUT')
         <x-inputs.color color="primary_variant_color"></x-inputs.color>
         <x-inputs.color color="primary_color"></x-inputs.color>
-        <x-inputs.color color="primary_unselect_color"></x-inputs.color>
         <x-inputs.color color="on_primary_color"></x-inputs.color>
         <x-inputs.color color="secondary_variant_color"></x-inputs.color>
         <x-inputs.color color="secondary_color"></x-inputs.color>
-        <x-inputs.color color="secondary_unselect_color"></x-inputs.color>
         <x-inputs.color color="on_secondary_color"></x-inputs.color>
         <x-inputs.color color="surface_color"></x-inputs.color>
         <x-inputs.color color="on_surface_color"></x-inputs.color>

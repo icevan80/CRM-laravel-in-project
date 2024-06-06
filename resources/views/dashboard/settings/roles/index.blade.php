@@ -2,9 +2,9 @@
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Менеджер ролей</h2>
         <div x-data="{showCreateRole: false}">
-            <x-button x-on:click="showCreateRole = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+            <x-button.default x-on:click="showCreateRole = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
                 <p>Создать новую роль</p>
-            </x-button>
+            </x-button.default>
             <form action="{{route('settings.roles.store')}}" method="post">
                 @csrf
                 @method('PUT')
@@ -19,12 +19,12 @@
                     </x-slot>
                     <x-slot name="footer">
                         <div class="flex gap-3">
-                            <x-button>
+                            <x-button.default>
                                 Сохранить
-                            </x-button>
-                            <x-secondary-button x-on:click="showCreateRole = false">
+                            </x-button.default>
+                            <x-button.secondary x-on:click="showCreateRole = false">
                                 Отмена
-                            </x-secondary-button>
+                            </x-button.secondary>
                         </div>
                     </x-slot>
                 </x-dialog.default>

@@ -85,20 +85,20 @@
                 <td>
                     <div class="mt-5 ">
                         <a href="{{ route('manage.services.show', ['id' => $service->id ])  }}">
-                            <x-button class="m-2">
+                            <x-button.default class="m-2">
                                 {{ __('View') }}
-                            </x-button>
+                            </x-button.default>
 
                         </a>
                         <a href="{{route('manage.services.edit', ['id' => $service->id])}}">
-                            <x-button class="m-2" wire:loading.attr="disabled">
+                            <x-button.default class="m-2" wire:loading.attr="disabled">
                                 {{ __('Edit') }}
-                            </x-button>
+                            </x-button.default>
                         </a>
-                        <x-danger-button class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})"
+                        <x-button.danger class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})"
                                          wire:loading.attr="disabled">
                             {{ __('Delete') }}
-                        </x-danger-button>
+                        </x-button.danger>
                     </div>
                 </td>
             </tr>

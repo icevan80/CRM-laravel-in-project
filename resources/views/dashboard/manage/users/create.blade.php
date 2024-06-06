@@ -10,9 +10,9 @@
             <x-forms.create.user :roles="$roles"></x-forms.create.user>
 
             <div class="flex items-center justify-end mt-4">
-                <x-button class="ml-4">
+                <x-button.default class="ml-4">
                     {{ __('Create User') }}
-                </x-button>
+                </x-button.default>
             </div>
         </form>
     </div>

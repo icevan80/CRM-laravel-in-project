@@ -16,7 +16,7 @@
 --}}{{--                <a href="{{ route('manageservices') }}?search={{ $service->slug }}">--}}{{--
 --}}{{--                    <x-button class="px-5 py-2 text-white bg-pink-500 rounded-md hover:bg--600">--}}{{--
 --}}{{--                        Manage--}}{{--
---}}{{--                    </x-button>--}}{{--
+--}}{{--                    </x-button.default>--}}{{--
 --}}{{--                </a>--}}{{--
 
                 <div class="bg-gray-100 px-3 py-2 my-2 ">

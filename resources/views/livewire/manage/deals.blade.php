@@ -70,9 +70,9 @@
                 </td>
                 <td class="px-4 py-4 max-w-xs font-medium text-gray-700">
                     <div class="flex gap-1">
-                        {{--<x-button wire:click="confirmDealEdit({{ $deal->id }})" wire:loading.attr="disabled">
+                        {{--<x-button.default wire:click="confirmDealEdit({{ $deal->id }})" wire:loading.attr="disabled">
                             {{ __('Edit') }}
-                        </x-button>--}}
+                        </x-button.default>--}}
                         <x-button.danger wire:click="confirmDeleteDeal({{ $deal->id }})">
                             {{ __('Delete') }}
                         </x-button.danger>

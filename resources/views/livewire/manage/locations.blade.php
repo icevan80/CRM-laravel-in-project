@@ -44,14 +44,14 @@
 
                 <td class="px-4 py-4 max-w-xs font-medium text-gray-700">
                     <div class="flex gap-1">
-                        <x-button wire:click="confirmLocationEdit({{ $location->id }}, {{ $location }})">
+                        <x-button.default wire:click="confirmLocationEdit({{ $location->id }}, {{ $location }})">
                             {{ __('Edit') }}
-                        </x-button>
+                        </x-button.default>
 
 
-                        <x-danger-button wire:click="confirmLocationDeletion({{ $location->id }})">
+                        <x-button.danger wire:click="confirmLocationDeletion({{ $location->id }})">
                             {{ __('Delete') }}
-                        </x-danger-button>
+                        </x-button.danger>
                     </div>
                 </td>
             </tr>
