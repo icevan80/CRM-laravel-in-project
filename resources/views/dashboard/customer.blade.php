@@ -2,7 +2,7 @@
     use App\Enums\UserRolesEnum;
     $role = Auth::user()->role;
 @endphp
-<x-dashboard>
+<x-dashboard.shell>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -61,11 +61,11 @@
           </div>
         </div>
 
-
-     <livewire:manage-appointments />
-
-
+<p>Home Page</p>
+{{--     <livewire:manage-appointments />--}}
 
 
 
-</x-dashboard>
+
+
+</x-dashboard.shell>

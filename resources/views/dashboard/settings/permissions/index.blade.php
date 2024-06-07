@@ -13,7 +13,7 @@
                         Создание нового правила
                     </x-slot>
                     <x-slot name="content">
-                        <x-label for="permission_name">Имя привелегии</x-label>
+                        <x-inputs.label for="permission_name">Имя привелегии</x-inputs.label>
                         <x-input type="text" id="permission_name" name="permission_name"/>
                         <x-input-error for="permission_name" class="mt-2"/>
                     </x-slot>

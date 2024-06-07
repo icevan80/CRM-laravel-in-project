@@ -7,11 +7,9 @@
     </div>
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-            <label for="category_id"
-                   class="block text-sm font-medium text-gray-700">Category</label>
 
-            <select name="service_category_id" id="category_id"
-                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <x-inputs.select  label="{{__('Category')}}" name="service_category_id" id="category_id"
+                    class="w-full">
                 @foreach ($categories as $category)
                     <option
                         @if($service->category_id == $category->id)
@@ -19,64 +17,50 @@
                         @endif
                         value="{{ $category->id }}">{{ $category->name}}</option>
                 @endforeach
-                @error('service_category_id') <span
-                    class="text-red-500">{{ $message }}</span>@enderror
-            </select>
+            </x-inputs.select>
         </div>
 
         <div>
-            <label
-                class="block text-sm font-medium text-gray-700">Type</label>
+            <x-inputs.label>
+                {{ __('Type')}}
+            </x-inputs.label>
 
             <div class="flex my-2">
-                <input class="m-2" type="radio" id="personal" name="service_type" value="personal"
-                       @if($service->type == "personal")
-                       checked
-                    @endif />
-                <label class="pr-4 my-1" for="personal">Personal</label>
-                <input class="m-2" type="radio" id="group" name="service_type" value="group"
-                       @if($service->type == "group")
-                       checked
-                    @endif />
-                <label class="pr-4 my-1" for="group">Group</label>
+                <x-inputs.radio label="{{__('Personal')}}" class="m-2" id="personal" name="service_type" value="personal"
+                                checkIt="{{$service->type == 'personal' ? 'true' : ''}}"
+                                 ></x-inputs.radio>
+                <x-inputs.radio label="{{__('Group')}}" class="m-2"  id="group" name="service_type" value="group"
+                                checkIt="{{$service->type == 'group' ? 'true' : ''}}"
+                        ></x-inputs.radio>
             </div>
         </div>
     </div>
     <div x-data="{inputRange: {{isset($service->max_price) ? 'true' : 'false'}}}">
         <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-                <label for="price" class="block text-sm font-medium text-gray-700"><span x-show="inputRange">Min </span>Price</label>
-                <x-input type="text" name="service_price" id="price" class="w-full"
-                         value="{{$service->price}}"></x-input>
-                @error('service_price') <span class="text-red-500">{{ $message }}</span>@enderror
+                <x-inputs.label for="price" ><span x-show="inputRange">Min </span>Price</x-inputs.label>
+                <x-inputs.default type="text" name="service_price" id="price" class="w-full"
+                         value="{{$service->price}}"></x-inputs.default>
             </div>
 
 
             <div x-show="inputRange">
-                <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
-                <x-input type="text" name="service_max_price" id="max_price" class="w-full"
-                         value="{{$service->max_price}}"></x-input>
-                @error('service_max_price') <span class="text-red-500">{{ $message }}</span>@enderror
+                <x-inputs.default label="{{__('Max Price')}}" type="text" name="service_max_price" id="max_price" class="w-full"
+                         value="{{$service->max_price}}"></x-inputs.default>
             </div>
         </div>
         <div class="flex">
-            <x-checkbox class="my-2" x-on:click="inputRange = !inputRange"
-                        checkIt="{{isset($service->max_price) ? 'true' : ''}}"></x-checkbox>
-            <p class="my-1 px-2">Input range</p>
+            <x-inputs.checkbox label="{{ __('Input range') }}" class="my-2" x-on:click="inputRange = !inputRange"
+                        checkIt="{{isset($service->max_price) ? 'true' : ''}}"></x-inputs.checkbox>
         </div>
     </div>
 
     <div>
-        <label class="block text-sm font-medium text-gray-700">Duration</label>
+        <x-inputs.label>{{__('Duration')}}</x-inputs.label>
         <div class="flex">
-
-
             <div>
-                <label  for="duration_hours" class="block text-sm font-medium text-gray-700">Hours</label>
-                <select name="service_duration_hours" id="duration_hours"
-                        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                    @for ($hours = 0; $hours <= 12; $hours++)
+                <x-inputs.select label="{{ __('Hours') }}" name="service_duration_hours" id="duration_hours">
+                @for ($hours = 0; $hours <= 12; $hours++)
                         <option
                             @if($service->duration_minutes / 60 == $hours)
                             selected
@@ -85,44 +69,36 @@
                             {{$hours}}
                         </option>
                     @endfor
-                    @error('service_duration_hours') <span class="text-red-500">{{ $message }}</span>@enderror
-                </select>
+                </x-inputs.select>
             </div>
             <div class="m-2"></div>
             <div>
-                <label for="duration_minutes" class="block text-sm font-medium text-gray-700">Minutes</label>
-                <select name="service_duration_minutes" id="duration_minutes"
-                        class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-
-                    @for ($minutes = 15; $minutes <= 60; $minutes += 15)
-
+                <x-inputs.select label="{{ __('Minutes') }}" name="service_duration_minutes" id="duration_minutes">
+                @for ($minutes = 15; $minutes <= 60; $minutes += 15)
                         <option
-
                             @if($service->duration_minutes % 60 == $minutes  % 60)
                             selected
                             @endif
                             value="{{ $minutes % 60 }}">{{ $minutes % 60 }}
                         </option>
                     @endfor
-                    @error('service_duration_minutes') <span class="text-red-500">{{ $message }}</span>@enderror
-                </select>
+                </x-inputs.select>
             </div>
         </div>
     </div>
     <div>
-        <label for="notes" class="block text-sm font-medium text-gray-700">Notes</label>
-        <textarea id="notes" name="service_notes"
-                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{$service->notes}}</textarea>
-        @error('service_notes') <span class="text-red-500">{{ $message }}</span>@enderror
+        <x-inputs.textarea label="{{ __('Notes') }}" id="notes" name="service_notes"
+                           class="w-full">{{$service->notes}}</x-inputs.textarea>
     </div>
     <div>
-        <label>Masters</label>
+        <x-inputs.label>Masters</x-inputs.label>
         <div x-data="{masterCount: 0}">
             @foreach($service->masters as $selectedMaster)
-                <select name="service_masters[]" id="masters"
-                        class="block my-2 mr-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <select name="service_masters[]" id="master"
+                        class="mr-2 my-2 border-primary-color border-dimmer-25 border-lighter-85 ring-primary-color
+        rounded-md shadow-sm text-on-surface-color">
                     <option>
-                        Убрать мастера
+                        {{ __('Remove Master') }}
                     </option>
                     @foreach ($masters as $master)
                         <option
@@ -136,10 +112,12 @@
                 </select>
             @endforeach
             <template x-for="i in masterCount">
-                <select name="service_masters[]" id="masters"
-                        class="block my-2 mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <select name="service_masters[]" id="master"
+                        class="mr-2 my-2 border-primary-color border-dimmer-25 border-lighter-85 ring-primary-color
+        rounded-md shadow-sm text-on-surface-color">
                     <option disabled selected>
-                        Выберите мастера
+                        {{ __('Choose Master') }}
+
                     </option>
                     @foreach ($masters as $master)
                         <option
@@ -150,14 +128,13 @@
                     @error('service_masters') <span class="text-red-500">{{ $message }}</span>@enderror
                 </select>
             </template>
-            <x-button.default type="button" x-on:click="masterCount += 1">Добавить мастера</x-button.default>
+            <x-button.default type="button" x-on:click="masterCount += 1">{{ __('Add Master') }}</x-button.default>
         </div>
     </div>
     <div>
-        <label for="is_hidden" class="block text-sm font-medium text-gray-700">Is Hidden</label>
 
-        <input type="checkbox" name="service_is_hidden" id="is_hidden">
-        @error('service_is_hidden') <span class="text-red-500">{{ $message }}</span>@enderror
+        <x-inputs.checkbox label="{{ __('Is Hidden') }}" name="service_is_hidden" id="is_hidden"></x-inputs.checkbox>
+
     </div>
     <livewire:components.upload-photo :tag="'service_image'" :source="$service->image"/>
 </div>

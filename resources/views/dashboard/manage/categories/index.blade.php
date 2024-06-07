@@ -2,7 +2,7 @@
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Категории</h2>
         <div x-data="{showCreateCategories: false}">
-            <x-button.default x-on:click="showCreateCategories = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+            <x-button.default x-on:click="showCreateCategories = true">
                 Create
             </x-button.default>
             <form action="{{route('manage.categories.store')}}" method="post">
@@ -13,7 +13,7 @@
                         Создание новой категории
                     </x-slot>
                     <x-slot name="content">
-                        <x-label for="category_name">Имя категории</x-label>
+                        <x-inputs.label for="category_name">Имя категории</x-inputs.label>
                         <x-input type="text" id="category_name" name="category_name"/>
                         <x-input-error for="category_name" class="mt-2"/>
                     </x-slot>

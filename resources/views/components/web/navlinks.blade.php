@@ -7,7 +7,4 @@
 <x-navlink.default href="{{ route('deals') }}" :active="request()->routeIs('deals')">
     {{ __('Deals') }}
 </x-navlink.default>
-{{--
-<x-nav-link href="{{ route('manageusers') }}" :active="request()->routeIs('manageusers')">
-    {{ __('Manage Users') }}
-</x-nav-link> --}}
+

@@ -1,10 +1,12 @@
 <div x-data="{ dashboardMenuOpen : screen.width > 640 ? true : false }" id="dashboard-menu" class="dashboard-menu">
-    <div @click="dashboardMenuOpen = !dashboardMenuOpen" class="dashboard-menu-drop-button" >Drop</div>
-    <div x-show="dashboardMenuOpen" >
+    <div @click="dashboardMenuOpen = !dashboardMenuOpen" class="dashboard-menu-drop-button">{{__('Drop')}}</div>
+    <div x-show="dashboardMenuOpen">
         <ul>
             <li>
                 <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-gray-500">Menu</div>
+                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                        {{__('Menu')}}
+                    </div>
                 </div>
                 <ul>
                     <li>
@@ -27,14 +29,18 @@
 
             <li>
                 <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-gray-500">Manage</div>
+                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                        {{__('Manage')}}
+                    </div>
                 </div>
                 <x-dashboard.manage.navlinks/>
             </li>
 
             <li>
                 <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-gray-500">Settings</div>
+                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                        {{__('Settings')}}
+                    </div>
                 </div>
                 <x-dashboard.settings.navlinks/>
             </li>
@@ -51,14 +57,17 @@
         top: 0;
         left: 0;
     }
+
     .dashboard-menu-drop-button {
         display: none;
         cursor: pointer;
     }
-    @media(max-width: 640px) {
+
+    @media (max-width: 640px) {
         .dashboard-menu-drop-button {
             display: block;
         }
+
         .dashboard-menu {
             background-color: white;
             max-width: 100%;

@@ -59,7 +59,7 @@
                 Изменение категории
             </x-slot>
             <x-slot name="content">
-                <x-label for="category_name">Имя категории</x-label>
+                <x-inputs.label for="category_name">Имя категории</x-inputs.label>
                 <x-input type="text" id="category_name" name="category_name"/>
                 <x-input-error for="category_name" class="mt-2"/>
             </x-slot>

@@ -12,24 +12,21 @@
         <x-slot name="form">
             <!-- Token Name -->
             <div class="col-span-6 sm:col-span-4">
-                <x-label for="name" value="{{ __('Token Name') }}" />
-                <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="createApiTokenForm.name" autofocus />
-                <x-input-error for="name" class="mt-2" />
+                <x-inputs.text label="{{ __('Token Name') }}" id="name" class="mt-1 block w-full" wire:model.defer="createApiTokenForm.name"
+                         autofocus></x-inputs.text>
             </div>
 
             <!-- Token Permissions -->
             @if (Laravel\Jetstream\Jetstream::hasPermissions())
                 <div class="col-span-6">
-                    <x-label for="permissions" value="{{ __('Permissions') }}" />
+                    <x-inputs.label for="permissions" value="{{ __('Permissions') }}"/>
 
-                    <div class="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
-                            <label class="flex items-center">
-                                <x-checkbox wire:model.defer="createApiTokenForm.permissions" :value="$permission"/>
-                                <span class="ml-2 text-sm text-gray-600">{{ $permission }}</span>
-                            </label>
-                        @endforeach
-                    </div>
+
+                    @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
+                        <x-inputs.checkbox label="{{ $permission }}" wire:model.defer="createApiTokenForm.permissions"
+                                           :value="$permission"></x-inputs.checkbox>
+                    @endforeach
+
                 </div>
             @endif
         </x-slot>
@@ -46,7 +43,7 @@
     </x-form-section>
 
     @if ($this->user->tokens->isNotEmpty())
-        <x-section-border />
+        <x-section-border/>
 
         <!-- Manage API Tokens -->
         <div class="mt-10 sm:mt-0">
@@ -76,12 +73,14 @@
                                     @endif
 
                                     @if (Laravel\Jetstream\Jetstream::hasPermissions())
-                                        <button class="cursor-pointer ml-6 text-sm text-gray-400 underline" wire:click="manageApiTokenPermissions({{ $token->id }})">
+                                        <button class="cursor-pointer ml-6 text-sm text-gray-400 underline"
+                                                wire:click="manageApiTokenPermissions({{ $token->id }})">
                                             {{ __('Permissions') }}
                                         </button>
                                     @endif
 
-                                    <button class="cursor-pointer ml-6 text-sm text-red-500" wire:click="confirmApiTokenDeletion({{ $token->id }})">
+                                    <button class="cursor-pointer ml-6 text-sm text-red-500"
+                                            wire:click="confirmApiTokenDeletion({{ $token->id }})">
                                         {{ __('Delete') }}
                                     </button>
                                 </div>
@@ -91,10 +90,10 @@
                 </x-slot>
             </x-action-section>
         </div>
-    @endif
+@endif
 
-    <!-- Token Value Modal -->
-    <x-dialog-modal wire:model="displayingToken">
+<!-- Token Value Modal -->
+    <x-dialog.default wire:model="displayingToken">
         <x-slot name="title">
             {{ __('API Token') }}
         </x-slot>
@@ -105,9 +104,9 @@
             </div>
 
             <x-input x-ref="plaintextToken" type="text" readonly :value="$plainTextToken"
-                class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 w-full break-all"
-                autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-                @showing-token-modal.window="setTimeout(() => $refs.plaintextToken.select(), 250)"
+                     class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 w-full break-all"
+                     autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+                     @showing-token-modal.window="setTimeout(() => $refs.plaintextToken.select(), 250)"
             />
         </x-slot>
 
@@ -116,10 +115,10 @@
                 {{ __('Close') }}
             </x-button.secondary>
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog.default>
 
     <!-- API Token Permissions Modal -->
-    <x-dialog-modal wire:model="managingApiTokenPermissions">
+    <x-dialog.default wire:model="managingApiTokenPermissions">
         <x-slot name="title">
             {{ __('API Token Permissions') }}
         </x-slot>
@@ -127,10 +126,7 @@
         <x-slot name="content">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach (Laravel\Jetstream\Jetstream::$permissions as $permission)
-                    <label class="flex items-center">
-                        <x-checkbox wire:model.defer="updateApiTokenForm.permissions" :value="$permission"/>
-                        <span class="ml-2 text-sm text-gray-600">{{ $permission }}</span>
-                    </label>
+                        <x-inputs.checkbox label="{{ $permission }}" wire:model.defer="updateApiTokenForm.permissions" :value="$permission"></x-inputs.checkbox>
                 @endforeach
             </div>
         </x-slot>
@@ -144,10 +140,10 @@
                 {{ __('Save') }}
             </x-button.default>
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog.default>
 
     <!-- Delete Token Confirmation Modal -->
-    <x-confirmation-modal wire:model="confirmingApiTokenDeletion">
+    <x-dialog.confirmation wire:model="confirmingApiTokenDeletion">
         <x-slot name="title">
             {{ __('Delete API Token') }}
         </x-slot>
@@ -165,5 +161,5 @@
                 {{ __('Delete') }}
             </x-button.danger>
         </x-slot>
-    </x-confirmation-modal>
+    </x-dialog.confirmation>
 </div>

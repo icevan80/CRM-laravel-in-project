@@ -49,7 +49,7 @@
             </tbody>
         </table>
 
-    <x-dialog-modal wire:model="notificationChangesComplete">
+    <x-dialog.default wire:model="notificationChangesComplete">
         <x-slot name="title">
             {{ __('Translation changes') }}
         </x-slot>
@@ -70,9 +70,9 @@
             </div>
 
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog.default>
 
-    <x-dialog-modal wire:model="createNewTranslation">
+    <x-dialog.default wire:model="createNewTranslation">
         <x-slot name="title">
             {{ __('Create translation') }}
         </x-slot>
@@ -107,7 +107,7 @@
             </div>
 
         </x-slot>
-    </x-dialog-modal>
+    </x-dialog.default>
 </div>
 
 <style>

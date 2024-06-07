@@ -6,9 +6,10 @@ class DashboardHomeController extends Controller
 {
     public function index()
     {
-        if (auth()->user()->hasPermission('new_style_access')) {
-            return view('dashboard.testim');
-        } else if (auth()->user()->hasPermission('admin_dashboard_access')) {
+//        if (auth()->user()->hasPermission('new_style_access')) {
+//            return view('dashboard.testim');
+//        } else
+            if (auth()->user()->hasPermission('admin_dashboard_access')) {
             $adminDashboardHomeController = new AdminDashboardHomeController();
             return $adminDashboardHomeController->index();
         } else if (auth()->user()->hasPermission('customer_dashboard_access')) {

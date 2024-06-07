@@ -10,37 +10,32 @@
             @csrf
 
             <div>
-                <x-label for="name" value="{{ __('Name') }}" />
-                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-inputs.text label="{{ __('Name') }}" id="name" class="w-full" name="name" :value="old('name')" required autofocus autocomplete="name"></x-inputs.text>
             </div>
 
             <div class="mt-4">
-                <x-label for="email" value="{{ __('Email') }}" />
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+                <x-inputs.default label="{{ __('Email') }}" id="email" class="w-full" type="email" name="email" :value="old('email')" required autocomplete="username"></x-inputs.default>
             </div>
 
             <div class="mt-4">
-                <x-label for="phone_number" value="{{ __('Phone Number') }}" />
+                <x-inputs.label for="phone_number" value="{{ __('Phone Number') }}"></x-inputs.label>
                 <span class="text-xs">eg: 0112121211</span>
-                <x-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number" />
+                <x-inputs.default id="phone_number" class="w-full" type="text" name="phone_number" :value="old('phone_number')" required autocomplete="phone_number"></x-inputs.default>
             </div>
 
             <div class="mt-4">
-                <x-label for="password" value="{{ __('Password') }}" />
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
+                <x-inputs.default label="{{ __('Password') }}" id="password" class="w-full" type="password" name="password" required autocomplete="new-password"></x-inputs.default>
             </div>
 
             <div class="mt-4">
-                <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
-                <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
+                <x-inputs.default label="{{ __('Confirm Password') }}" id="password_confirmation" class="w-full" type="password" name="password_confirmation" required autocomplete="new-password"></x-inputs.default>
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
-                    <x-label for="terms">
+                    <x-inputs.label for="terms">
                         <div class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-
+                            <x-inputs.checkbox name="terms" id="terms" required />
                             <div class="ml-2">
                                 {!! __('I agree to the :terms_of_service and :privacy_policy', [
                                         'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">'.__('Terms of Service').'</a>',
@@ -48,7 +43,7 @@
                                 ]) !!}
                             </div>
                         </div>
-                    </x-label>
+                    </x-inputs.label>
                 </div>
             @endif
 

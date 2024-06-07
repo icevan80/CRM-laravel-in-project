@@ -25,3 +25,65 @@
         </div>
     </body>
 </html>
+
+@php
+    // \Illuminate\Support\Facades\App::setLocale(getStore()->default_lang);
+    $theme = getTheme();
+@endphp
+
+
+<style>
+    :root {
+        --primary-variant-h: {{$theme['primary_variant_color']['h']}};
+        --primary-variant-s: {{$theme['primary_variant_color']['s']}};
+        --primary-variant-l: {{$theme['primary_variant_color']['l']}};
+        --primary-h: {{$theme['primary_color']['h']}};
+        --primary-s: {{$theme['primary_color']['s']}};
+        --primary-l: {{$theme['primary_color']['l']}};
+        --on-primary-h: {{$theme['on_primary_color']['h']}};
+        --on-primary-s: {{$theme['on_primary_color']['s']}};
+        --on-primary-l: {{$theme['on_primary_color']['l']}};
+        --secondary-variant-h: {{$theme['secondary_variant_color']['h']}};
+        --secondary-variant-s: {{$theme['secondary_variant_color']['s']}};
+        --secondary-variant-l: {{$theme['secondary_variant_color']['l']}};
+        --secondary-h: {{$theme['secondary_color']['h']}};
+        --secondary-s: {{$theme['secondary_color']['s']}};
+        --secondary-l: {{$theme['secondary_color']['l']}};
+        --on-secondary-h: {{$theme['on_secondary_color']['h']}};
+        --on-secondary-s: {{$theme['on_secondary_color']['s']}};
+        --on-secondary-l: {{$theme['on_secondary_color']['l']}};
+        --surface-h: {{$theme['surface_color']['h']}};
+        --surface-s: {{$theme['surface_color']['s']}};
+        --surface-l: {{$theme['surface_color']['l']}};
+        --on-surface-h: {{$theme['on_surface_color']['h']}};
+        --on-surface-s: {{$theme['on_surface_color']['s']}};
+        --on-surface-l: {{$theme['on_surface_color']['l']}};
+        --background-h: {{$theme['background_color']['h']}};
+        --background-s: {{$theme['background_color']['s']}};
+        --background-l: {{$theme['background_color']['l']}};
+        --on-background-h: {{$theme['on_background_color']['h']}};
+        --on-background-s: {{$theme['on_background_color']['s']}};
+        --on-background-l: {{$theme['on_background_color']['l']}};
+        --success-h: {{$theme['success_color']['h']}};
+        --success-s: {{$theme['success_color']['s']}};
+        --success-l: {{$theme['success_color']['l']}};
+        --on-success-h: {{$theme['on_success_color']['h']}};
+        --on-success-s: {{$theme['on_success_color']['s']}};
+        --on-success-l: {{$theme['on_success_color']['l']}};
+        --error-h: {{$theme['error_color']['h']}};
+        --error-s: {{$theme['error_color']['s']}};
+        --error-l: {{$theme['error_color']['l']}};
+        --on-error-h: {{$theme['on_error_color']['h']}};
+        --on-error-s: {{$theme['on_error_color']['s']}};
+        --on-error-l: {{$theme['on_error_color']['l']}};
+        --text-on-primary-h: {{$theme['text_on_primary_color']['h']}};
+        --text-on-primary-s: {{$theme['text_on_primary_color']['s']}};
+        --text-on-primary-l: {{$theme['text_on_primary_color']['l']}};
+        --text-on-secondary-h: {{$theme['text_on_secondary_color']['h']}};
+        --text-on-secondary-s: {{$theme['text_on_secondary_color']['s']}};
+        --text-on-secondary-l: {{$theme['text_on_secondary_color']['l']}};
+        --text-on-surface-h: {{$theme['text_on_surface_color']['h']}};
+        --text-on-surface-s: {{$theme['text_on_surface_color']['s']}};
+        --text-on-surface-l: {{$theme['text_on_surface_color']['l']}};
+    }
+</style>

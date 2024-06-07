@@ -1,9 +1,12 @@
 @props(['active'])
 
 @php
+    $baseClasses = 'relative flex flex-row items-center h-11 border-primary-color focus:outline-none background-color
+                    hover:bg-lighter-85 text-on-surface-color text-lighter-50 hover:text-darken-15 border-l-4 px-4
+                    hover:border-opacity-100';
     $classes = ($active ?? false)
-                ? 'relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 px-4 bg-gray-100 border-pink-500 text-gray-900 font-semibold'
-                : 'relative flex flex-row items-center h-11 focus:outline-none hover:bg-gray-50 text-gray-600 hover:text-gray-800 border-l-4 border-transparent hover:border-pink-500 px-4';
+                ? $baseClasses.' bg-lighter-90 border-l-4 border-opacity-100 text-darken-15 font-semibold'
+                : $baseClasses.' border-opacity-0';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>

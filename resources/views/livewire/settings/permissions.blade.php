@@ -8,7 +8,7 @@
                     @endif
                     @if($this->userId != null)
                         <td>
-                            <div style="display: flex; position: relative" class="text-left">
+                            <div style="position: relative" class="flex text-left">
                                 <h2 style="width: 50%;  " class="pl-6">{{$permission->name}}</h2>
                                 <div style="margin-right: 0; align-content: end" class="flex">
                                     <x-inputs.radio

@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Manage;
 
+use App\Models\Category;
+use App\Models\Master;
 use App\Models\Service;
 use Livewire\Component;
 
@@ -9,11 +11,21 @@ class Services extends Component
 {
     public $search;
 
+public $categories;
+public $masters;
+public $selectedService;
+
     public $confirmingServiceDeletion = false;
+    public $confirmingServiceEdition = false;
 
     protected $queryString = [
         'search' => ['except' => ''],
     ];
+
+    public function mount() {
+        $this->categories = Category::all();
+        $this->masters = Master::all();
+    }
 
     public function render()
     {
@@ -32,13 +44,17 @@ class Services extends Component
             ->where('status', true)
             ->paginate(10);
 
-        $categories = \App\Models\Category::all();
-
-        return view('livewire.manage.services', compact('services', 'categories'));
+        return view('livewire.manage.services', compact('services'));
     }
 
     public function confirmServiceDeletion($id)
     {
         $this->confirmingServiceDeletion = $id;
+    }
+
+    public function confirmingServiceEdition($id)
+    {
+        $this->confirmingServiceEdition = $id;
+        $this->selectedService =         $this->service = Service::where('id', $id)->first();
     }
 }

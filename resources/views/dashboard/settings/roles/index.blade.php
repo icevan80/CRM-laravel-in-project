@@ -13,7 +13,7 @@
                         Создание новой роли
                     </x-slot>
                     <x-slot name="content">
-                        <x-label for="role_name">Имя роли</x-label>
+                        <x-inputs.label for="role_name">Имя роли</x-inputs.label>
                         <x-input type="text" id="role_name" name="role_name"/>
                         <x-input-error for="role_name" class="mt-2"/>
                     </x-slot>

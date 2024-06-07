@@ -2,7 +2,7 @@
     use App\Enums\UserRolesEnum;
     $role = Auth::user()->role;
 @endphp
-<x-dashboard>
+<x-dashboard.shell>
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -123,35 +123,6 @@
             </div>
         </div>
       </div>
-
-     <div class="mt-4">
-         {{--@foreach($locations as $location)
-             <h1 class=" m-3 font-medium text-gray-800 text-2xl mb-2">{{ $location->name }}</h1>
-
-             <div class="grid md:grid-cols-2">
-                 <div class="m-3">
-                     <h2 class="font-medium text-gray-800 text-xl mb-2">Today's Schedule</h2>
-                     <x-day-schedule :date="\Carbon\Carbon::today()" :location-id="$location->id" />
-                 </div>
-
-                 <div class="m-3">
-                     <h2 class="font-medium text-gray-800 text-xl mb-2">Tomorrow's Schedule</h2>
-                     <x-day-schedule :date="\Carbon\Carbon::today()->addDay()" :location-id="$location->id"/>
-                 </div>
-
-             </div>
-         @endforeach--}}
-     </div>
-
-
-
-
-
-
-
-
-
-
  </div>
 
-</x-dashboard>
+</x-dashboard.shell>

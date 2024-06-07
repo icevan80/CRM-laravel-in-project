@@ -75,41 +75,26 @@
             <x-slot name="content">
                 @isset($this->selectLocation)
                     <div>
-                        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-                        <x-input type="text" name="location_name" id="name" class="w-full"
-                                 value="{{$this->selectLocation->name}}"></x-input>
-                        @error('location_name') <span
-                            class="text-red-500">{{ $message }}</span>@enderror
+                        <x-inputs.text label="{{ __('Name') }}" name="location_name" id="name" class="w-full"
+                                 value="{{$this->selectLocation->name}}"></x-inputs.text>
                     </div>
 
                     <div>
-                        <label for="address"
-                               class="block text-sm font-medium text-gray-700">Address</label>
-                        <textarea type="text" name="location_address" id="address"
-                                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">{{$this->selectLocation->address}}</textarea>
-                        @error('location_address') <span
-                            class="text-red-500">{{ $message }}</span>@enderror
+                        <x-inputs.textarea label="Address" name="location_address" id="address"
+                                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">{{$this->selectLocation->address}}</x-inputs.textarea>
                     </div>
 
                     <div>
-                        <label for="telephone_number" class="block text-sm font-medium text-gray-700">Telephone
-                            Number</label>
-                        <x-input type="tel" name="location_telephone_number" minlength="10"
+                        <x-inputs.default label="Telephone Number" type="tel" name="location_telephone_number" minlength="10"
                                  maxlength="10"
                                  id="telephone_number"
                                  value="{{$this->selectLocation->telephone_number}}"
-                                 class="w-full"></x-input>
-                        @error('location_telephone_number') <span
-                            class="text-red-500">{{ $message }}</span>@enderror
+                                 class="w-full"></x-inputs.default>
                     </div>
 
-                    <div>
-                        <label for="location_operate" class="block text-sm font-medium text-gray-700">Is
-                            Operating</label>
-                        <x-checkbox name="location_operate" id="location_operate"
-                                    checkIt="{{$this->selectLocation->operate ? 'true' : 'false'}}"></x-checkbox>
-                        @error('location_operate') <span
-                            class="text-red-500">{{ $message }}</span>@enderror
+                    <div class="my-2">
+                        <x-inputs.checkbox label="{{ __('Is Operating') }}" name="location_operate" id="location_operate"
+                                    checkIt="{{$this->selectLocation->operate ? 'true' : 'false'}}"></x-inputs.checkbox>
                     </div>
                 @endisset
             </x-slot>

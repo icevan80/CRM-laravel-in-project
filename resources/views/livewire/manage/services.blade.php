@@ -90,11 +90,9 @@
                             </x-button.default>
 
                         </a>
-                        <a href="{{route('manage.services.edit', ['id' => $service->id])}}">
-                            <x-button.default class="m-2" wire:loading.attr="disabled">
-                                {{ __('Edit') }}
-                            </x-button.default>
-                        </a>
+                        <x-button.default class="m-2" wire:click="confirmingServiceEdition({{ $service->id }})">
+                            {{ __('Edit') }}
+                        </x-button.default>
                         <x-button.danger class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})"
                                          wire:loading.attr="disabled">
                             {{ __('Delete') }}
@@ -112,7 +110,7 @@
     </div>
 
 
-    <form action="{{route('manage.services.destroy', ['id' => $this->confirmingServiceDeletion])}}" method="post">
+    <form action="{{route('manage.services.destroy', ['id' => $confirmingServiceDeletion])}}" method="post">
         @csrf
         @method('PUT')
         <x-dialog.default wire:model="confirmingServiceDeletion">
@@ -133,6 +131,37 @@
                     </x-button.secondary>
                 </div>
             </x-slot>
+        </x-dialog.default>
+    </form>
+
+    <form action="{{route('manage.services.update', ['id'=> $confirmingServiceEdition])}}" method="post">
+        @csrf
+        @method('PUT')
+        <x-dialog.default wire:model="confirmingServiceEdition">
+            <x-slot name="title">
+                Редактирование услуги
+            </x-slot>
+
+            <x-slot name="content">
+                @isset($this->selectedService)
+                    <x-forms.edit.service :categories="$categories" :masters="$masters"
+                                          :service="$this->selectedService"/>
+                @endif
+            </x-slot>
+
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.default>
+                        Сохранить
+                    </x-button.default>
+                    <a href="{{route('manage.services')}}">
+                        <x-button.secondary wire:click="$set('confirmingServiceEdition', false)">
+                            {{ __('Cancel') }}
+                        </x-button.secondary>
+                    </a>
+                </div>
+            </x-slot>
+
         </x-dialog.default>
     </form>
 </div>
