@@ -2,7 +2,7 @@
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Deals</h2>
         <div x-data="{showCreateDeals: false}">
-            <x-button.default x-on:click="showCreateDeals = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+            <x-button.default x-on:click="showCreateDeals = true">
                 Create
             </x-button.default>
             <form action="{{route('manage.deals.store')}}" method="post">

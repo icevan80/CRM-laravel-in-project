@@ -7,7 +7,7 @@
     {{--    <div class="flex flex-wrap gap-4 mt-10">--}}
     {{--        @foreach ($services as $service)--}}
     {{--        @if($service->is_hidden == false)--}}
-    {{--            <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">--}}
+    {{--            <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg backgorund-color shadow-md duration-300 hover:scale-105 hover:shadow-lg">--}}
     {{--                <img class="h-48 w-full object-cover object-center" src="{{ asset('storage/images/'. $service->image)}}" alt="Product Image" />--}}
     {{--                <div class="p-4">--}}
     {{--                <h2 class="mb-2 text-lg font-medium  text-gray-900">{{ $service->name}}</h2>--}}

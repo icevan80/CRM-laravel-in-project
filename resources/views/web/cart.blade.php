@@ -5,7 +5,7 @@
             @if(session('unavailable_time_slots'))
 
 
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <div class="error-color bg-lighter-90 bg-opacity-75 border border-error-color text-error-color px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Oops!</strong>
                     <span class="block sm:inline">The following time slots are no longer available. Please remove them from your cart to continue.</span>
                     <ul class="mt-2 list-disc list-inside text-sm text-red-600">
@@ -19,7 +19,7 @@
             @endif
             <div class="flex flex-col md:flex-row gap-4">
                 <div class="md:w-3/4">
-                    <div class="bg-white rounded-lg shadow-md p-6 mb-4">
+                    <div class="surface-color rounded-lg shadow-md p-6 mb-4">
                         <table class="w-full">
                             <thead>
                             <tr>
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="md:w-1/4">
-                    <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="surface-color rounded-lg shadow-md p-6">
                         <h2 class="text-lg font-semibold mb-4">Summary</h2>
                         <div class="flex justify-between mb-2">
                             <span>Subtotal</span>
@@ -99,7 +99,7 @@
                             <span class="font-semibold">Total</span>
                             <span class="font-semibold">LKR {{ number_format($cart?->total, 2, '.', ',') }}</span>
                         </div>
-                        <button @click="showCheckoutConfirmation = true" class="bg-pink-500 text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                        <button @click="showCheckoutConfirmation = true" class="primary-color text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
                     </div>
                 </div>
             </div>
@@ -109,7 +109,7 @@
             <div class="fixed inset-0 transition-opacity -z-10" aria-hidden="true">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-            <div class="bg-white rounded-lg p-4 max-w-md mx-auto"  @click.outside="showCheckoutConfirmation = false" >
+            <div class="surface-color rounded-lg p-4 max-w-md mx-auto"  @click.outside="showCheckoutConfirmation = false" >
                 <h2 class="text-xl font-semibold">Confirm Checkout</h2>
                 <p>Are you sure you want to checkout?</p>
                 <div class="mt-4 flex justify-end space-x-4">
@@ -118,9 +118,9 @@
                     </button>
                     <form action="{{route('cart.checkout')}}" method="post">
                         @csrf
-                        <button class="px-4 py-2 text-sm font-medium text-white bg-pink-600 border border-transparent rounded-md hover:bg-pink-700 focus:outline-none">
+                        <x-button.default>
                             Confirm
-                        </button>
+                        </x-button.default>
                     </form>
 
                 </div>

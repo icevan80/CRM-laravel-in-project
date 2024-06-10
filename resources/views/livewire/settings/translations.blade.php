@@ -39,10 +39,10 @@
                         <p>{{ $translationValue['key'] }}</p>
                     </td>
                     <td class="font-medium border p-2 w-full">
-                        <x-input type="text"
+                        <x-inputs.text
                                  wire:model.debounce.500ms="parsedTranslation.{{ $translationValue['key'] }}.value">
 
-                        </x-input>
+                        </x-inputs.text>
                     </td>
                 </tr>
             @endforeach
@@ -78,16 +78,13 @@
         </x-slot>
 
         <x-slot name="content">
-            <label for="code" class="block text-sm font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }}
-                en</label>
-            <x-input id="code" type="text" wire:model.debounce.500ms="code"
-                     class="border text-gray-900  border-gray-300 rounded-lg">
-            </x-input>
+            <x-inputs.label for="code" class="block text-sm font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }}
+                en</x-inputs.label>
+            <x-inputs.text id="code" wire:model.debounce.500ms="code">
+            </x-inputs.text>
             <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Language name') }}
                 - {{ __('Example') }} English</label>
-            <x-input id="name" type="text" wire:model.debounce.500ms="name"
-                     class="border text-gray-900  border-gray-300 rounded-lg">
-            </x-input>
+            <x-inputs.text id="name" wire:model.debounce.500ms="name"></x-inputs.text>
         </x-slot>
 
         <x-slot name="footer">

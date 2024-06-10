@@ -2,8 +2,7 @@
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Service - {{$service->name}}</h2>
         <div x-data="{showEditService: false}">
-            <x-button.default x-on:click="showEditService = true"
-                              class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+            <x-button.default x-on:click="showEditService = true">
                 Edit
             </x-button.default>
             <form action="{{route('manage.services.update', ['id'=> $id])}}" method="post">
@@ -58,14 +57,14 @@
         <div>
             @if($service->is_hidden == true)
                 <span
-                    class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-600">
-                        <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                    class="inline-flex items-center gap-1 rounded-full error-color bg-lighter-90 bg-opacity-75 px-2 py-1 text-xs font-medium text-error-color">
+                        <span class="h-1.5 w-1.5 rounded-full error-color"></span>
                         Hidden
                       </span>
             @else
                 <span
-                    class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-600">
-                        <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                    class="inline-flex items-center gap-1 rounded-full success-color bg-lighter-90 bg-opacity-75 px-2 py-1 text-xs font-medium text-success-color">
+                        <span class="h-1.5 w-1.5 rounded-full success-color"></span>
                         Visible
                         </span>
             @endif

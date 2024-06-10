@@ -10,8 +10,7 @@
         @endif
         <div>
             <a href="{{route('manage.users.create')}}">
-                <x-button.default
-                                  class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+                <x-button.default>
                     Create user
                 </x-button.default>
             </a>

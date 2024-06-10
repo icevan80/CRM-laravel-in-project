@@ -11,8 +11,8 @@
                             <label
                                 class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
                                 x-bind:class="{
-                                'bg-pink-500 text-white ': selectedLocation === {{ $location->id }},
-                                'bg-gray-50 hover:bg-pink-100': selectedLocation !== {{ $location->id }}
+                                'primary-color text-white ': selectedLocation === {{ $location->id }},
+                                'surface-color bg-lighter-50 bg-opacity-75  hover:bg-darken-35': selectedLocation !== {{ $location->id }}
                             }"
                             >
                                 <input type="radio" name="time-slot-choice"
@@ -56,8 +56,8 @@
                         <label
                             class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
                             x-bind:class="{
-                                'bg-pink-500 text-white ': selectedTimeSlot === {{ $timeSlot->id }},
-                                'bg-gray-50 hover:bg-pink-100': selectedTimeSlot !== {{ $timeSlot->id }},
+                                'primary-color text-white ': selectedTimeSlot === {{ $timeSlot->id }},
+                                'surface-color bg-lighter-50 bg-opacity-75 hover:bg-darken-35': selectedTimeSlot !== {{ $timeSlot->id }},
                             }"
                         >
                             <input type="radio" name="time-slot-choice"
@@ -101,7 +101,7 @@
         </div>
 
         <button type="submit"
-                class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-pink-600 px-8 py-3 text-base font-medium text-white hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent primary-color px-8 py-3 text-base font-medium text-white hover:bg-darken-35 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
             Add to cart
         </button>
     </form>

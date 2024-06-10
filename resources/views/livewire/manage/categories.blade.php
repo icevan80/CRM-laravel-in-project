@@ -1,6 +1,5 @@
 <div>
     <div class="w-1/3 float-right m-4">
-        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -9,14 +8,14 @@
                           d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                 </svg>
             </div>
-            <x-input type="search" wire:model.debounce.500ms="search" id="default-search" name="search"
-                     class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                     placeholder="Search Categories..."></x-input>
+            <x-inputs.default type="search" wire:model.debounce.500ms="search" id="default-search" name="search"
+                     class="w-full p-4 pl-10"
+                     placeholder="Search Categories..."></x-inputs.default>
             <x-button.default type="submit" class="text-white absolute right-2.5 bottom-2.5 ">Search</x-button.default>
         </div>
     </div>
 
-    <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+    <table class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
@@ -59,9 +58,7 @@
                 Изменение категории
             </x-slot>
             <x-slot name="content">
-                <x-inputs.label for="category_name">Имя категории</x-inputs.label>
-                <x-input type="text" id="category_name" name="category_name"/>
-                <x-input-error for="category_name" class="mt-2"/>
+                <x-inputs.text label="{{ __('Category name') }}"  id="category_name" name="category_name"></x-inputs.text>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">

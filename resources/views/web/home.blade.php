@@ -23,7 +23,7 @@ class="relative bg-cover bg-center bg-no-repeat " style="background-image: url({
   <div class="max-w-xl text-left ltr:sm:text-left rtl:sm:text-right">
     <h1 class="text-3xl font-extrabold sm:text-5xl text-neutral-700">
       Find Your Perfect Salon Experience at
-      <strong class="block font-extrabold text-pink-500">
+      <strong class="block font-extrabold text-primary-color">
         Salon Bliss.      </strong>
     </h1>
 
@@ -34,12 +34,12 @@ class="relative bg-cover bg-center bg-no-repeat " style="background-image: url({
     <div class="mt-8 flex flex-wrap gap-4 text-center">
       <a
         href="{{route('services')}}"
-        class="block w-full rounded bg-pink-500 px-12 py-3 text-lg font-medium text-white shadow hover:bg-pink-700 focus:outline-none focus:ring active:bg-pink-500 sm:w-auto"
+        class="block w-full rounded primary-color px-12 py-3 text-lg font-medium text-white shadow hover:bg-darken-35 focus:outline-none focus:ring active:primary-color sm:w-auto"
       >
 Book Now      </a>
 <a
           href="{{route('services')}}"
-          class="block w-full rounded bg-white px-12 py-3 text-lg font-medium text-pink-500 shadow hover:text-pink-600 focus:outline-none focus:ring-offset-pink-400 active:text-pink-500 sm:w-auto"
+          class="block w-full rounded background-color px-12 py-3 text-lg font-medium text-primary-color shadow hover:text-lighter-50 focus:outline-none hover:bg-lighter-90 focus:ring-offset-pink-400 active:text-primary-color sm:w-auto"
         >
           Browse Services
         </a>
@@ -52,37 +52,37 @@ Book Now      </a>
 </section>
 
         {{-- <img class="w-full bg-cover" src="{{ asset('images\Salon2.jpg') }}" alt="Banner image"> --}}
-        {{-- <div class="absolute right-1 top-5 font-black text-pink-600 text-7xl">30% OFF <br>THIS SEASON</div> --}}
+        {{-- <div class="absolute right-1 top-5 font-black text-primary-color text-7xl">30% OFF <br>THIS SEASON</div> --}}
  <div>
-    <div class="text-center text-4xl font-semibold text-pink-500 m-2 mt-5">Categories</div>
+    <div class="text-center text-4xl font-semibold text-primary-color m-2 mt-5">Categories</div>
 
     <div class="container flex gap-10 p-10 pt-3 justify-center mx-auto">
       <a href="#" class="text-center gap-2 duration-300 hover:scale-105">
           <img class="w-60 rounded-xl" src="{{ asset('images/hair.jpg')}}" alt="">
-          <span class="text-pink-500 text-2xl">Hair</span>
+          <span class="text-primary-color text-2xl">Hair</span>
       </a>
       <a href="#" class="text-center gap-2 duration-300 hover:scale-105">
         <img class="w-60 rounded-xl" src="{{ asset('images/nails.jpg')}}"  alt="">
-        <span class="text-pink-500 text-2xl">Nails</span>
+        <span class="text-primary-color text-2xl">Nails</span>
 
       </a>
       <a href="#" class="text-center gap-2 duration-300 hover:scale-105">
         <img class="w-60 rounded-xl" src="{{ asset('images/skin.jpg')}}" alt="">
-        <span class="text-pink-500 text-2xl">Skin</span>
+        <span class="text-primary-color text-2xl">Skin</span>
 
       </a>
       <a href="#" class="text-center gap-2 duration-300 hover:scale-105">
         <img class="w-60 rounded-xl" src="{{ asset('images/makeup.jpg')}}" alt="">
-        <span class="text-pink-500 text-2xl">Makeup</span>
+        <span class="text-primary-color text-2xl">Makeup</span>
       </a>
     </div>
 
     </div>
 
-    <section class="pt-5 bg-white">
+    <section class="pt-5 background-color">
       <div class="md:w-4/5 mx-auto">
         <div class="mx-auto text-center md:max-w-xl lg:max-w-3xl">
-          <h3 class="mb-6 text-3xl text-pink-500 font-bold">Popular Services</h3>
+          <h3 class="mb-6 text-3xl text-primary-color font-bold">Popular Services</h3>
           <p class="mb-6 pb-2 text-gray-700 md:mb-12 md:pb-0">
             Services Popular among our customers.
           </p>
@@ -90,7 +90,7 @@ Book Now      </a>
 
         <div class="flex flex-col md:flex-row mt-3 pb-7 h-max">
 
-          <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+          <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg background-color shadow-md duration-300 hover:scale-105 hover:shadow-lg">
             <img class="h-48 w-full object-cover object-center" src="{{ asset('images/hair-cut.jpg')}}" alt="Product Image" />
             <div class="p-4">
               <h2 class="mb-2 text-lg font-medium  text-gray-900">Hair Cut</h2>
@@ -112,7 +112,7 @@ Book Now      </a>
           </div>
 
 
-           <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+           <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg background-color shadow-md duration-300 hover:scale-105 hover:shadow-lg">
             <img class="h-48 w-full object-cover object-center" src="{{ asset('images/hair-coloring.jpg')}}" alt="Product Image" />
             <div class="p-4">
               <h2 class="mb-2 text-lg font-medium  text-gray-900">Hair Coloring</h2>
@@ -133,7 +133,7 @@ Book Now      </a>
             </div>
           </div>
 
-           <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg bg-white shadow-md duration-300 hover:scale-105 hover:shadow-lg">
+           <div class="mx-auto w-80 pb-20 transform overflow-hidden rounded-lg background-color shadow-md duration-300 hover:scale-105 hover:shadow-lg">
             <img class="h-48 w-full object-cover object-center" src="{{ asset('images/nail-coloring.jpg')}}" alt="Product Image" />
             <div class="p-4">
               <h2 class="mb-2 text-lg font-medium  text-gray-900">Nail Coloring</h2>
@@ -159,7 +159,7 @@ Book Now      </a>
       <div class="flex justify-end mx-auto pb-5 gap-3 md:w-3/4">
 
         <x-button.secondary>View price list </x-button.secondary>
-        <a href="{{route('services')}}" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded">
+        <a href="{{route('services')}}" class="primary-color hover:bg-darken-35 text-white font-bold py-2 px-4 rounded">
           View All Services
         </a>
       </div>
@@ -168,7 +168,7 @@ Book Now      </a>
         {{-- <x-button.default>View all services</x-button.default>   --}}
         {{-- <a
           href="#"
-          class="block w-full rounded bg-pink-500 px-12 py-3 text-lg font-medium text-white shadow hover:bg-pink-700 focus:outline-none focus:ring active:bg-pink-500 sm:w-auto"
+          class="block w-full rounded primary-color px-12 py-3 text-lg font-medium text-white shadow hover:bg-darken-35 focus:outline-none focus:ring active:primary-color sm:w-auto"
         >
   Browse Services    </a> --}}
 
@@ -178,37 +178,37 @@ Book Now      </a>
 
 <section class=" w-3/4 p-3 mx-auto pt-5">
 <div>
-  <div class="text-center text-4xl font-semibold text-pink-500 m-2">Offers</div>
+  <div class="text-center text-4xl font-semibold text-primary-color m-2">Offers</div>
 </div>
 <div class="flex gap-10 ">
-  <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+  <div class="max-w-sm p-6 background-color border border-gray-200 rounded-lg shadow ">
     <a href="#">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">15% Off for Combank Credit Cards</h5>
     </a>
     <p class="mb-3 font-normal text-gray-700 ">Offer Valid till 30th Of July 2023</p>
-    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-pink-500 rounded-lg hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
+    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white primary-color rounded-lg hover:bg-darken-35 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
         View Offer
         <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     </a>
   </div>
 
-  <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+  <div class="max-w-sm p-6 background-color border border-gray-200 rounded-lg shadow ">
     <a href="#">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">12% Off for Promo Code: HAIR2023</h5>
     </a>
     <p class="mb-3 font-normal text-gray-700 ">Offer Valid till 30th Of July 2023</p>
-    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-pink-500 rounded-lg hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
+    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white primary-color rounded-lg hover:bg-darken-35 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
         View Offer
         <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     </a>
   </div>
 
-  <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow ">
+  <div class="max-w-sm p-6 background-color border border-gray-200 rounded-lg shadow ">
     <a href="#">
         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">15% Off for Frimi</h5>
     </a>
     <p class="mb-3 font-normal text-gray-700 ">Offer Valid till 30th Of July 2023</p>
-    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-pink-500 rounded-lg hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
+    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white primary-color rounded-lg hover:bg-darken-35 focus:ring-4 focus:outline-none focus:ring-pink-300 ">
         View Offer
         <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
     </a>
@@ -223,7 +223,7 @@ Book Now      </a>
     {{-- Gallery --}}
     <section class="pt-5 pb-5">
         <div class="mx-auto text-center md:max-w-xl lg:max-w-3xl">
-          <h3 class="text-3xl text-pink-500 font-bold">Gallery</h3>
+          <h3 class="text-3xl text-primary-color font-bold">Gallery</h3>
         </div>
         <div class="container mx-auto px-5 py-2 lg:px-32 lg:pt-12">
           <div class="-m-1 flex flex-wrap md:-m-2">
@@ -279,10 +279,10 @@ Book Now      </a>
         </div>
     </section>
     {{-- Testimonials --}}
-    <section class="bg-white pt-5">
+    <section class="background-color pt-5">
       <div class="md:w-3/4 mx-auto">
         <div class="mx-auto text-center md:max-w-xl lg:max-w-3xl">
-          <h3 class="mb-6 text-3xl text-pink-500 font-bold">Testimonials</h3>
+          <h3 class="mb-6 text-3xl text-primary-color font-bold">Testimonials</h3>
           <p class="mb-6 pb-2 text-gray-700 md:mb-12 md:pb-0">
             Here are the testimonials from our customers who have visited our salon.
           </p>
@@ -423,7 +423,7 @@ Book Now      </a>
 
     <section class="mb-12" id="offer-banner">
 
-      <div class="bg-pink-600 alert alert-dismissible fade show fixed bottom-0 right-0 left-0 z-[1030] w-full py-4 px-6 text-white md:flex justify-between items-center text-center md:text-left">
+      <div class="primary-color border-t alert alert-dismissible fade show fixed bottom-0 right-0 left-0 z-[1030] w-full py-4 px-6 text-white md:flex justify-between items-center text-center md:text-left">
         <div class="mb-4 md:mb-0 flex items-center flex-wrap justify-center md:justify-start">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="w-4 h-4 mr-2">
             <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
@@ -432,7 +432,7 @@ Book Now      </a>
           <strong class="mr-1">Limited offer!</strong> Get massive discounts now before it's to late
         </div>
         <div class="flex items-center justify-center">
-          <a class="inline-block px-6 py-2.5 bg-white text-gray-700 font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out mr-4" href="#" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">Claim offer</a>
+          <a class="inline-block px-6 py-2.5 background-color text-gray-700 font-semibold text-xs leading-tight uppercase rounded shadow-md hover:bg-gray-100 hover:shadow-lg focus:bg-gray-100 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-gray-200 active:shadow-lg transition duration-150 ease-in-out mr-4" href="#" role="button" data-mdb-ripple="true" data-mdb-ripple-color="light">Claim offer</a>
 
 
           <div class="text-white" data-bs-dismiss="alert" aria-label="Close" id="offer-banner-close">
@@ -444,7 +444,7 @@ Book Now      </a>
     </section>
     <!-- Footer container -->
 <footer
-class="bg-pink-500 text-center text-neutral-100 lg:text-left">
+class="primary-color text-center text-neutral-100 lg:text-left">
 <div
   class="flex items-center justify-center border-b-2 border-neutral-200 p-6 lg:justify-between">
   <div class="mr-12 hidden lg:block">
@@ -599,7 +599,7 @@ class="bg-pink-500 text-center text-neutral-100 lg:text-left">
 </div>
 
 <!--Copyright section-->
-<div class="bg-white p-2 text-center">
+<div class="background-color p-2 text-center">
   <span class="text-neutral-500">© 2023 Copyright:</span>
   <a
     class="font-semibold text-neutral-600"

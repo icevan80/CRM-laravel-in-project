@@ -2,7 +2,7 @@
     <div class="container mx-auto p-1">
         <div class="pb-2 mb-3">
 
-            <div class="bg-white p-3 shadow-sm rounded-sm" x-data="{ showFullInfo : false}">
+            <div class="background-color p-3 shadow-sm rounded-sm" x-data="{ showFullInfo : false}">
                 <div class="text-center my-2">
                     <img class="h-16 w-16 rounded-full mx-auto"
                          src="{{ $user->profile_photo_url }}"
@@ -61,10 +61,10 @@
                                 <span>Status</span>
                                 @if ($user->status == 1)
                                     <span class="ml-auto"><span
-                                            class="bg-green-500 py-1 px-2 rounded text-white text-sm">Active</span></span>
+                                            class="success-color py-1 px-2 rounded text-on-success-color text-sm">Active</span></span>
                                 @else
                                     <span class="ml-auto"><span
-                                            class="bg-red-500 py-1 px-2 rounded text-white text-sm">Inactive</span></span>
+                                            class="error-color py-1 px-2 rounded text-on-error-color text-sm">Inactive</span></span>
                                 @endif
                             </li>
                             <li class="flex items-center py-3">

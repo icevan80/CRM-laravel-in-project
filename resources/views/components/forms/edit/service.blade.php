@@ -1,13 +1,11 @@
 <div>
     <div>
-        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
-        <x-input type="text" name="service_name" id="name" class="w-full"
-                 value="{{$service->name}}"></x-input>
+        <x-inputs.text label="{{ __('Name') }}" name="service_name" id="name" class="w-full"
+                 value="{{$service->name}}"></x-inputs.text>
         @error('service_name') <span class="text-red-500">{{ $message }}</span>@enderror
     </div>
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-
             <x-inputs.select  label="{{__('Category')}}" name="service_category_id" id="category_id"
                     class="w-full">
                 @foreach ($categories as $category)

@@ -1,5 +1,5 @@
 <x-dashboard.shell>
-    <div class="w-1/3 mx-auto bg-white rounded-lg p-5">
+    <div class="w-1/3 mx-auto background-color rounded-lg p-5">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create User') }}
         </h2>

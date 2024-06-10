@@ -13,9 +13,8 @@
                     method="post">
                     @csrf
                     @method('PUT')
-                    <label>
-                        Исполнитель:
-                        <select class="border text-gray-900  border-gray-300 rounded-lg"
+
+                        <x-inputs.select label="Исполнитель:"
                                 name="implementer_id">
                             @foreach ($masters as $master)
                                 <option
@@ -24,11 +23,10 @@
                                     @endif
                                     value={{$master->user->id}}>{{$master->user->name}}</option>
                             @endforeach
-                        </select>
+                        </x-inputs.select>
                         <x-button.default>
                             Изменить
                         </x-button.default>
-                    </label>
                 </form>
             @else
                 <h2>Исполнитель: {{ $appointment->implementer->name}}</h2>

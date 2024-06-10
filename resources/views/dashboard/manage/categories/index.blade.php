@@ -13,9 +13,7 @@
                         Создание новой категории
                     </x-slot>
                     <x-slot name="content">
-                        <x-inputs.label for="category_name">Имя категории</x-inputs.label>
-                        <x-input type="text" id="category_name" name="category_name"/>
-                        <x-input-error for="category_name" class="mt-2"/>
+                        <x-inputs.text label="{{ __('Category name') }}" type="text" id="category_name" name="category_name"></x-inputs.text>
                     </x-slot>
                     <x-slot name="footer">
                         <div class="flex gap-3">

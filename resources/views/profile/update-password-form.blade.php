@@ -9,7 +9,7 @@
 
     <x-slot name="form">
         <div class="col-span-6 sm:col-span-4">
-            <x-input.default label="{{ __('Current Password') }}" id="current_password" type="password" class="w-full" wire:model.defer="state.current_password" autocomplete="current-password"></x-input.default>
+            <x-inputs.default label="{{ __('Current Password') }}" id="current_password" type="password" class="w-full" wire:model.defer="state.current_password" autocomplete="current-password"></x-inputs.default>
         </div>
 
         <div class="col-span-6 sm:col-span-4">

@@ -1,6 +1,6 @@
 <div>
     <div class="mobile-filters">
-        <select wire:model="list" class="border text-gray-900  border-gray-300 rounded-lg">
+        <x-inputs.select wire:model="list" class="border text-gray-900  border-gray-300 rounded-lg">
             <option
                 value="two_weeks">{{ __('Two weeks') }}</option>
             <option
@@ -9,33 +9,33 @@
                 value="today_tomorrow">{{ __('Today - tomorrow') }}</option>
             <option
                 value="rows">{{ __('Rows') }}</option>
-        </select>
+        </x-inputs.select>
         {{-- TODO: добавить разрешение view_other_appointemnt --}}
         @if(auth()->user()->hasPermission('edit_other_appointment'))
             <h2 class="text-2xl font-bold px-4">-</h2>
-            <select wire:model="view" class="border text-gray-900  border-gray-300 rounded-lg">
+            <x-inputs.select wire:model="view">
                 <option value="salon">{{ __('Salon') }}</option>
                 <option value="master">{{ __('Current master') }}</option>
                 <option value="self">{{ __('My appointments') }}</option>
                 <option value="all">{{ __('Without filters') }}</option>
-            </select>
+            </x-inputs.select>
             @if($view == 'salon' && $locations)
                 <h2 class="text-2xl font-bold px-4">-</h2>
-                <select wire:model="follow" class="border text-gray-900  border-gray-300 rounded-lg">
+                <x-inputs.select wire:model="follow">
                     @foreach ($locations as $location)
                         <option
                             value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
                     @endforeach
-                </select>
+                </x-inputs.select>
             @elseif($view == 'master' && $masters)
                 <h2 class="text-2xl font-bold px-4">-</h2>
-                <select wire:model="follow" class="border text-gray-900  border-gray-300 rounded-lg">
+                <x-inputs.select wire:model="follow">
                     <option value="0">{{ __('All masters') }}</option>
                     @foreach ($masters as $master)
                         <option
                             value="{{$master->id}}">{{$master->user->name}}</option>
                     @endforeach
-                </select>
+                </x-inputs.select>
             @endif
         @endif
         <div class="w-full" x-data="{appDataFalse: false}">
@@ -48,16 +48,15 @@
         </div>
     </div>
     <div class="w-full rounded-lg border border-gray-200 shadow-md my-4">
-        <table class="w-full border bg-white text-left text-sm text-gray-500 min-w-screen">
+        <table class="w-full border background-color text-left text-sm text-gray-500 min-w-screen">
             <thead class="table-header bg-gray-50">
             <tr>
                 <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
-                    <x-input wire:model="selectedDay" type="date"
-                             class="mobile-calendar border text-gray-900  border-gray-300 rounded-lg"></x-input>
+                    <x-inputs.date wire:model="selectedDay"></x-inputs.date>
                 </th>
                 @foreach($tableCells as $cellDay)
                     <th scope="col"
-                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'bg-pink-600 text-white' : 'text-gray-900'}} day-column py-4 text-center font-medium border p-2">{{
+                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-4 text-center font-medium border p-2">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                         <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
                         @if($cellDay['count_appointments'] != 0)
@@ -93,7 +92,7 @@
                                                         drag-item="{{ $appointmentData['data']['appointment_code'] }}"
                                                         draggable="{{ $appointmentData['available'] ? 'true' : 'false' }}"
                                                         x-on:click="$wire.setSelectedAppointment({{ $appointmentData['data'] }})"
-                                                        class="appointment-slot text-white {{ $appointmentData['data']['complete'] ? 'bg-green-600' : 'bg-pink-600' }}  font-medium border"
+                                                        class="appointment-slot text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
                                                         style="height: calc(102% * {{$appointmentData['range']}})">
                                                         <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
                                                         <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
@@ -115,7 +114,7 @@
                                                 @foreach($cellMinute['appointments'] as $appointmentData)
                                                     <div
                                                         wire:click="setSelectedAppointment({{ $appointmentData['data'] }})"
-                                                        class="appointment-slot past text-white {{ $appointmentData['data']['complete'] ? 'bg-green-600' : 'bg-pink-600' }}  font-medium border"
+                                                        class="appointment-slot past text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
                                                         style="height: calc(102% * {{$appointmentData['range']}})">
                                                         <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
                                                         <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
@@ -275,10 +274,10 @@
                                 {{--<div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
                                     <div style="width: 600px; position: relative">
-                                        <x-input class="w-full" id="name" type="text" name="appointment_name"
+                                        <x-inputs.default class="w-full" id="name" type="text" name="appointment_name"
                                                  wire:focusout="endSearch"
                                                  wire:focusin="startSearch"
-                                                 wire:model.debounce.500ms="searchService"></x-input>
+                                                 wire:model.debounce.500ms="searchService"></x-inputs.default>
                                         @if($this->searchProcess)
                                             <div class="search-result-list">
                                                 @foreach($searchedServices as $service)
@@ -526,7 +525,7 @@
         e.target.setAttribute('dragging', true)
     }
     let eventDrop = e => {
-        e.target.classList.remove('bg-pink-500')
+        e.target.classList.remove('primary-color')
 
         let draggingEl = root.querySelector('[dragging]')
 
@@ -546,14 +545,14 @@
     }
     let eventDragenter = e => {
         if (e.target.tagName !== 'P') {
-            e.target.classList.add('bg-pink-500')
+            e.target.classList.add('primary-color')
         }
 
         e.preventDefault()
     }
     let eventDragOver = e => e.preventDefault()
     let eventDragLeave = e => {
-        e.target.classList.remove('bg-pink-500')
+        e.target.classList.remove('primary-color')
     }
     let eventDragEnd = e => {
         e.target.removeAttribute('dragging')

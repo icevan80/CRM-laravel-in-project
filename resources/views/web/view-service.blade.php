@@ -3,7 +3,7 @@
     {{--<div class="flex w-full transform text-left text-base transition md:my-8 md:max-w-2xl md:px-4 lg:max-w-4xl">--}}
     <div class="md:w-9/12 w-full mx-auto">
         <div
-            class="relative flex w-full items-center overflow-hidden bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+            class="relative flex w-full items-center overflow-hidden background-color px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
             {{--        <button type="button" class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8">--}}
             {{--            <span class="sr-only">Close</span>--}}
             {{--            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">--}}
@@ -14,7 +14,7 @@
                 --}}{{--                            @if (false)--}}{{--
 
 --}}{{--                <a href="{{ route('manageservices') }}?search={{ $service->slug }}">--}}{{--
---}}{{--                    <x-button class="px-5 py-2 text-white bg-pink-500 rounded-md hover:bg--600">--}}{{--
+--}}{{--                    <x-button class="px-5 py-2 text-white primary-color rounded-md hover:bg--600">--}}{{--
 --}}{{--                        Manage--}}{{--
 --}}{{--                    </x-button.default>--}}{{--
 --}}{{--                </a>--}}{{--
@@ -312,8 +312,8 @@
 {{--                                                <label--}}
 {{--                                                    class="group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase  focus:outline-none sm:flex-1 cursor-pointer shadow-sm"--}}
 {{--                                                    x-bind:class="{--}}
-{{--                                                            'bg-pink-500 text-white ': selectedTimeSlot === '{{ $timeSlot->id }}',--}}
-{{--                                                            'bg-gray-50 text-gray-800 hover:bg-pink-100': selectedTimeSlot !== '{{ $timeSlot->id }}',--}}
+{{--                                                            'primary-color text-white ': selectedTimeSlot === '{{ $timeSlot->id }}',--}}
+{{--                                                            'surface-color bg-lighter-50 bg-opacity-75  hover:bg-darken-35 text-gray-800': selectedTimeSlot !== '{{ $timeSlot->id }}',--}}
 {{--                                                        }"--}}
 {{--                                                >--}}
 {{--                                                    <input type="radio" name="time-slot-choice"--}}

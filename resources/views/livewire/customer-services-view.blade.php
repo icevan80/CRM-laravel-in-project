@@ -1,4 +1,4 @@
-<div class="bg-white">
+<div class="background-color">
     <div>
         <!--
           Mobile filter dialog
@@ -30,12 +30,12 @@
                     To: "translate-x-full"
                 -->
                 <div
-                    class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+                    class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto surface-color py-4 pb-12 shadow-xl">
                     <div class="flex items-center justify-between px-4">
 
                         <h2 class="text-lg font-medium text-gray-900">Filters</h2>
                         <button type="button"
-                                class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
+                                class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md surface-color p-2 text-gray-400">
                             <span class="sr-only">Close menu</span>
                             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                                  stroke="currentColor" aria-hidden="true">
@@ -69,7 +69,7 @@
                             <h3 class="-mx-2 -my-3 flow-root">
                                 <!-- Expand/collapse section button -->
                                 <button type="button"
-                                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
+                                        class="flex w-full items-center justify-between surface-color px-2 py-3 text-gray-400 hover:text-gray-500"
                                         aria-controls="filter-section-mobile-0" aria-expanded="false">
                                     <span class="font-medium text-gray-900">Color</span>
                                     <span class="ml-6 flex items-center">
@@ -138,7 +138,7 @@
                             <h3 class="-mx-2 -my-3 flow-root">
                                 <!-- Expand/collapse section button -->
                                 <button type="button"
-                                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
+                                        class="flex w-full items-center justify-between surface-color px-2 py-3 text-gray-400 hover:text-gray-500"
                                         aria-controls="filter-section-mobile-1" aria-expanded="false">
                                     <span class="font-medium text-gray-900">Category</span>
                                     <span class="ml-6 flex items-center">
@@ -200,7 +200,7 @@
                             <h3 class="-mx-2 -my-3 flow-root">
                                 <!-- Expand/collapse section button -->
                                 <button type="button"
-                                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
+                                        class="flex w-full items-center justify-between surface-color px-2 py-3 text-gray-400 hover:text-gray-500"
                                         aria-controls="filter-section-mobile-2" aria-expanded="false">
                                     <span class="font-medium text-gray-900">Size</span>
                                     <span class="ml-6 flex items-center">
@@ -226,7 +226,7 @@
 
         <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
-                <h1 class="text-4xl font-bold tracking-tight text-pink-500">Services</h1>
+                <h1 class="text-4xl font-bold tracking-tight text-primary-color">Services</h1>
                 <div class="w-1/3 float-right m-4">
                     <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
                     <div class="relative">
@@ -241,7 +241,7 @@
                                class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                                placeholder="Search Services...">
                         <button type="submit"
-                                class="text-white absolute right-2.5 bottom-2.5 bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-4 py-2">
+                                class="text-white absolute right-2.5 bottom-2.5 primary-color hover:bg-darken-35 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-4 py-2">
                             Search
                         </button>
                     </div>
@@ -275,7 +275,7 @@
                             To: "transform opacity-0 scale-95"
                         -->
                         <div x-cloak x-show="showSortMenu" @click.away="showSortMenu = false"
-                             class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+                             class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md surface-color shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
                              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                             <div class="py-1" role="none" x-data="{ selectedIndex:0 }">
                                 <!--
@@ -352,7 +352,7 @@
                             <h3 class="-my-3 flow-root">
                                 <!-- Expand/collapse section button -->
                                 <button type="button"
-                                        class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                                        class="flex w-full items-center justify-between surface-color py-3 text-sm text-gray-400 hover:text-gray-500"
                                         aria-controls="filter-section-1" aria-expanded="false">
                                     <span class="font-medium text-gray-900">Category</span>
                                     <span class="ml-6 flex items-center">
@@ -386,7 +386,7 @@
                             <h3 class="-my-3 flow-root">
                                 <!-- Expand/collapse section button -->
                                 <button type="button"
-                                        class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                                        class="flex w-full items-center justify-between surface-color py-3 text-sm text-gray-400 hover:text-gray-500"
                                         aria-controls="filter-section-2" aria-expanded="false">
                                     <span class="font-medium text-gray-900">Size</span>
                                     <span class="ml-6 flex items-center">

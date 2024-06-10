@@ -12,14 +12,14 @@
             <input type="search" wire:model="search" id="default-search" name="search"
                    class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                    placeholder="Search Deals...">
-            <button type="submit"
-                    class="text-white absolute right-2.5 bottom-2.5 bg-pink-600 hover:bg-pink-700 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-4 py-2">
+            <x-button.default type="submit"
+                    class="absolute right-2.5 bottom-2.5">
                 Search
-            </button>
+            </x-button.default>
         </div>
     </div>
 
-    <table class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+    <table class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="pl-6 py-4 font-medium text-gray-900">Id</th>
@@ -53,15 +53,15 @@
                     <div>
                         @if($deal->is_hidden == true)
                             <span
-                                class="inline-flex items-center gap-1 rounded-full bg-red-50 px-2 py-1 text-xs font-medium text-red-600">
-                            <span class="h-1.5 w-1.5 rounded-full bg-red-600"></span>
+                                class="inline-flex items-center gap-1 rounded-full error-color bg-lighter-90 bg-opacity-75 px-2 py-1 text-xs font-medium text-error-color">
+                            <span class="h-1.5 w-1.5 rounded-full error-color"></span>
                             Hidden
                           </span>
                         @else
                             <span
-                                class="inline-flex items-center gap-1 rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-600"
+                                class="inline-flex items-center gap-1 rounded-full success-color bg-lighter-90 bg-opacity-75  px-2 py-1 text-xs font-medium text-green-600"
                             >
-                            <span class="h-1.5 w-1.5 rounded-full bg-green-600"></span>
+                            <span class="h-1.5 w-1.5 rounded-full success-color"></span>
                             Visible
                             </span>
                         @endif

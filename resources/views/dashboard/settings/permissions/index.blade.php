@@ -2,7 +2,7 @@
     <div class="flex justify-between mx-7 pt-6">
         <h2 class="text-2xl font-bold">Менеджер прав</h2>
         <div x-data="{showCreatePermission: false}">
-            <x-button.default x-on:click="showCreatePermission = true" class="px-2 py-2 text-white bg-pink-500 rounded-md hover:bg--600">
+            <x-button.default x-on:click="showCreatePermission = true">
                 Create
             </x-button.default>
             <form action="{{route('settings.permissions.store')}}" method="post">
@@ -13,9 +13,7 @@
                         Создание нового правила
                     </x-slot>
                     <x-slot name="content">
-                        <x-inputs.label for="permission_name">Имя привелегии</x-inputs.label>
-                        <x-input type="text" id="permission_name" name="permission_name"/>
-                        <x-input-error for="permission_name" class="mt-2"/>
+                        <x-inputs.text label="{{ __('Permission name') }}" id="permission_name" name="permission_name"></x-inputs.text>
                     </x-slot>
                     <x-slot name="footer">
                         <div class="flex gap-3">

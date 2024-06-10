@@ -9,7 +9,7 @@
     <div class="label-container center-h">
         <x-inputs.label for="{{ $color }}">{{ $colorName }}</x-inputs.label>
     </div>
-    <x-input id="{{ $color }}" name="{{ $color }}" wire:model="scheme.{{$color}}"></x-input>
+    <x-inputs.default id="{{ $color }}" name="{{ $color }}" wire:model="scheme.{{$color}}"></x-inputs.default>
     @isset($this->scheme[$color])
         <div class="center-h">
             @if(str_starts_with($color, 'text_on_'))

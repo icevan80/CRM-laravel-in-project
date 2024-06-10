@@ -47,7 +47,7 @@
         </div>
     </div>
     <table
-        class="w-full border-collapse bg-white text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+        class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="pl-6 py-4 font-medium text-gray-900">Code</th>
