@@ -1,0 +1,439 @@
+.text-on-primary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-primary-s);
+    --text-color-l: var(--text-on-primary-l);
+    color: hsl(var(--text-on-primary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-on-secondary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-secondary-s);
+    --text-color-l: var(--text-on-secondary-l);
+    color: hsl(var(--text-on-secondary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-on-surface-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--text-on-surface-s);
+    --text-color-l: var(--text-on-surface-l);
+    color: hsl(var(--text-on-surface-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-primary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--primary-s);
+    --text-color-l: var(--primary-l);
+    color: hsl(var(--primary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-secondary-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--secondary-s);
+    --text-color-l: var(--secondary-l);
+    color: hsl(var(--secondary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-error-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--error-s);
+    --text-color-l: var(--error-l);
+    color: hsl(var(--error-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-on-error-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--on-error-s);
+    --text-color-l: var(--on-error-l);
+    color: hsl(var(--on-error-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-success-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--success-s);
+    --text-color-l: var(--success-l);
+    color: hsl(var(--success-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-on-success-color {
+    --tw-text-opacity: 1;
+    --text-color-s: var(--on-success-s);
+    --text-color-l: var(--on-success-l);
+    color: hsl(var(--on-success-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
+}
+
+.text-lighter-5 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.05), 93);
+}
+
+.text-lighter-10 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.10), 93);
+}
+
+.text-lighter-15 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.15), 93);
+}
+
+.text-lighter-20 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.20), 93);
+}
+
+.text-lighter-25 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.25), 93);
+}
+
+.text-lighter-35 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.35), 93);
+}
+
+.text-lighter-50 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.50), 93);
+}
+
+.text-lighter-70 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 1.70), 93);
+}
+
+.text-darken-5 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.95), 93);
+}
+
+.text-darken-10 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.90), 93);
+}
+
+.text-darken-15 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.85), 93);
+}
+
+.text-darken-20 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.80), 93);
+}
+
+.text-darken-25 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.75), 93);
+}
+
+.text-darken-35 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.65), 93);
+}
+
+.text-darken-50 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.50), 93);
+}
+
+.text-darken-70 {
+    --text-color-l-c: clamp(7, calc(var(--text-color-l) * 0.30), 93);
+}
+
+.text-light-reset {
+    --text-color-l-c: var(--text-color-l);
+}
+
+.text-light-black {
+    --text-color-l-c: 0;
+}
+
+.text-light-10 {
+    --text-color-l-c: 10;
+}
+
+.text-light-20 {
+    --text-color-l-c: 20;
+}
+
+.text-light-30 {
+    --text-color-l-c: 30;
+}
+
+.text-light-40 {
+    --text-color-l-c: 40;
+}
+
+.text-light-50 {
+    --text-color-l-c: 50;
+}
+
+.text-light-80 {
+    --text-color-l-c: 80;
+}
+
+.text-light-90 {
+    --text-color-l-c: 90;
+}
+
+.text-light-white {
+    --text-color-l-c: 100;
+}
+
+.hover\:text-lighter-5:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.05), 93);
+}
+
+.hover\:text-lighter-10:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.10), 93);
+}
+
+.hover\:text-lighter-15:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.15), 93);
+}
+
+.hover\:text-lighter-20:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.20), 93);
+}
+
+.hover\:text-lighter-25:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.25), 93);
+}
+
+.hover\:text-lighter-35:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.35), 93);
+}
+
+.hover\:text-lighter-50:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.50), 93);
+}
+
+.hover\:text-lighter-70:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.70), 93);
+}
+
+.hover\:text-darken-5:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.95), 93);
+}
+
+.hover\:text-darken-10:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.90), 93);
+}
+
+.hover\:text-darken-15:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.85), 93);
+}
+
+.hover\:text-darken-20:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.80), 93);
+}
+
+.hover\:text-darken-25:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.75), 93);
+}
+
+.hover\:text-darken-35:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.65), 93);
+}
+
+.hover\:text-darken-50:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.50), 93);
+}
+
+.hover\:text-darken-70:hover {
+    --text-color-l-h: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.30), 93);
+}
+
+.hover\:text-light-reset:hover {
+    --text-color-l-h: var(--text-color-l);
+}
+
+.hover\:text-light-black:hover {
+    --text-color-l-h: 0;
+}
+
+.hover\:text-light-50:hover {
+    --text-color-l-h: 50;
+}
+
+.hover\:text-light-80:hover {
+    --text-color-l-h: 80;
+}
+
+.hover\:text-light-90:hover {
+    --text-color-l-h: 90;
+}
+
+.hover\:text-light-white:hover {
+    --text-color-l-h: 100;
+}
+
+.focus\:text-lighter-5:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.05), 93);
+}
+
+.focus\:text-lighter-10:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.10), 93);
+}
+
+.focus\:text-lighter-15:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.15), 93);
+}
+
+.focus\:text-lighter-20:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.20), 93);
+}
+
+.focus\:text-lighter-25:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.25), 93);
+}
+
+.focus\:text-lighter-35:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.35), 93);
+}
+
+.focus\:text-lighter-50:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.50), 93);
+}
+
+.focus\:text-lighter-70:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 1.70), 93);
+}
+
+.focus\:text-darken-5:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.95), 93);
+}
+
+.focus\:text-darken-10:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.90), 93);
+}
+
+.focus\:text-darken-15:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.85), 93);
+}
+
+.focus\:text-darken-20:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.80), 93);
+}
+
+.focus\:text-darken-25:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.75), 93);
+}
+
+.focus\:text-darken-35:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.65), 93);
+}
+
+.focus\:text-darken-50:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.50), 93);
+}
+
+.focus\:text-darken-70:focus {
+    --text-color-l-f: clamp(7, calc(var(--text-color-l-c, var(--text-color-l)) * 0.30), 93);
+}
+
+.focus\:text-light-reset:focus {
+    --text-color-l-f: var(--text-color-l);
+}
+
+.focus\:text-light-black:focus {
+    --text-color-l-f: 0;
+}
+
+.focus\:text-light-50:focus {
+    --text-color-l-f: 50;
+}
+
+.focus\:text-light-80:focus {
+    --text-color-l-f: 80;
+}
+
+.focus\:text-light-90:focus {
+    --text-color-l-f: 90;
+}
+
+.focus\:text-light-white:focus {
+    --text-color-l-f: 100;
+}
+
+.text-saturation-reset {
+    --text-color-s-c: var(--text-color-s);
+}
+
+.text-richer-50 {
+    --text-color-s-c: clamp(10, calc(var(--text-color-s) * 1.50), 100);
+}
+
+.text-paler-50 {
+    --text-color-s-c: clamp(10, calc(var(--text-color-s) * 0.50), 100);
+}
+
+.text-paler-90 {
+    --text-color-s-c: clamp(10, calc(var(--text-color-s) * 0.10), 100);
+}
+
+.hover\:text-saturation-reset:hover {
+    --text-color-s-h: var(--text-color-s);
+}
+
+.hover\:text-richer-50:hover {
+    --text-color-s-h: clamp(10, calc(var(--text-color-s) * 1.50), 100);
+}
+
+.hover\:text-paler-50:hover {
+    --text-color-s-h: clamp(10, calc(var(--text-color-s) * 0.50), 100);
+}
+
+.hover\:text-paler-90:hover {
+    --text-color-s-h: clamp(10, calc(var(--text-color-s) * 0.10), 100);
+}
+
+
+.focus\:text-saturation-reset:focus {
+    --text-color-s-f: var(--text-color-s);
+}
+
+.focus\:text-richer-50:focus {
+    --text-color-s-f: clamp(10, calc(var(--text-color-s) * 1.50), 100);
+}
+
+.focus\:text-paler-50:focus {
+    --text-color-s-f: clamp(10, calc(var(--text-color-s) * 0.50), 100);
+}
+
+.focus\:text-paler-90:focus {
+    --text-color-s-f: clamp(10, calc(var(--text-color-s) * 0.10), 100);
+}
+
+.text-opacity-0 {
+    --tw-text-opacity: .0
+}
+
+.text-opacity-25 {
+    --tw-text-opacity: .25
+}
+
+.text-opacity-75 {
+    --tw-text-opacity: .75
+}
+
+.text-opacity-100 {
+    --tw-text-opacity: 1.0
+}
+
+.hover\:text-opacity-0:hover {
+    --tw-text-opacity: .0
+}
+
+.hover\:text-opacity-25:hover {
+    --tw-text-opacity: .25
+}
+
+.hover\:text-opacity-75:hover {
+    --tw-text-opacity: .75
+}
+
+.hover\:text-opacity-100:hover {
+    --tw-text-opacity: 1.0
+}
+
+.focus\:text-opacity-0:focus {
+    --tw-text-opacity: .0
+}
+
+.focus\:text-opacity-25:focus {
+    --tw-text-opacity: .25
+}
+
+.focus\:text-opacity-75:focus {
+    --tw-text-opacity: .75
+}
+
+.focus\:text-opacity-100:focus {
+    --tw-text-opacity: 1.0
+}

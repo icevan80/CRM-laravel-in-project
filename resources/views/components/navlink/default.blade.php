@@ -4,7 +4,7 @@
     $baseClasses = 'inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium leading-5 border-primary-color text-on-surface-color focus:outline-none transition duration-150 ease-in-out';
     $classes = ($active ?? false)
                 ? $baseClasses.' border-opacity-100 text-darken-15'
-            : $baseClasses.' border-opacity-0 text-lighter-50 hover:text-darken-25 hover:border-opacity-75 hover:border-dimmer-25';
+            : $baseClasses.' border-opacity-0 text-light-50 hover:text-darken-50 hover:border-opacity-75 hover:border-dimmer-25';
 @endphp
 
 <a {{ $attributes->merge(['class' => $classes]) }}>

@@ -1,0 +1,458 @@
+.ring-primary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--primary-s);
+    --ring-color-l: var(--primary-l);
+    --tw-ring-color: hsl(var(--primary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-primary-variant-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--primary-variant-s);
+    --ring-color-l: var(--primary-variant-l);
+    --tw-ring-color: hsl(var(--primary-variant-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-primary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-primary-s);
+    --ring-color-l: var(--on-primary-l);
+    --tw-ring-color: hsl(var(--on-primary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-secondary-variant-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--secondary-variant-s);
+    --ring-color-l: var(--secondary-variant-l);
+    --tw-ring-color: hsl(var(--secondary-variant-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-secondary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--secondary-s);
+    --ring-color-l: var(--secondary-l);
+    --tw-ring-color: hsl(var(--secondary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-secondary-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-secondary-s);
+    --ring-color-l: var(--on-secondary-l);
+    --tw-ring-color: hsl(var(--on-secondary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-surface-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--surface-s);
+    --ring-color-l: var(--surface-l);
+    --tw-ring-color: hsl(var(--surface-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-surface-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-surface-s);
+    --ring-color-l: var(--on-surface-l);
+    --tw-ring-color: hsl(var(--on-surface-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-ring-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--ring-s);
+    --ring-color-l: var(--ring-l);
+    --tw-ring-color: hsl(var(--ring-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-ring-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-ring-s);
+    --ring-color-l: var(--on-ring-l);
+    --tw-ring-color: hsl(var(--on-ring-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-success-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--success-s);
+    --ring-color-l: var(--success-l);
+    --tw-ring-color: hsl(var(--success-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-success-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-success-s);
+    --ring-color-l: var(--on-success-l);
+    --tw-ring-color: hsl(var(--on-success-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-error-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--error-s);
+    --ring-color-l: var(--error-l);
+    --tw-ring-color: hsl(var(--error-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-on-error-color {
+    --tw-ring-opacity: 1;
+    --ring-color-s: var(--on-error-s);
+    --ring-color-l: var(--on-error-l);
+    --tw-ring-color: hsl(var(--on-error-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
+}
+
+.ring-lighter-5 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.05), 93);
+}
+
+.ring-lighter-10 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.10), 93);
+}
+
+.ring-lighter-15 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.15), 93);
+}
+
+.ring-lighter-20 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.20), 93);
+}
+
+.ring-lighter-25 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.25), 93);
+}
+
+.ring-lighter-35 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.35), 93);
+}
+
+.ring-lighter-50 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.50), 93);
+}
+
+.ring-lighter-70 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 1.70), 93);
+}
+
+.ring-darken-5 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.95), 93);
+}
+
+.ring-darken-10 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.90), 93);
+}
+
+.ring-darken-15 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.85), 93);
+}
+
+.ring-darken-20 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.80), 93);
+}
+
+.ring-darken-25 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.75), 93);
+}
+
+.ring-darken-35 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.65), 93);
+}
+
+.ring-darken-50 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.50), 93);
+}
+
+.ring-darken-70 {
+    --ring-color-l-c: clamp(7, calc(var(--ring-color-l) * 0.30), 93);
+}
+
+.ring-light-reset {
+    --ring-color-l-c: var(--ring-color-l);
+}
+
+.ring-light-black {
+    --ring-color-l-c: 0;
+}
+
+.ring-light-50 {
+    --ring-color-l-c: 50;
+}
+
+.ring-light-80 {
+    --ring-color-l-c: 80;
+}
+
+.ring-light-90 {
+    --ring-color-l-c: 90;
+}
+
+.ring-light-white {
+    --ring-color-l-c: 100;
+}
+
+.hover\:ring-lighter-5:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.05), 93);
+}
+
+.hover\:ring-lighter-10:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.10), 93);
+}
+
+.hover\:ring-lighter-15:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.15), 93);
+}
+
+.hover\:ring-lighter-20:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.20), 93);
+}
+
+.hover\:ring-lighter-25:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.25), 93);
+}
+
+.hover\:ring-lighter-35:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.35), 93);
+}
+
+.hover\:ring-lighter-50:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.50), 93);
+}
+
+.hover\:ring-lighter-70:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.70), 93);
+}
+
+.hover\:ring-darken-5:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.95), 93);
+}
+
+.hover\:ring-darken-10:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.90), 93);
+}
+
+.hover\:ring-darken-15:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.85), 93);
+}
+
+.hover\:ring-darken-20:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.80), 93);
+}
+
+.hover\:ring-darken-25:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.75), 93);
+}
+
+.hover\:ring-darken-35:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.65), 93);
+}
+
+.hover\:ring-darken-50:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.50), 93);
+}
+
+.hover\:ring-darken-70:hover {
+    --ring-color-l-h: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.30), 93);
+}
+
+.hover\:ring-light-reset:hover {
+    --ring-color-l-h: var(--ring-color-l);
+}
+
+.hover\:ring-light-black:hover {
+    --ring-color-l-h: 0;
+}
+
+.hover\:ring-light-50:hover {
+    --ring-color-l-h: 50;
+}
+
+.hover\:ring-light-80:hover {
+    --ring-color-l-h: 80;
+}
+
+.hover\:ring-light-90:hover {
+    --ring-color-l-h: 90;
+}
+
+.hover\:ring-light-white:hover {
+    --ring-color-l-h: 100;
+}
+
+.focus\:ring-lighter-5:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.05), 93);
+}
+
+.focus\:ring-lighter-10:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.10), 93);
+}
+
+.focus\:ring-lighter-15:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.15), 93);
+}
+
+.focus\:ring-lighter-20:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.20), 93);
+}
+
+.focus\:ring-lighter-25:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.25), 93);
+}
+
+.focus\:ring-lighter-35:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.35), 93);
+}
+
+.focus\:ring-lighter-50:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.50), 93);
+}
+
+.focus\:ring-lighter-70:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 1.70), 93);
+}
+
+.focus\:ring-darken-5:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.95), 93);
+}
+
+.focus\:ring-darken-10:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.90), 93);
+}
+
+.focus\:ring-darken-15:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.85), 93);
+}
+
+.focus\:ring-darken-20:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.80), 93);
+}
+
+.focus\:ring-darken-25:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.75), 93);
+}
+
+.focus\:ring-darken-35:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.65), 93);
+}
+
+.focus\:ring-darken-50:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.50), 93);
+}
+
+.focus\:ring-darken-70:focus {
+    --ring-color-l-f: clamp(7, calc(var(--ring-color-l-c, var(--ring-color-l)) * 0.30), 93);
+}
+
+.focus\:ring-light-reset:focus {
+    --ring-color-l-f: var(--ring-color-l);
+}
+
+.focus\:ring-light-black:focus {
+    --ring-color-l-f: 0;
+}
+
+.focus\:ring-light-50:focus {
+    --ring-color-l-f: 50;
+}
+
+.focus\:ring-light-80:focus {
+    --ring-color-l-f: 80;
+}
+
+.focus\:ring-light-90:focus {
+    --ring-color-l-f: 90;
+}
+
+.focus\:ring-light-white:focus {
+    --ring-color-l-f: 100;
+}
+
+.ring-saturation-reset {
+    --ring-color-s-c: var(--ring-color-s);
+}
+
+.ring-richer-50 {
+    --ring-color-s-c: clamp(10, calc(var(--ring-color-s) * 1.50), 100);
+}
+
+.ring-paler-50 {
+    --ring-color-s-c: clamp(10, calc(var(--ring-color-s) * 0.50), 100);
+}
+
+.ring-paler-90 {
+    --ring-color-s-c: clamp(10, calc(var(--ring-color-s) * 0.10), 100);
+}
+
+.hover\:ring-saturation-reset:hover {
+    --ring-color-s-h: var(--ring-color-s);
+}
+
+.hover\:ring-richer-50:hover {
+    --ring-color-s-h: clamp(10, calc(var(--ring-color-s) * 1.50), 100);
+}
+
+.hover\:ring-paler-50:hover {
+    --ring-color-s-h: clamp(10, calc(var(--ring-color-s) * 0.50), 100);
+}
+
+.hover\:ring-paler-90:hover {
+    --ring-color-s-h: clamp(10, calc(var(--ring-color-s) * 0.10), 100);
+}
+
+
+.focus\:ring-saturation-reset:focus {
+    --ring-color-s-f: var(--ring-color-s);
+}
+
+.focus\:ring-richer-50:focus {
+    --ring-color-s-f: clamp(10, calc(var(--ring-color-s) * 1.50), 100);
+}
+
+.focus\:ring-paler-50:focus {
+    --ring-color-s-f: clamp(10, calc(var(--ring-color-s) * 0.50), 100);
+}
+
+.focus\:ring-paler-90:focus {
+    --ring-color-s-f: clamp(10, calc(var(--ring-color-s) * 0.10), 100);
+}
+
+.ring-opacity-0 {
+    --tw-ring-opacity: .0
+}
+
+.ring-opacity-25 {
+    --tw-ring-opacity: .25
+}
+
+.ring-opacity-75 {
+    --tw-ring-opacity: .75
+}
+
+.ring-opacity-100 {
+    --tw-ring-opacity: 1.0
+}
+
+.hover\:ring-opacity-0:hover {
+    --tw-ring-opacity: .0
+}
+
+.hover\:ring-opacity-25:hover {
+    --tw-ring-opacity: .25
+}
+
+.hover\:ring-opacity-75:hover {
+    --tw-ring-opacity: .75
+}
+
+.hover\:ring-opacity-100:hover {
+    --tw-ring-opacity: 1.0
+}
+
+.focus\:ring-opacity-0:focus {
+    --tw-ring-opacity: .0
+}
+
+.focus\:ring-opacity-25:focus {
+    --tw-ring-opacity: .25
+}
+
+.focus\:ring-opacity-75:focus {
+    --tw-ring-opacity: .75
+}
+
+.focus\:ring-opacity-100:focus {
+    --tw-ring-opacity: 1.0
+}

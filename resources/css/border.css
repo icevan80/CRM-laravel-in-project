@@ -1,0 +1,458 @@
+.border-primary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-s);
+    --border-color-l: var(--primary-l);
+    border-color: hsl(var(--primary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-primary-variant-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-variant-s);
+    --border-color-l: var(--primary-variant-l);
+    border-color: hsl(var(--primary-variant-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-primary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-primary-s);
+    --border-color-l: var(--on-primary-l);
+    border-color: hsl(var(--on-primary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-secondary-variant-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--secondary-variant-s);
+    --border-color-l: var(--secondary-variant-l);
+    border-color: hsl(var(--secondary-variant-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-secondary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--secondary-s);
+    --border-color-l: var(--secondary-l);
+    border-color: hsl(var(--secondary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-secondary-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-secondary-s);
+    --border-color-l: var(--on-secondary-l);
+    border-color: hsl(var(--on-secondary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-surface-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--surface-s);
+    --border-color-l: var(--surface-l);
+    border-color: hsl(var(--surface-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-surface-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-surface-s);
+    --border-color-l: var(--on-surface-l);
+    border-color: hsl(var(--on-surface-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-border-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--border-s);
+    --border-color-l: var(--border-l);
+    border-color: hsl(var(--border-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-border-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-border-s);
+    --border-color-l: var(--on-border-l);
+    border-color: hsl(var(--on-border-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-success-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--success-s);
+    --border-color-l: var(--success-l);
+    border-color: hsl(var(--success-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-success-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-success-s);
+    --border-color-l: var(--on-success-l);
+    border-color: hsl(var(--on-success-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-error-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--error-s);
+    --border-color-l: var(--error-l);
+    border-color: hsl(var(--error-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-on-error-color {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--on-error-s);
+    --border-color-l: var(--on-error-l);
+    border-color: hsl(var(--on-error-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.border-lighter-5 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.05), 93);
+}
+
+.border-lighter-10 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.10), 93);
+}
+
+.border-lighter-15 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.15), 93);
+}
+
+.border-lighter-20 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.20), 93);
+}
+
+.border-lighter-25 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.25), 93);
+}
+
+.border-lighter-35 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.35), 93);
+}
+
+.border-lighter-50 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.50), 93);
+}
+
+.border-lighter-70 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 1.70), 93);
+}
+
+.border-darken-5 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.95), 93);
+}
+
+.border-darken-10 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.90), 93);
+}
+
+.border-darken-15 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.85), 93);
+}
+
+.border-darken-20 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.80), 93);
+}
+
+.border-darken-25 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.75), 93);
+}
+
+.border-darken-35 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.65), 93);
+}
+
+.border-darken-50 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.50), 93);
+}
+
+.border-darken-70 {
+    --border-color-l-c: clamp(7, calc(var(--border-color-l) * 0.30), 93);
+}
+
+.border-light-reset {
+    --border-color-l-c: var(--border-color-l);
+}
+
+.border-light-black {
+    --border-color-l-c: 0;
+}
+
+.border-light-50 {
+    --border-color-l-c: 50;
+}
+
+.border-light-80 {
+    --border-color-l-c: 80;
+}
+
+.border-light-90 {
+    --border-color-l-c: 90;
+}
+
+.border-light-white {
+    --border-color-l-c: 100;
+}
+
+.hover\:border-lighter-5:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.05), 93);
+}
+
+.hover\:border-lighter-10:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.10), 93);
+}
+
+.hover\:border-lighter-15:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.15), 93);
+}
+
+.hover\:border-lighter-20:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.20), 93);
+}
+
+.hover\:border-lighter-25:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.25), 93);
+}
+
+.hover\:border-lighter-35:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.35), 93);
+}
+
+.hover\:border-lighter-50:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.50), 93);
+}
+
+.hover\:border-lighter-70:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.70), 93);
+}
+
+.hover\:border-darken-5:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.95), 93);
+}
+
+.hover\:border-darken-10:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.90), 93);
+}
+
+.hover\:border-darken-15:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.85), 93);
+}
+
+.hover\:border-darken-20:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.80), 93);
+}
+
+.hover\:border-darken-25:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.75), 93);
+}
+
+.hover\:border-darken-35:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.65), 93);
+}
+
+.hover\:border-darken-50:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.50), 93);
+}
+
+.hover\:border-darken-70:hover {
+    --border-color-l-h: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.30), 93);
+}
+
+.hover\:border-light-reset:hover {
+    --border-color-l-h: var(--border-color-l);
+}
+
+.hover\:border-light-black:hover {
+    --border-color-l-h: 0;
+}
+
+.hover\:border-light-50:hover {
+    --border-color-l-h: 50;
+}
+
+.hover\:border-light-80:hover {
+    --border-color-l-h: 80;
+}
+
+.hover\:border-light-90:hover {
+    --border-color-l-h: 90;
+}
+
+.hover\:border-light-white:hover {
+    --border-color-l-h: 100;
+}
+
+.focus\:border-lighter-5:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.05), 93);
+}
+
+.focus\:border-lighter-10:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.10), 93);
+}
+
+.focus\:border-lighter-15:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.15), 93);
+}
+
+.focus\:border-lighter-20:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.20), 93);
+}
+
+.focus\:border-lighter-25:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.25), 93);
+}
+
+.focus\:border-lighter-35:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.35), 93);
+}
+
+.focus\:border-lighter-50:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.50), 93);
+}
+
+.focus\:border-lighter-70:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 1.70), 93);
+}
+
+.focus\:border-darken-5:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.95), 93);
+}
+
+.focus\:border-darken-10:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.90), 93);
+}
+
+.focus\:border-darken-15:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.85), 93);
+}
+
+.focus\:border-darken-20:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.80), 93);
+}
+
+.focus\:border-darken-25:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.75), 93);
+}
+
+.focus\:border-darken-35:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.65), 93);
+}
+
+.focus\:border-darken-50:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.50), 93);
+}
+
+.focus\:border-darken-70:focus {
+    --border-color-l-f: clamp(7, calc(var(--border-color-l-c, var(--border-color-l)) * 0.30), 93);
+}
+
+.focus\:border-light-reset:focus {
+    --border-color-l-f: var(--border-color-l);
+}
+
+.focus\:border-light-black:focus {
+    --border-color-l-f: 0;
+}
+
+.focus\:border-light-50:focus {
+    --border-color-l-f: 50;
+}
+
+.focus\:border-light-80:focus {
+    --border-color-l-f: 80;
+}
+
+.focus\:border-light-90:focus {
+    --border-color-l-f: 90;
+}
+
+.focus\:border-light-white:focus {
+    --border-color-l-f: 100;
+}
+
+.border-saturation-reset {
+    --border-color-s-c: var(--border-color-s);
+}
+
+.border-richer-50 {
+    --border-color-s-c: clamp(10, calc(var(--border-color-s) * 1.50), 100);
+}
+
+.border-paler-50 {
+    --border-color-s-c: clamp(10, calc(var(--border-color-s) * 0.50), 100);
+}
+
+.border-paler-90 {
+    --border-color-s-c: clamp(10, calc(var(--border-color-s) * 0.10), 100);
+}
+
+.hover\:border-saturation-reset:hover {
+    --border-color-s-h: var(--border-color-s);
+}
+
+.hover\:border-richer-50:hover {
+    --border-color-s-h: clamp(10, calc(var(--border-color-s) * 1.50), 100);
+}
+
+.hover\:border-paler-50:hover {
+    --border-color-s-h: clamp(10, calc(var(--border-color-s) * 0.50), 100);
+}
+
+.hover\:border-paler-90:hover {
+    --border-color-s-h: clamp(10, calc(var(--border-color-s) * 0.10), 100);
+}
+
+
+.focus\:border-saturation-reset:focus {
+    --border-color-s-f: var(--border-color-s);
+}
+
+.focus\:border-richer-50:focus {
+    --border-color-s-f: clamp(10, calc(var(--border-color-s) * 1.50), 100);
+}
+
+.focus\:border-paler-50:focus {
+    --border-color-s-f: clamp(10, calc(var(--border-color-s) * 0.50), 100);
+}
+
+.focus\:border-paler-90:focus {
+    --border-color-s-f: clamp(10, calc(var(--border-color-s) * 0.10), 100);
+}
+
+.border-opacity-0 {
+    --tw-border-opacity: .0
+}
+
+.border-opacity-25 {
+    --tw-border-opacity: .25
+}
+
+.border-opacity-75 {
+    --tw-border-opacity: .75
+}
+
+.border-opacity-100 {
+    --tw-border-opacity: 1.0
+}
+
+.hover\:border-opacity-0:hover {
+    --tw-border-opacity: .0
+}
+
+.hover\:border-opacity-25:hover {
+    --tw-border-opacity: .25
+}
+
+.hover\:border-opacity-75:hover {
+    --tw-border-opacity: .75
+}
+
+.hover\:border-opacity-100:hover {
+    --tw-border-opacity: 1.0
+}
+
+.focus\:border-opacity-0:focus {
+    --tw-border-opacity: .0
+}
+
+.focus\:border-opacity-25:focus {
+    --tw-border-opacity: .25
+}
+
+.focus\:border-opacity-75:focus {
+    --tw-border-opacity: .75
+}
+
+.focus\:border-opacity-100:focus {
+    --tw-border-opacity: 1.0
+}

@@ -50,7 +50,7 @@
                  x-transition:leave="ease-in duration-200"
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0">
-                <div class="absolute inset-0 background-color bg-darken-25 opacity-75"></div>
+                <div class="absolute inset-0 background-color bg-darken-25 bg-opacity-75"></div>
             </div>
             @if($dataBackRoute!='none')
         </a>

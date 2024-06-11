@@ -24,20 +24,3 @@
     }
 </style>
 
-{{--<style>
-    .border-primary-color{
-        border-color: var(--primary-color);
-    }
-
-    .text-primary-color{
-        color: var(--primary-color);
-    }
-
-    .focus\:border-primary-color:focus{
-        border-color: var(--primary-color);
-    }
-
-    .focus\:ring-primary-color:focus {
-        --tw-ring-color: var(--primary-color);
-    }
-</style>--}}

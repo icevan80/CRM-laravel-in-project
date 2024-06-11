@@ -322,8 +322,7 @@
 
                                 </x-inputs.date>
 
-                                <label for="time"
-                                       class="block text-sm font-medium text-gray-700">{{ __('Time') }}</label>
+                                <x-inputs.label for="time">{{ __('Time') }}</x-inputs.label>
                                 <div class="time-block">
                                     <x-inputs.select id="time_start" name="appointment_start_time" wire:model="newAppointment.start_time">
                                             @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
@@ -625,8 +624,16 @@
         top: 10%;
         right: 5%;
         border-radius: 100%;
-        background-color: orange;
-        color: white;
+
+        --tw-bg-opacity: 1;
+        --bg-color-s: var(--secondary-variant-s);
+        --bg-color-l: var(--secondary-variant-l);
+        background-color: hsl(var(--secondary-variant-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
+
+        --tw-text-opacity: 1;
+        --text-color-s: var(--text-on-secondary-s);
+        --text-color-l: var(--text-on-secondary-l);
+        color: hsl(var(--text-on-secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-text-opacity));
     }
 
     .time-line {
@@ -635,8 +642,12 @@
         top: 0;
         left: 0;
         position: absolute;
-        background-color: #2d3748;
         z-index: 10;
+
+        --tw-bg-opacity: 1;
+        --bg-color-s: var(--secondary-variant-s);
+        --bg-color-l: var(--secondary-variant-l);
+        background-color: hsl(var(--secondary-variant-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
     }
 
     .time-slot, .past-time-slot {
@@ -649,13 +660,21 @@
     }
 
     .time-slot:hover {
-        background-color: #de5c9d;
+        /*background-color: #de5c9d;*/
         z-index: 3;
         cursor: pointer;
+
+        --tw-bg-opacity: 1;
+        --bg-color-s: var(--primary-s);
+        --bg-color-l: var(--primary-l);
+        background-color: hsl(var(--primary-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
     }
 
     .past-time-slot:hover {
-        background-color: #718096;
+        --tw-bg-opacity: 1;
+        --bg-color-s: 10;
+        --bg-color-l: 65;
+        background-color: hsl(var(--primary-variant-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
         z-index: 3;
     }
 
@@ -688,14 +707,22 @@
 
     .appointment-slot:hover {
         min-width: 70%;
-        background-color: mediumvioletred;
         cursor: grab;
+
+        --tw-bg-opacity: 1;
+        --bg-color-s: var(--primary-s);
+        --bg-color-l: var(--primary-l);
+        background-color: hsl(var(--primary-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
     }
 
     .appointment-slot.past:hover {
         min-width: 70%;
-        background-color: mediumvioletred;
         cursor: pointer;
+
+        --tw-bg-opacity: 1;
+        --bg-color-s: var(--primary-s);
+        --bg-color-l: var(--primary-l);
+        background-color: hsl(var(--primary-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
     }
 
     .appointment-slot:hover .appointment-slot-info {
