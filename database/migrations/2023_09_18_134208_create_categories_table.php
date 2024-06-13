@@ -13,6 +13,9 @@ return new class extends Migration {
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        Schema::table('services', function (Blueprint $table) {
+            $table->foreignId('category_id')->constrained();
+        });
     }
 
     public function down(): void

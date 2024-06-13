@@ -28,6 +28,7 @@ class Service extends Model
         'type',
         'duration_minutes',
         'category_id',
+        'subcategory_id',
         'is_hidden',
     ];
 
@@ -63,6 +64,11 @@ class Service extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function subcategory()
+    {
+        return $this->belongsTo(Subcategory::class);
+    }
+
     public function hits()
     {
         return $this->hasMany(ServiceHit::class);
@@ -95,8 +101,17 @@ class Service extends Model
             $customers = User::where('role_id', Role::getRole('Customer')->id)->where('status', true)->get();
 
             foreach ($customers as $customer) {
-
                 dispatch(new SendNewServicePromoMailJob($customer, $service));
+            }
+        });
+    }
+    static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($service) {
+            if ($service->slug == null) {
+                $service->slug = \DB::table('services')->count().'-'.\Str::slug($service->name);
             }
         });
     }

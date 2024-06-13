@@ -7,7 +7,7 @@
     </div>
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div>
-            <x-inputs.select label="{{__('Category')}}" name="service_category_id" id="category_id">
+            <x-inputs.select label="{{__('Category')}}" name="service_category_id" id="category_id" class="max-w-4/5">
                 <option disabled selected value="">{{__('Select Category')}}</option>
                 @foreach ($categories as $category)
                     <option value="{{ $category->id }}">{{ $category->name}}</option>
@@ -21,9 +21,9 @@
             </x-inputs.label>
 
             <div class="flex my-2">
-                <x-inputs.radio label="{{__('Personal')}}" id="personal" name="service_type" value="personal"
+                <x-inputs.radio label="{{__('Personal')}}" id="personal" name="service_type" value="personal" class="text-light-reset text-saturation-reset"
                                 checked></x-inputs.radio>
-                <x-inputs.radio label="{{__('Group')}}" id="group" name="service_type" value="group"></x-inputs.radio>
+                <x-inputs.radio label="{{__('Group')}}" id="group" name="service_type" value="group" class="text-light-reset text-saturation-reset"></x-inputs.radio>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="my-2">
-            <x-inputs.checkbox label="{{ __('Input range') }}"
+            <x-inputs.checkbox label="{{ __('Input range') }}" class="text-light-reset text-saturation-reset"
                                x-on:click="inputRange = !inputRange"></x-inputs.checkbox>
         </div>
 
@@ -86,7 +86,7 @@
         <div x-data="{masterCount: 1}">
             <template x-for="i in masterCount">
                 <select name="service_masters[]" id="master"
-                        class="mr-2 my-2 border-primary-color border-dimmer-25 border-lighter-85 ring-primary-color
+                        class="mr-2 my-2 border-primary-color border-paler-90 border-light-80 ring-primary-color
         rounded-md shadow-sm text-on-surface-color">
                     <option disabled selected>
                         {{ __('Choose Master') }}
@@ -100,7 +100,7 @@
                 @error('service_masters') <span class="text-error-color">{{ $message }}</span>@enderror
 
             </template>
-            <x-button.default type="button" x-on:click="masterCount += 1">{{ __('Add Master') }}</x-button.default>
+            <x-button.default type="button" class="text-on-primary-color text-light-reset text-saturation-reset" x-on:click="masterCount += 1">{{ __('Add Master') }}</x-button.default>
         </div>
     </div>
     <div>

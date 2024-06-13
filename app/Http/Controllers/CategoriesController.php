@@ -13,7 +13,7 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-            return view('dashboard.manage.categories.index');
+        return view('dashboard.manage.categories.index');
     }
 
     /**

@@ -87,7 +87,7 @@ class DisplayDeal extends Controller
 
         /*Role::create([
             'name' => 'Admin',
-            'default_permissions' => json_encode($array),
+            'default_permissions' => json_encode(array()),
         ]);
         Role::create([
             'name' => 'Employee',

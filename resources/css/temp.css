@@ -1,0 +1,459 @@
+.primary-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--primary-s);
+    --bg-color-l: var(--primary-l);
+    background-color: hsl(var(--primary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.primary-variant-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--primary-variant-s);
+    --bg-color-l: var(--primary-variant-l);
+    background-color: hsl(var(--primary-variant-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-primary-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-primary-s);
+    --bg-color-l: var(--on-primary-l);
+    background-color: hsl(var(--on-primary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.secondary-variant-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--secondary-variant-s);
+    --bg-color-l: var(--secondary-variant-l);
+    background-color: hsl(var(--secondary-variant-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.secondary-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--secondary-s);
+    --bg-color-l: var(--secondary-l);
+    background-color: hsl(var(--secondary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-secondary-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-secondary-s);
+    --bg-color-l: var(--on-secondary-l);
+    background-color: hsl(var(--on-secondary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.surface-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--surface-s);
+    --bg-color-l: var(--surface-l);
+    background-color: hsl(var(--surface-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-surface-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-surface-s);
+    --bg-color-l: var(--on-surface-l);
+    background-color: hsl(var(--on-surface-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.background-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--background-s);
+    --bg-color-l: var(--background-l);
+    background-color: hsl(var(--background-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-background-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-background-s);
+    --bg-color-l: var(--on-background-l);
+    background-color: hsl(var(--on-background-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.success-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--success-s);
+    --bg-color-l: var(--success-l);
+    background-color: hsl(var(--success-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-success-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-success-s);
+    --bg-color-l: var(--on-success-l);
+    background-color: hsl(var(--on-success-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.error-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--error-s);
+    --bg-color-l: var(--error-l);
+    background-color: hsl(var(--error-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.on-error-color {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--on-error-s);
+    --bg-color-l: var(--on-error-l);
+    background-color: hsl(var(--on-error-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+
+.bg-lighter-5 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.05), 93);
+}
+
+.bg-lighter-10 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.10), 93);
+}
+
+.bg-lighter-15 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.15), 93);
+}
+
+.bg-lighter-20 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.20), 93);
+}
+
+.bg-lighter-25 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.25), 93);
+}
+
+.bg-lighter-35 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.35), 93);
+}
+
+.bg-lighter-50 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.50), 93);
+}
+
+.bg-lighter-70 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 1.70), 93);
+}
+
+.bg-darken-5 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.95), 93);
+}
+
+.bg-darken-10 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.90), 93);
+}
+
+.bg-darken-15 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.85), 93);
+}
+
+.bg-darken-20 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.80), 93);
+}
+
+.bg-darken-25 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.75), 93);
+}
+
+.bg-darken-35 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.65), 93);
+}
+
+.bg-darken-50 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.50), 93);
+}
+
+.bg-darken-70 {
+    --bg-color-l-c: clamp(7, calc(var(--bg-color-l) * 0.30), 93);
+}
+
+.bg-light-reset {
+    --bg-color-l-c: var(--bg-color-l);
+}
+
+.bg-light-black {
+    --bg-color-l-c: 0;
+}
+
+.bg-light-50 {
+    --bg-color-l-c: 50;
+}
+
+.bg-light-80 {
+    --bg-color-l-c: 80;
+}
+
+.bg-light-90 {
+    --bg-color-l-c: 90;
+}
+
+.bg-light-white {
+    --bg-color-l-c: 100;
+}
+
+.hover\:bg-lighter-5:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.05), 93);
+}
+
+.hover\:bg-lighter-10:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.10), 93);
+}
+
+.hover\:bg-lighter-15:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.15), 93);
+}
+
+.hover\:bg-lighter-20:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.20), 93);
+}
+
+.hover\:bg-lighter-25:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.25), 93);
+}
+
+.hover\:bg-lighter-35:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.35), 93);
+}
+
+.hover\:bg-lighter-50:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.50), 93);
+}
+
+.hover\:bg-lighter-70:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 1.70), 93);
+}
+
+.hover\:bg-darken-5:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.95), 93);
+}
+
+.hover\:bg-darken-10:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.90), 93);
+}
+
+.hover\:bg-darken-15:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.85), 93);
+}
+
+.hover\:bg-darken-20:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.80), 93);
+}
+
+.hover\:bg-darken-25:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.75), 93);
+}
+
+.hover\:bg-darken-35:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.65), 93);
+}
+
+.hover\:bg-darken-50:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.50), 93);
+}
+
+.hover\:bg-darken-70:hover {
+    --bg-color-l-h: clamp(7, calc(var(--bg-color-l) * 0.30), 93);
+}
+
+.hover\:bg-light-reset:hover {
+    --bg-color-l-h: var(--bg-color-l);
+}
+
+.hover\:bg-light-black:hover {
+    --bg-color-l-h: 0;
+}
+
+.hover\:bg-light-50:hover {
+    --bg-color-l-h: 50;
+}
+
+.hover\:bg-light-80:hover {
+    --bg-color-l-h: 80;
+}
+
+.hover\:bg-light-90:hover {
+    --bg-color-l-h: 90;
+}
+
+.hover\:bg-light-white:hover {
+    --bg-color-l-h: 100;
+}
+
+.focus\:bg-lighter-5:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.05), 93);
+}
+
+.focus\:bg-lighter-10:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.10), 93);
+}
+
+.focus\:bg-lighter-15:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.15), 93);
+}
+
+.focus\:bg-lighter-20:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.20), 93);
+}
+
+.focus\:bg-lighter-25:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.25), 93);
+}
+
+.focus\:bg-lighter-35:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.35), 93);
+}
+
+.focus\:bg-lighter-50:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.50), 93);
+}
+
+.focus\:bg-lighter-70:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 1.70), 93);
+}
+
+.focus\:bg-darken-5:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.95), 93);
+}
+
+.focus\:bg-darken-10:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.90), 93);
+}
+
+.focus\:bg-darken-15:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.85), 93);
+}
+
+.focus\:bg-darken-20:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.80), 93);
+}
+
+.focus\:bg-darken-25:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.75), 93);
+}
+
+.focus\:bg-darken-35:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.65), 93);
+}
+
+.focus\:bg-darken-50:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.50), 93);
+}
+
+.focus\:bg-darken-70:focus {
+    --bg-color-l-f: clamp(7, calc(var(--bg-color-l) * 0.30), 93);
+}
+
+.focus\:bg-light-reset:focus {
+    --bg-color-l-f: var(--bg-color-l);
+}
+
+.focus\:bg-light-black:focus {
+    --bg-color-l-f: 0;
+}
+
+.focus\:bg-light-50:focus {
+    --bg-color-l-f: 50;
+}
+
+.focus\:bg-light-80:focus {
+    --bg-color-l-f: 80;
+}
+
+.focus\:bg-light-90:focus {
+    --bg-color-l-f: 90;
+}
+
+.focus\:bg-light-white:focus {
+    --bg-color-l-f: 100;
+}
+
+.bg-saturation-reset {
+    --bg-color-s-c: var(--bg-color-s);
+}
+
+.bg-richer-50 {
+    --bg-color-s-c: clamp(10, calc(var(--bg-color-s) * 1.50), 100);
+}
+
+.bg-paler-50 {
+    --bg-color-s-c: clamp(10, calc(var(--bg-color-s) * 0.50), 100);
+}
+
+.bg-paler-90 {
+    --bg-color-s-c: clamp(10, calc(var(--bg-color-s) * 0.90), 100);
+}
+
+.hover\:bg-saturation-reset:hover {
+    --bg-color-s-h: var(--bg-color-s);
+}
+
+.hover\:bg-richer-50:hover {
+    --bg-color-s-h: clamp(10, calc(var(--bg-color-s) * 1.50), 100);
+}
+
+.hover\:bg-paler-50:hover {
+    --bg-color-s-h: clamp(10, calc(var(--bg-color-s) * 0.50), 100);
+}
+
+.hover\:bg-paler-90:hover {
+    --bg-color-s-h: clamp(10, calc(var(--bg-color-s) * 0.90), 100);
+}
+
+
+.focus\:bg-saturation-reset:focus {
+    --bg-color-s-f: var(--bg-color-s);
+}
+
+.focus\:bg-richer-50:focus {
+    --bg-color-s-f: clamp(10, calc(var(--bg-color-s) * 1.50), 100);
+}
+
+.focus\:bg-paler-50:focus {
+    --bg-color-s-f: clamp(10, calc(var(--bg-color-s) * 0.50), 100);
+}
+
+.focus\:bg-paler-90:focus {
+    --bg-color-s-f: clamp(10, calc(var(--bg-color-s) * 0.90), 100);
+}
+
+.bg-opacity-0 {
+    --tw-bg-opacity: .0
+}
+
+.bg-opacity-25 {
+    --tw-bg-opacity: .25
+}
+
+.bg-opacity-75 {
+    --tw-bg-opacity: .75
+}
+
+.bg-opacity-100 {
+    --tw-bg-opacity: 1.0
+}
+
+.hover\:bg-opacity-0:hover {
+    --tw-bg-opacity: .0
+}
+
+.hover\:bg-opacity-25:hover {
+    --tw-bg-opacity: .25
+}
+
+.hover\:bg-opacity-75:hover {
+    --tw-bg-opacity: .75
+}
+
+.hover\:bg-opacity-100:hover {
+    --tw-bg-opacity: 1.0
+}
+
+.focus\:bg-opacity-0:focus {
+    --tw-bg-opacity: .0
+}
+
+.focus\:bg-opacity-25:focus {
+    --tw-bg-opacity: .25
+}
+
+.focus\:bg-opacity-75:focus {
+    --tw-bg-opacity: .75
+}
+
+.focus\:bg-opacity-100:focus {
+    --tw-bg-opacity: 1.0
+}

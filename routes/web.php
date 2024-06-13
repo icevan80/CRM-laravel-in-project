@@ -8,6 +8,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SalonController;
 use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SubcategoriesController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -155,6 +156,16 @@ Route::middleware([
                         Route::put('/categories/store', 'store')->name('manage.categories.store');
                         Route::put('/categories/{id}/update', 'update')->name('manage.categories.update');
                         Route::put('/categories/{id}/destroy', 'destroy')->name('manage.categories.destroy');
+                    });
+                });
+                Route::middleware([
+                    'validatePermission:manage_categories'
+                ])->group(function () {
+                    Route::controller(SubcategoriesController::class)->group(function () {
+                        Route::get('/subcategories', 'index')->name('manage.subcategories');
+                        Route::put('/subcategories/store', 'store')->name('manage.subcategories.store');
+                        Route::put('/subcategories/{id}/update', 'update')->name('manage.subcategories.update');
+                        Route::put('/subcategories/{id}/destroy', 'destroy')->name('manage.subcategories.destroy');
                     });
                 });
                 Route::middleware([

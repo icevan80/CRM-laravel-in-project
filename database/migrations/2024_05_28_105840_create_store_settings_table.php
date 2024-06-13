@@ -16,9 +16,9 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->json('color_scheme')->default('[]');
             $table->string('default_lang');
-            $table->string('default_color_primary');
-            $table->string('default_color_secondary');
-            $table->string('default_color_surface');
+//            $table->string('default_color_primary');
+//            $table->string('default_color_secondary');
+//            $table->string('default_color_surface');
             $table->timestamps();
         });
     }
