@@ -41,6 +41,8 @@ class AppointmentsController extends Controller
      */
     public function store(Request $request)
     {
+
+
         if ($request['appointment_description'] == null) {
             $request['appointment_description'] = '';
         }
@@ -50,7 +52,25 @@ class AppointmentsController extends Controller
         $request->validate([
             'appointment_name' => 'required|string|min:1|max:255',
             'appointment_description' => 'nullable|string',
+            'client_name' => 'required|string|min:1|max:255',
+            'client_phone' => 'required|string|min:1|max:255',
+            'client_email' => 'required|string|min:1|max:255',
+            'client_notes' => 'nullable|string',
         ]);
+
+        $client = \App\Models\Client::where('phone_number', $request['client_phone']);
+
+        if ($client->count() == 0) {
+            $client = \App\Models\Client::create([
+                'name' => $request['client_name'],
+                'phone_number' => $request['client_phone'],
+                'email' => $request['client_email'],
+                'notes' => $request['client_notes'],
+            ]);
+        } else {
+            $client = $client->first();
+        }
+
 
         if ($this->masterSlotValidate(
             $request['appointment_date'],
@@ -61,6 +81,7 @@ class AppointmentsController extends Controller
                 Appointment::create([
                     'creator_id' => $request['appointment_creator_id'],
                     'implementer_id' => $request['appointment_implementer_id'],
+                    'client_id' => $client->id,
                     'receiving_name' => $request['appointment_name'],
                     'receiving_description' => $request['appointment_description'],
                     'date' => $request['appointment_date'],

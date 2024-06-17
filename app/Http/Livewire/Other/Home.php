@@ -2,6 +2,15 @@
 
 namespace App\Http\Livewire\Other;
 
+//use App\Models\Category;
+//use App\Models\Location;
+//use App\Models\Master;
+//use App\Models\Permission;
+//use App\Models\Role;
+//use App\Models\Service;
+//use App\Models\Subcategory;
+//use App\Models\User;
+//use Illuminate\Support\Facades\Hash;
 use Livewire\Component;
 
 class Home extends Component
@@ -575,9 +584,9 @@ class Home extends Component
         ]);*/
 
 //        $masters = Master::all();
-
+//
 //        $service = Service::all();
-
+//
 //        foreach ($service as $item) {
 //            $randNum = rand(0, 2);
 //            if ($randNum == 0) {

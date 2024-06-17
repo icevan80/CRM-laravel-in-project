@@ -228,7 +228,7 @@
                                 {{ __('Delete') }}
                             </x-button.danger>
                         @endif
-                            @if($confirmSelectAppointment && $confirmSelectAppointment->complete == false && ($confirmSelectAppointment->implementer_id == auth()->user()->id || $this->allowOthers))
+                        @if($confirmSelectAppointment && $confirmSelectAppointment->complete == false && ($confirmSelectAppointment->implementer_id == auth()->user()->id || $this->allowOthers))
                             <x-button.default
                                 wire:click="confirmAppointmentCancellation"
                                 wire:loading.attr="disabled">
@@ -267,9 +267,9 @@
                                                  class="w-full"
                                                  label="{{ __('Service') }}"
                                                  wire:model="newAppointment.service_id">
-                                        @foreach ($services as $service)
-                                            <option value={{$service->id}}>{{$service->name}}</option>
-                                        @endforeach
+                                    @foreach ($services as $service)
+                                        <option value={{$service->id}}>{{$service->name}}</option>
+                                    @endforeach
                                 </x-inputs.select>
                                 {{--<div>
                                     <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Name') }}</label>
@@ -300,15 +300,15 @@
                                     <x-inputs.select id="implementer" name="appointment_implementer_id"
                                                      class="w-full"
                                                      label="{{ __('Location') }}">
-                                            @foreach ($masters as $master)
-                                                <option value={{$master->user->id}}>{{$master->user->name}}</option>
-                                            @endforeach
+                                        @foreach ($masters as $master)
+                                            <option value={{$master->user->id}}>{{$master->user->name}}</option>
+                                        @endforeach
                                     </x-inputs.select>
                                 @else
                                     <label for="implementer"
                                            class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
                                     <x-inputs.default type="hidden" id="implementer" name="appointment_implementer_id"
-                                             value="{{auth()->user()->id}}"></x-inputs.default>
+                                                      value="{{auth()->user()->id}}"></x-inputs.default>
                                     <p>{{ auth()->user()->name }}</p>
                                 @endif
 
@@ -324,42 +324,43 @@
 
                                 <x-inputs.label for="time">{{ __('Time') }}</x-inputs.label>
                                 <div class="time-block">
-                                    <x-inputs.select id="time_start" name="appointment_start_time" wire:model="newAppointment.start_time">
-                                            @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                                @if($i->lessThan(now()))
-                                                    @continue
-                                                @endif
-                                                <option
-                                                    value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                                            @endfor
+                                    <x-inputs.select id="time_start" name="appointment_start_time"
+                                                     wire:model="newAppointment.start_time">
+                                        @for ($i = today()->setDateFrom($newAppointment['date'])->hour(8); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                            @if($i->lessThan(now()))
+                                                @continue
+                                            @endif
+                                            <option
+                                                value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                        @endfor
                                     </x-inputs.select>
                                     <x-inputs.select id="time_end" name="appointment_end_time">
-                                            @for ($i = today()->setDateFrom($newAppointment['date'])->setTimeFrom($newAppointment['start_time'])->addMinutes($this->getSelectedServiceDuration()); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
-                                                @if($i->lessThan(now()->addMinutes($this->getSelectedServiceDuration())))
-                                                    @continue
-                                                @endif
-                                                <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
-                                            @endfor
+                                        @for ($i = today()->setDateFrom($newAppointment['date'])->setTimeFrom($newAppointment['start_time'])->addMinutes($this->getSelectedServiceDuration()); $i <= today()->setDateFrom($newAppointment['date'])->hour(20); $i->addMinutes(15))
+                                            @if($i->lessThan(now()->addMinutes($this->getSelectedServiceDuration())))
+                                                @continue
+                                            @endif
+                                            <option value="{{$i->toTimeString()}}">{{$i->isoFormat('HH : mm')}}</option>
+                                        @endfor
                                     </x-inputs.select>
                                 </div>
 
                                 <x-inputs.select id="location" name="appointment_location_id"
                                                  class="w-full"
                                                  label="{{ __('Location') }}">
-                                        @foreach ($locations as $location)
-                                            <option value={{$location->id}}>{{$location->name}}
-                                                - {{$location->address}}</option>
-                                        @endforeach
+                                    @foreach ($locations as $location)
+                                        <option value={{$location->id}}>{{$location->name}}
+                                            - {{$location->address}}</option>
+                                    @endforeach
                                 </x-inputs.select>
 
                                 <x-inputs.default type="hidden" id="creator" name="appointment_creator_id"
-                                         value="{{auth()->user()->id}}"></x-inputs.default>
+                                                  value="{{auth()->user()->id}}"></x-inputs.default>
                                 <x-inputs.default type="hidden" id="total" name="appointment_total"
-                                         value="{{$this->getSelectedServiceTotal()}}"></x-inputs.default>
+                                                  value="{{$this->getSelectedServiceTotal()}}"></x-inputs.default>
                             </div>
                             <div class="w-full">
                                 <h1>Client data</h1>
-
+                                <livewire:forms.client-form/>
                             </div>
                         </div>
                     @endif
@@ -752,7 +753,7 @@
         overflow-x: hidden;
         background-color: white;
         left: -1px;
-        top: 36px;
+        top: 60px;
     }
 
     .search-result-item {
@@ -764,6 +765,27 @@
         background-color: darkgray;
 
     }
+
+    /*.search-result-list {*/
+    /*    position: absolute;*/
+    /*    width: calc(100% + 2px);*/
+    /*    max-height: 300px;*/
+    /*    overflow-y: scroll;*/
+    /*    overflow-x: hidden;*/
+    /*    background-color: white;*/
+    /*    left: -1px;*/
+    /*    top: 36px;*/
+    /*}*/
+
+    /*.search-result-item {*/
+    /*    cursor: pointer;*/
+    /*    padding: 6px 12px;*/
+    /*}*/
+
+    /*.search-result-item:hover {*/
+    /*    background-color: darkgray;*/
+
+    /*}*/
 
     @media (max-width: 640px) {
         .mobile-calendar, .mobile-filters {

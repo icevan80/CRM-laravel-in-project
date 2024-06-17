@@ -2,9 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\UserRolesEnum;
-use App\Jobs\SendAppointmentConfirmationMailJob;
-use App\Jobs\SendNewServicePromoMailJob;
 use Illuminate\Database\Eloquent\Model;
 
 class Appointment extends Model
@@ -13,6 +10,7 @@ class Appointment extends Model
         'appointment_code',
         'creator_id',
         'implementer_id',
+        'client_id',
         'receiving_name',
         'receiving_description',
         'date',
@@ -49,6 +47,14 @@ class Appointment extends Model
     public function location()
     {
         return $this->belongsTo(Location::class);
+    }
+
+    public function client() {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function user() {
+        return $this->client->user;
     }
 
 

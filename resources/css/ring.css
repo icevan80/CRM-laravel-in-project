@@ -2,6 +2,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--primary-s);
     --ring-color-l: var(--primary-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--primary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -9,6 +15,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--primary-variant-s);
     --ring-color-l: var(--primary-variant-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--primary-variant-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -16,6 +28,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-primary-s);
     --ring-color-l: var(--on-primary-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-primary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -23,6 +41,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--secondary-variant-s);
     --ring-color-l: var(--secondary-variant-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--secondary-variant-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -30,6 +54,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--secondary-s);
     --ring-color-l: var(--secondary-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--secondary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -37,6 +67,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-secondary-s);
     --ring-color-l: var(--on-secondary-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-secondary-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -44,6 +80,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--surface-s);
     --ring-color-l: var(--surface-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--surface-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -51,6 +93,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-surface-s);
     --ring-color-l: var(--on-surface-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-surface-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -58,6 +106,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--ring-s);
     --ring-color-l: var(--ring-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--ring-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -65,6 +119,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-ring-s);
     --ring-color-l: var(--on-ring-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-ring-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -72,6 +132,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--success-s);
     --ring-color-l: var(--success-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--success-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -79,6 +145,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-success-s);
     --ring-color-l: var(--on-success-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-success-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -86,6 +158,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--error-s);
     --ring-color-l: var(--error-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--error-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 
@@ -93,6 +171,12 @@
     --tw-ring-opacity: 1;
     --ring-color-s: var(--on-error-s);
     --ring-color-l: var(--on-error-l);
+    --ring-color-s-h: initial;
+    --ring-color-s-f: initial;
+    --ring-color-s-c: initial;
+    --ring-color-l-h: initial;
+    --ring-color-l-f: initial;
+    --ring-color-l-c: initial;
     --tw-ring-color: hsl(var(--on-error-h) var(--ring-color-s-h, var(--ring-color-s-f, var(--ring-color-s-c, var(--ring-color-s)))) var(--ring-color-l-h, var(--ring-color-l-f, var(--ring-color-l-c, var(--ring-color-l)))) / var(--tw-ring-opacity));
 }
 

@@ -24,10 +24,10 @@
             </x-inputs.label>
 
             <div class="flex my-2">
-                <x-inputs.radio label="{{__('Personal')}}" class="m-2" id="personal" name="service_type" value="personal" class="text-light-reset text-saturation-reset"
+                <x-inputs.radio label="{{__('Personal')}}" class="m-2" id="personal" name="service_type" value="personal"
                                 checkIt="{{$service->type == 'personal' ? 'true' : ''}}"
                                  ></x-inputs.radio>
-                <x-inputs.radio label="{{__('Group')}}" class="m-2"  id="group" name="service_type" value="group" class="text-light-reset text-saturation-reset"
+                <x-inputs.radio label="{{__('Group')}}" class="m-2"  id="group" name="service_type" value="group"
                                 checkIt="{{$service->type == 'group' ? 'true' : ''}}"
                         ></x-inputs.radio>
             </div>
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="flex">
-            <x-inputs.checkbox label="{{ __('Input range') }}" class="my-2 text-light-reset text-saturation-reset" x-on:click="inputRange = !inputRange"
+            <x-inputs.checkbox label="{{ __('Input range') }}" class="my-2" x-on:click="inputRange = !inputRange"
                         checkIt="{{isset($service->max_price) ? 'true' : ''}}"></x-inputs.checkbox>
         </div>
     </div>
@@ -126,7 +126,7 @@
                     @error('service_masters') <span class="text-red-500">{{ $message }}</span>@enderror
                 </select>
             </template>
-            <x-button.default type="button" class="text-light-reset text-saturation-reset" x-on:click="masterCount += 1">{{ __('Add Master') }}</x-button.default>
+            <x-button.default type="button" x-on:click="masterCount += 1">{{ __('Add Master') }}</x-button.default>
         </div>
     </div>
     <div>

@@ -75,14 +75,14 @@
                     <div>
                         @if($service->is_hidden == true)
                             <span
-                                class="inline-flex items-center gap-1 rounded-full el-error-color el-paler-50 el-lighter-70 el-opacity-75 px-2 py-1 text-xs font-medium text-error-color"
+                                class="inline-flex items-center gap-1 rounded-full error-color bg-paler-50 bg-lighter-70 opacity-75 px-2 py-1 text-xs font-medium text-error-color"
                             >
                         <span class="h-1.5 w-1.5 rounded-full error-color"></span>
                         Hidden
                       </span>
                         @else
                             <span
-                                class="inline-flex items-center gap-1 rounded-full el-success-color el-paler-50 el-lighter-70 el-opacity-75 px-2 py-1 text-xs font-medium text-success-color"
+                                class="inline-flex items-center gap-1 rounded-full success-color bg-paler-50 bg-lighter-70 opacity-75 px-2 py-1 text-xs font-medium text-success-color"
                             >
                         <span class="h-1.5 w-1.5 rounded-full success-color"></span>
                         Visible

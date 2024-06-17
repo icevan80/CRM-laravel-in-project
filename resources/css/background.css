@@ -2,6 +2,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--primary-s);
     --bg-color-l: var(--primary-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--primary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -9,6 +15,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--primary-variant-s);
     --bg-color-l: var(--primary-variant-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--primary-variant-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -16,6 +28,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-primary-s);
     --bg-color-l: var(--on-primary-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-primary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -23,6 +41,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--secondary-variant-s);
     --bg-color-l: var(--secondary-variant-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--secondary-variant-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -30,6 +54,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--secondary-s);
     --bg-color-l: var(--secondary-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--secondary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -37,6 +67,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-secondary-s);
     --bg-color-l: var(--on-secondary-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-secondary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -44,6 +80,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--surface-s);
     --bg-color-l: var(--surface-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--surface-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -51,6 +93,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-surface-s);
     --bg-color-l: var(--on-surface-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-surface-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -58,6 +106,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--background-s);
     --bg-color-l: var(--background-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--background-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -65,6 +119,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-background-s);
     --bg-color-l: var(--on-background-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-background-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -72,6 +132,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--success-s);
     --bg-color-l: var(--success-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--success-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -79,6 +145,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-success-s);
     --bg-color-l: var(--on-success-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-success-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -86,6 +158,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--error-s);
     --bg-color-l: var(--error-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--error-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 
@@ -93,6 +171,12 @@
     --tw-bg-opacity: 1;
     --bg-color-s: var(--on-error-s);
     --bg-color-l: var(--on-error-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-h: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
     background-color: hsl(var(--on-error-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
 }
 

@@ -2,6 +2,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--text-on-primary-s);
     --text-color-l: var(--text-on-primary-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--text-on-primary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -9,6 +15,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--text-on-secondary-s);
     --text-color-l: var(--text-on-secondary-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--text-on-secondary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -16,6 +28,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--text-on-surface-s);
     --text-color-l: var(--text-on-surface-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--text-on-surface-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -23,6 +41,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--primary-s);
     --text-color-l: var(--primary-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--primary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -30,6 +54,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--secondary-s);
     --text-color-l: var(--secondary-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--secondary-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -37,6 +67,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--error-s);
     --text-color-l: var(--error-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--error-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -44,6 +80,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--on-error-s);
     --text-color-l: var(--on-error-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--on-error-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -51,6 +93,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--success-s);
     --text-color-l: var(--success-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--success-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 
@@ -58,6 +106,12 @@
     --tw-text-opacity: 1;
     --text-color-s: var(--on-success-s);
     --text-color-l: var(--on-success-l);
+    --text-color-s-h: initial;
+    --text-color-s-f: initial;
+    --text-color-s-c: initial;
+    --text-color-l-h: initial;
+    --text-color-l-f: initial;
+    --text-color-l-c: initial;
     color: hsl(var(--on-success-h) var(--text-color-s-h, var(--text-color-s-f, var(--text-color-s-c, var(--text-color-s)))) var(--text-color-l-h, var(--text-color-l-f, var(--text-color-l-c, var(--text-color-l)))) / var(--tw-text-opacity));
 }
 

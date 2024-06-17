@@ -62,15 +62,23 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    function role() {
+    function role()
+    {
         return $this->belongsTo(Role::class);
     }
 
-    function cart() {
+    function client()
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    function cart()
+    {
         return $this->hasOne(Cart::class);
     }
 
-    function updateRole($newRole) {
+    function updateRole($newRole)
+    {
         // TODO: как-то это оптимизировать потом
         if ($newRole->name == 'Master') {
             if (Master::all()->where('user_id', $this->id)->count() == 0) {
@@ -78,7 +86,7 @@ class User extends Authenticatable
                     'user_id' => $this->id,
                 ]);
             }
-        } else if ($this->role->name == 'Master' && $newRole->name != 'Master' ) {
+        } else if ($this->role->name == 'Master' && $newRole->name != 'Master') {
             if (Master::all()->where('user_id', $this->id)->count() != 0) {
                 Master::all()->where('user_id', $this->id)->first()->delete();
             }
@@ -94,7 +102,7 @@ class User extends Authenticatable
         foreach ($customPermissions as $key => $permission) {
             if ($permission['approve']) {
                 $rolePermissions[$key] = $permission['code_name'];
-            } else if (array_key_exists($key, $rolePermissions)){
+            } else if (array_key_exists($key, $rolePermissions)) {
                 unset($rolePermissions[$key]);
             }
         }
@@ -107,7 +115,8 @@ class User extends Authenticatable
         return json_decode($this->permissions, true);;
     }
 
-    function hasPermission($code) :bool {
+    function hasPermission($code): bool
+    {
         $array = $this->permissions();
         $permission = Permission::getPermission($code);
         if ($permission == null) {
@@ -159,6 +168,24 @@ class User extends Authenticatable
 
         static::creating(function ($user) {
             $user->permissions = json_encode(array());
+        });
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $clients = Client::all()->where('phone_number', $user->phone_number);
+            $alreadyClient = $clients->count() > 0;
+            if ($alreadyClient) {
+                $client = $clients->first();
+                $client->first()->update([
+                    'user_id' => $user->id
+                ]);
+            } else {
+                Client::create([
+                    'user_id' => $user->id,
+                ])->id;
+            }
         });
     }
 }
