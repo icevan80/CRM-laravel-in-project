@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->double('total', 10, 2)->default(0);
             $table->boolean('referral')->default(false);
             $table->boolean('complete')->default(false);
+            $table->enum('progress', array('waiting', 'arrive', 'not_arrive', 'complete'))->default('waiting');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

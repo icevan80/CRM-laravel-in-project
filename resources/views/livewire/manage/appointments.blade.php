@@ -154,8 +154,7 @@
                                 @csrf
                                 @method('PUT')
                                 <label>
-                                    Исполнитель:
-                                    <select class="border text-gray-900  border-gray-300 rounded-lg"
+                                    <x-inputs.select label="{{__('Implementer')}}"
                                             name="implementer_id">
                                         @foreach ($masters as $master)
                                             <option
@@ -164,7 +163,7 @@
                                                 @endif
                                                 value={{$master->user->id}}>{{$master->user->name}}</option>
                                         @endforeach
-                                    </select>
+                                    </x-inputs.select>
                                     <x-button.default>
                                         Изменить
                                     </x-button.default>
@@ -184,10 +183,12 @@
                 <div class="flex gap-3">
                     @if($confirmSelectAppointment)
                         @if($confirmSelectAppointment && $confirmSelectAppointment->complete == false && ($confirmSelectAppointment->implementer_id == auth()->user()->id || $this->allowOthers))
+
                             <x-button.icon
-                                active-color="primary-color"
-                                not-active-color="secondary-color"
-                                class="text-on-surface-color">
+                                active="{{$confirmSelectAppointment->progress == 'waiting' ? 'true' : 'false'}}"
+                                wire:click="changeProgress('waiting')"
+                                active-color="primary-color bg-darken-50 text-on-primary-color"
+                                not-active-color="surface-color text-on-surface-color">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
@@ -195,7 +196,12 @@
                                           d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                 </svg>
                             </x-button.icon>
-                            <x-button.icon class="surface-color text-on-surface-color">
+                            <x-button.icon
+                                active="{{$confirmSelectAppointment->progress == 'arrive' ? 'true' : 'false'}}"
+                                wire:click="changeProgress('arrive')"
+                                active-color="secondary-color text-on-secondary-color"
+                                not-active-color="surface-color text-on-surface-color"
+                                class="">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
@@ -203,7 +209,12 @@
                                           d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                 </svg>
                             </x-button.icon>
-                            <x-button.icon class="surface-color text-on-surface-color">
+                            <x-button.icon
+                                active="{{$confirmSelectAppointment->progress == 'not_arrive' ? 'true' : 'false'}}"
+                                wire:click="changeProgress('not_arrive')"
+                                active-color="error-color text-on-error-color"
+                                not-active-color="surface-color"
+                                class="text-on-surface-color text-on-surface-color">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
@@ -211,7 +222,11 @@
                                           d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                 </svg>
                             </x-button.icon>
-                            <x-button.icon class="surface-color text-on-surface-color">
+                            <x-button.icon
+                                active="{{$confirmSelectAppointment->progress == 'complete' ? 'true' : 'false'}}"
+                                wire:click="changeProgress('complete')"
+                                active-color="primary-color text-on-primary-color"
+                                not-active-color="surface-color text-on-surface-color">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"

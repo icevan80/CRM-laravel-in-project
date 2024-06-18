@@ -451,4 +451,9 @@ class Appointments extends Component
     public function endSearch() {
         $this->searchProcess = false;
     }
+
+    public function changeProgress($status) {
+        $this->confirmSelectAppointment->progress = $status;
+        $this->confirmSelectAppointment->update();
+    }
 }
