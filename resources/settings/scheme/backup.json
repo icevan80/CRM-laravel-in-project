@@ -1,0 +1,87 @@
+{
+  "primary_variant_color": {
+    "h": 330,
+    "s": 74,
+    "l": 35
+  },
+  "primary_color": {
+    "h": 331,
+    "s": 80,
+    "l": 60
+  },
+  "on_primary_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "secondary_variant_color": {
+    "h": 83,
+    "s": 76,
+    "l": 36
+  },
+  "secondary_color": {
+    "h": 83,
+    "s": 91,
+    "l": 63
+  },
+  "on_secondary_color": {
+    "h": 0,
+    "s": 0,
+    "l": 0
+  },
+  "surface_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "on_surface_color": {
+    "h": 0,
+    "s": 0,
+    "l": 0
+  },
+  "background_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "on_background_color": {
+    "h": 0,
+    "s": 0,
+    "l": 0
+  },
+  "success_color": {
+    "h": 128,
+    "s": 81,
+    "l": 48
+  },
+  "on_success_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "error_color": {
+    "h": 4,
+    "s": 80,
+    "l": 48
+  },
+  "on_error_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "text_on_primary_color": {
+    "h": 0,
+    "s": 0,
+    "l": 100
+  },
+  "text_on_secondary_color": {
+    "h": 0,
+    "s": 0,
+    "l": 0
+  },
+  "text_on_surface_color": {
+    "h": 0,
+    "s": 0,
+    "l": 0
+  }
+}

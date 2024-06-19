@@ -1,5 +1,6 @@
 import {defineConfig} from 'vite';
 import laravel, {refreshPaths} from 'laravel-vite-plugin';
+import path from 'path'
 
 export default defineConfig({
     plugins: [
@@ -19,4 +20,9 @@ export default defineConfig({
             ],
         }),
     ],
+    resolve: {
+        alias: {
+            '~font' : path.resolve(__dirname,'resources/fonts')
+        }
+    }
 });

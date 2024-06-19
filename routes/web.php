@@ -83,7 +83,8 @@ Route::middleware([
             ])->group(function () {
                 Route::controller(SalonController::class)->group(function () {
                     Route::get('/salon', 'index')->name('settings.salon');
-                    Route::put('/salon/update', 'update')->name('settings.salon.update');
+                    Route::put('/salon/update_scheme', 'updateScheme')->name('settings.salon.updateScheme');
+                    Route::put('/salon/update_fonts', 'updateFonts')->name('settings.salon.updateFonts');
                 });
             });
 

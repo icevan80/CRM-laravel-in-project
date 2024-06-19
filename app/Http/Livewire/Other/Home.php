@@ -83,6 +83,9 @@ class Home extends Component
         Permission::create([
             'name' => 'New style access'
         ]);
+        Permission::create([
+            'name' => 'Edit salon settings'
+        ]);
 
 //        Role::create([
 //            'name' => 'Admin',

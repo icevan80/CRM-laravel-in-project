@@ -9,7 +9,20 @@ function getStore() {
 }
 
 function getTheme() {
-    $file = file_get_contents(resource_path('/settings/default.json'));
+    if (file_exists(resource_path('/settings/scheme/'.config('constants.store_uuid').'.json'))) {
+        $file = file_get_contents(resource_path('/settings/scheme/'.config('constants.store_uuid').'.json'));
+    } else {
+        $file = file_get_contents(resource_path('/settings/scheme/default.json'));
+    }
+    return json_decode($file, true);
+}
+
+function getFonts() {
+    if (file_exists(resource_path('/settings/fonts/'.config('constants.store_uuid').'.json'))) {
+        $file = file_get_contents(resource_path('/settings/fonts/'.config('constants.store_uuid').'.json'));
+    } else {
+        $file = file_get_contents(resource_path('/settings/fonts/default.json'));
+    }
     return json_decode($file, true);
 }
 

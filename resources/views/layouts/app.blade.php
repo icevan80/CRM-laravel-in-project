@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+@php
+    $fonts = getFonts();
+@endphp
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +18,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=K2D:ital,wght@0,400;0,500;1,300&display=swap" rel="stylesheet">
 
+    <!-- Primary Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{{ $fonts['primary_font_url'] }}" rel="stylesheet">
+
+    <!-- Secondary Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="{{ $fonts['secondary_font_url'] }}" rel="stylesheet">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/element.css', 'resources/js/app.js'])
@@ -22,26 +42,27 @@
 <!-- Styles -->
     @livewireStyles
 </head>
-<body class="font-sans antialiased">
+{{--<body class="font-sans antialiased">--}}
+<body class="primary-font antialiased">
 <x-banner/>
-
 <div class="min-h-screen">
-    <x-navlink.header-menu>
+    <x-header></x-header>
+{{--    <x-navlink.header-menu>--}}
 
-        <!-- Pass the main logo from page to the nav menu component-->
-        <x-slot name="mainLogoRoute">
-            @isset($mainLogoRoute)
-                {{ $mainLogoRoute }}
-            @endisset
-        </x-slot>
+{{--        <!-- Pass the main logo from page to the nav menu component-->--}}
+{{--        <x-slot name="mainLogoRoute">--}}
+{{--            @isset($mainLogoRoute)--}}
+{{--                {{ $mainLogoRoute }}--}}
+{{--            @endisset--}}
+{{--        </x-slot>--}}
 
-        <!-- Pass the nav links from page to the nav menu component-->
-        <x-slot name="navlinks">
-            @isset($navlinks)
-                {{ $navlinks }}
-            @endif
-        </x-slot>
-    </x-navlink.header-menu>
+{{--        <!-- Pass the nav links from page to the nav menu component-->--}}
+{{--        <x-slot name="navlinks">--}}
+{{--            @isset($navlinks)--}}
+{{--                {{ $navlinks }}--}}
+{{--            @endif--}}
+{{--        </x-slot>--}}
+{{--    </x-navlink.header-menu>--}}
 
     <!-- Page Heading -->
     @if (isset($header))
@@ -71,7 +92,23 @@
 
 
 <style>
+    .primary-font {
+        font-family: "{{ $fonts['primary_font_name'] }}", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+
+    .secondary-font {
+        font-family: "{{ $fonts['secondary_font_name'] }}", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
     :root {
+        --primary-font: {{ $fonts['primary_font_name'] }};
+        --secoondary-font: {{ $fonts['secondary_font_name'] }};
+
         --primary-variant-h: {{$theme['primary_variant_color']['h']}};
         --primary-variant-s: {{$theme['primary_variant_color']['s']}};
         --primary-variant-l: {{$theme['primary_variant_color']['l']}};
