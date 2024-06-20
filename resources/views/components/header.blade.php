@@ -1,6 +1,6 @@
 <div x-data="{ open: false }" class="w-full items-center header-menu background-color border-b z-50 sticky top-0">
 
-    <div class="inline-flex float-left">
+    <div class="inline-flex">
         <x-widgets.salon-logo></x-widgets.salon-logo>
         <x-widgets.salon-title></x-widgets.salon-title>
     </div>
@@ -36,18 +36,18 @@
         @auth
 
             {{--            <div class="items-center">--}}
-            <x-widgets.dropdown align="right" width="48">
+            <x-widgets.dropdown align="right" width="512">
                 <x-slot name="trigger">
                     <x-navlink.header class="cursor-pointer">
                         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                            <img class="h-8 w-8 rounded-full object-cover"
+                            <img class="h-12 w-12 rounded-full object-cover"
                                  src="{{ Auth::user()->profile_photo_url }}"
                                  alt="{{ Auth::user()->name }}"/>
                         @endif
                         <div class="ml-2">
                             {{ Auth::user()->name }}
                         </div>
-                        <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                        <svg class="ml-2 -mr-0.5 h-12 w-12" xmlns="http://www.w3.org/2000/svg"
                              fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                              stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -57,7 +57,7 @@
                 </x-slot>
                 <x-slot name="content">
                     @if(auth()->user()->role->name == 'Customer')
-                        <div class="block px-4 py-2 text-xs text-on-surface-color text-light-50">
+                        <div class="block px-1 py-0.5 font-text-small text-on-surface-color text-light-50">
                             {{ __('Shop') }}
                         </div>
                         <x-navlink.dropdown href="{{ route('cart') }}">
@@ -73,7 +73,7 @@
                         <div class="border-t border-primary-color border-paler-90 border-light-80"></div>
                     @endif
                 <!-- Account Management -->
-                    <div class="block px-4 py-2 text-xs text-on-surface-color text-light-50">
+                    <div class="block px-1 py-0.5 font-text-small text-on-surface-color text-light-50">
                         {{ __('Manage Account') }}
                     </div>
 

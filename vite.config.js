@@ -8,7 +8,7 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/css/background.css',
-                'resources/css/element.css',
+                'resources/css/paddings-margins.css',
                 'resources/css/text.css',
                 'resources/css/border.css',
                 'resources/css/ring.css',

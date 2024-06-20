@@ -33,16 +33,16 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
+          rel="stylesheet">
 
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/element.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/paddings-margins.css', 'resources/js/app.js'])
 
 <!-- Styles -->
     @livewireStyles
 </head>
-{{--<body class="font-sans antialiased">--}}
 <body class="primary-font antialiased">
 <x-banner/>
 <div class="min-h-screen">
@@ -64,7 +64,7 @@
 {{--        </x-slot>--}}
 {{--    </x-navlink.header-menu>--}}
 
-    <!-- Page Heading -->
+<!-- Page Heading -->
     @if (isset($header))
         <header class="background-color shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 text-center">
@@ -106,8 +106,6 @@
     }
 
     :root {
-        --primary-font: {{ $fonts['primary_font_name'] }};
-        --secoondary-font: {{ $fonts['secondary_font_name'] }};
 
         --primary-variant-h: {{$theme['primary_variant_color']['h']}};
         --primary-variant-s: {{$theme['primary_variant_color']['s']}};
