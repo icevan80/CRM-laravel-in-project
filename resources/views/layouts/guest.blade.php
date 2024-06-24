@@ -17,7 +17,7 @@
 
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/element.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/paddings-margins.css', 'resources/js/app.js'])
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

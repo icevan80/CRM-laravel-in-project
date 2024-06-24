@@ -13,28 +13,28 @@
   This component comes with some `rtl` classes. Please remove them if they are not needed in your project.
 -->
         <section>
-            <x-preview-block></x-preview-block>
+            <x-blocks.preview-block></x-blocks.preview-block>
         </section>
         <section>
-            <x-categories-block></x-categories-block>
+            <x-blocks.categories-block></x-blocks.categories-block>
         </section>
         <section>
-            <x-specials-block></x-specials-block>
+            <x-blocks.specials-block></x-blocks.specials-block>
         </section>
         <section>
-            <x-about-block></x-about-block>
+            <x-blocks.about-block></x-blocks.about-block>
         </section>
         <section>
-            <x-masters-block></x-masters-block>
+            <x-blocks.masters-block></x-blocks.masters-block>
         </section>
         <section>
-            <x-reviews-block></x-reviews-block>
+            <x-blocks.reviews-block></x-blocks.reviews-block>
         </section>
         <section>
-            <x-map-block></x-map-block>
+            <x-blocks.map-block></x-blocks.map-block>
         </section>
         <section>
-            <x-feedback-block></x-feedback-block>
+            <x-blocks.feedback-block></x-blocks.feedback-block>
         </section>
 
         {{-- <img class="w-full bg-cover" src="{{ asset('images\Salon2.jpg') }}" alt="Banner image"> --}}

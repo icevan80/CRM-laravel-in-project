@@ -54,3 +54,8 @@ html {
     height: 2px;
     background-image: radial-gradient(hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 80%);
 }
+
+.primary-gradient-border{
+    height: 2px;
+    background-image: radial-gradient(hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 40%);
+}
