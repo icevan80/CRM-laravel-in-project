@@ -6,6 +6,8 @@ class HomePageController extends Controller
 {
     public function index()
     {
+        $categories = \App\Models\Category::all();
+
 
         $deals = \App\Models\Deal::where('end_date', '>', now())
             ->where('is_hidden', false)
@@ -20,6 +22,6 @@ class HomePageController extends Controller
             ->where('is_hidden', false)
             ->get();
 
-        return view('web.home', compact('deals', 'popularServices'));
+        return view('web.home', compact('deals', 'popularServices', 'categories'));
     }
 }

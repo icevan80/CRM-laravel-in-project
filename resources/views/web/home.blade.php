@@ -16,7 +16,7 @@
             <x-blocks.preview-block></x-blocks.preview-block>
         </section>
         <section>
-            <x-blocks.categories-block></x-blocks.categories-block>
+            <x-blocks.categories-block :categories="$categories"></x-blocks.categories-block>
         </section>
         <section>
             <x-blocks.specials-block></x-blocks.specials-block>

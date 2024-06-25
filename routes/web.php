@@ -41,9 +41,7 @@ Route::middleware([
 
 //Route::get('/test', [App\Http\Controllers\AdminDashboardHome::class, 'index'])->name('test');
 
-    Route::get('/', function () {
-        return view('web.home');
-    })->name('home');
+    Route::get('/', [App\Http\Controllers\HomePageController::class, 'index'])->name('home');
 
     Route::get('/deals', [App\Http\Controllers\DisplayDeal::class, 'index'])->name('deals');
 

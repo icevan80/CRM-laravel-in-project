@@ -56,6 +56,25 @@ html {
 }
 
 .primary-gradient-border{
-    height: 2px;
-    background-image: radial-gradient(hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 40%);
+    background: linear-gradient(to left, hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 40%);
+}
+
+.border-margin {
+    margin: 2px 2px 2px 0;
+}
+
+.h-inherit {
+    height: inherit;
+}
+
+.grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.grid-group-1\/4 {
+    grid-column: 1 / 4;
+}
+
+.grid-group-4\/6 {
+    grid-column: 4 / 6;
 }
