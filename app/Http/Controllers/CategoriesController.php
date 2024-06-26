@@ -40,6 +40,7 @@ class CategoriesController extends Controller
 
             Category::create([
                 'name' => $request['category_name'],
+                'image' => $request['category_image'],
             ]);
         } catch (Exception $e) {
             return redirect()->route('manage.categories')->with('errormsg', 'Category  not created.');
@@ -78,7 +79,10 @@ class CategoriesController extends Controller
 
         try {
             $category = Category::all()->where('id', $id)->first();
-            $category->name = $request['category_name'];
+            $category->update([
+                'name' => $request['category_name'],
+                'image' => $request['category_image'],
+            ]);
             $category->save();
         } catch (Exception $e) {
             return redirect()->route('manage.categories')->with('errormsg', 'Category not updated.');

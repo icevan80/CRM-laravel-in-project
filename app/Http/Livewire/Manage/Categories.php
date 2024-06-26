@@ -10,6 +10,7 @@ class Categories extends Component
     private $categories;
 
     public int $categoryId = 0;
+    public $selectedCategory;
 
     public string $search = '';
 
@@ -30,9 +31,10 @@ class Categories extends Component
         return view('livewire.manage.categories', compact('categories'));
     }
 
-    public function confirmCategoryEdit($categoryId)
+    public function confirmCategoryEdit($category)
     {
-        $this->fill(['categoryId' => $categoryId]);
+        $this->selectedCategory = $category;
+        $this->fill(['categoryId' => $category['id']]);
         $this->fill(['confirmEditCategory' => true]);
     }
 

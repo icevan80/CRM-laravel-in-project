@@ -14,6 +14,7 @@
                     </x-slot>
                     <x-slot name="content">
                         <x-inputs.text label="{{ __('Category name') }}" type="text" id="category_name" name="category_name"></x-inputs.text>
+                        <livewire:components.upload-photo :tag="'category_image'"/>
                     </x-slot>
                     <x-slot name="footer">
                         <div class="flex gap-3">

@@ -19,6 +19,7 @@
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
+            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Photo</th>
             <th scope="col" class="px-4 py-4 w-full font-medium text-gray-900">Name</th>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Actions</th>
         </tr>
@@ -28,12 +29,16 @@
         @foreach ($categories as $category)
             <tr class="hover:bg-gray-50">
                 <td class="px-4 py-4  max-w-0">{{ $category->id }}</td>
-
+                <td class="px-4 py-4">
+                    <div class="w-20 h-20 font-medium text-gray-700">
+                        <img src="{{ asset('storage/' . $category->image) }}" alt="" class="w-20 h-20 object-cover">
+                    </div>
+                </td>
                 <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $category->name}}</td>
 
                 <td  class="px-4 py-4 max-w-xs font-medium text-gray-700">
                     <div class="flex gap-1">
-                        <x-button.default wire:click="confirmCategoryEdit({{ $category->id }})">
+                        <x-button.default wire:click="confirmCategoryEdit({{ $category }})">
                             {{ __('Edit') }}
                         </x-button.default>
                         <x-button.danger wire:click="confirmCategoryDeletion({{ $category->id }})">
@@ -58,7 +63,10 @@
                 Изменение категории
             </x-slot>
             <x-slot name="content">
-                <x-inputs.text label="{{ __('Category name') }}"  id="category_name" name="category_name"></x-inputs.text>
+                @if(isset($this->selectedCategory))
+                <x-inputs.text label="{{ __('Category name') }}"  id="category_name" name="category_name" value="{{ $this->selectedCategory['name'] }}"></x-inputs.text>
+                <livewire:components.upload-photo :tag="'category_image'" :source="$this->selectedCategory['image']"/>
+                @endif
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">

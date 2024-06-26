@@ -18,7 +18,9 @@
                 @break($loop->iteration == 6)
 
     @endforeach
-    <h1>Все услуги</h1>
+    <div>
+        <p class="font-text-normal-plus text-on-surface-color text-light-80">Все услуги</p>
+    </div>
 </div>
 
 

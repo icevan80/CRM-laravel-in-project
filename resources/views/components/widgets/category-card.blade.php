@@ -15,12 +15,12 @@
     ]) }}
     style="height:{{ $cardHeight }};">
     <div class="grid grid-cols-5 h-inherit">
-        <div class="grid-group-1/4">
-            <div
-                style="height:100%; width:100%; background-image: url('https://kartinki.pics/uploads/posts/2022-02/1645500476_1-kartinkin-net-p-kvadratnie-kartinki-1.jpg')">
+        <div class="grid-group-1/4 overflow-hidden">
+            <div>
+                <img  src="{{ asset('storage/' . $category->image) }}" alt="" class="object-center">
             </div>
         </div>
-        <div class="background-color border-margin grid-group-4/6">
+        <div class="background-color border-margin grid-group-4/6 overflow-hidden">
             <div style="padding-top: {{ $paddingTop }}">
                 <p style="" class="font-text-normal">
                     {{ $category->name }}

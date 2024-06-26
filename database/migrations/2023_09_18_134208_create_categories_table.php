@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->boolean('status')->default(true);
+            $table->string('image', 2048)->nullable();
             $table->timestamps();
         });
         Schema::table('services', function (Blueprint $table) {

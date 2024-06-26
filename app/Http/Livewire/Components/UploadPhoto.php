@@ -27,7 +27,7 @@ class UploadPhoto extends Component
     {
         if ($this->image instanceof \Illuminate\Http\UploadedFile) {
 
-            $rules['image'] = 'required|image|mimes:jpg,jpeg,png,svg,gif,webp|max:204800';
+            $rules['image'] = 'required|image|mimes:jpg,jpeg,png,svg,gif,webp|max:2048000';
         } else {
             $rules['image'] = 'required|string|min:1|max:255';
         }
