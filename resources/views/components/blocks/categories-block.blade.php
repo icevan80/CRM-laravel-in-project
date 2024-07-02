@@ -15,11 +15,14 @@
             </div>
         @endif
 
-                @break($loop->iteration == 6)
+        @break($loop->iteration == 6)
 
     @endforeach
     <div>
-        <p class="font-text-normal-plus text-on-surface-color text-light-80">Все услуги</p>
+        <div class="transform duration-150 hover:scale-105 inline-block">
+            <a href="" class="font-text-normal-plus text-on-surface-color text-light-80 font-weight-200 underline">Все
+                услуги</a>
+        </div>
     </div>
 </div>
 

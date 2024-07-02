@@ -78,3 +78,24 @@ html {
 .grid-group-4\/6 {
     grid-column: 4 / 6;
 }
+
+.preview-text-div {
+    margin: 10% 0 20% 10%;
+}
+
+.preview-photo-div {
+    height: 100vh;
+}
+
+.font-weight-200 {
+    font-weight: 200;
+}
+
+.text-slogan {
+    line-height: 11rem;
+}
+
+.text-special {
+    margin: 14rem 0 9rem 0;
+    line-height: 6.5rem;
+}

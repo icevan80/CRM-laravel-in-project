@@ -2,7 +2,7 @@
      style="background-image: url({{ asset('images/salon/preview-desktop.png') }}">
     <div class="grid-cols-1">
         <div class="preview-text-div h-full">
-            <p class="font-title-big text-slogan">
+            <p class="font-title-big text-slogan font-weight-200">
                 Ваша красота - наша сила!
             </p>
             <p class="font-title-small secondary-font text-special text-primary-color">
@@ -20,24 +20,3 @@
         <div class="preview-photo-div"></div>
     </div>
 </div>
-
-
-<style>
-    .preview-text-div {
-        margin: 10% 0 20% 10%;
-    }
-
-    .preview-photo-div {
-        height: 100vh;
-    }
-
-    .text-slogan {
-        font-weight: 200;
-        line-height: 11rem;
-    }
-
-    .text-special {
-        margin: 14rem 0 9rem 0;
-        line-height: 6.5rem;
-    }
-</style>
