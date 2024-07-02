@@ -20,8 +20,9 @@
     @endforeach
     <div>
         <div class="transform duration-150 hover:scale-105 inline-block">
-            <a href="" class="font-text-normal-plus text-on-surface-color text-light-80 font-weight-200 underline">Все
-                услуги</a>
+            <a href="" class="font-text-normal-plus text-on-surface-color text-light-80 underline font-weight-200 ">
+                <p class="">Все услуги</p>
+            </a>
         </div>
     </div>
 </div>

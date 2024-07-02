@@ -11,31 +11,21 @@
             <div class="carousel-items-card success-color"><p>aboba6</p></div>
         </div>
     </div>
+    <div>
+
+    </div>
 </div>
 
 <script>
     let showSlidesCount = 2;
-    let slideIndex = showSlidesCount;
-    let slides = document.getElementsByClassName("carousel-items-card");
+    let slideIndex = 0;
+    // let slides = document.getElementsByClassName("carousel-items-card");
 
-    for (let k = 0; k < slides.length; k++) {
-        slides[k].style.width = 100 / showSlidesCount + '%';
-        slides[k].style.display = 'none';
-    }
-
-    for (let k = 0; k < showSlidesCount; k++) {
-        slides[slideIndex + k].style.display = 'block';
-    }
-
-    showSlides(slideIndex);
+    initCarousel();
+    // showSlides(slideIndex);
 
     // Next/previous controls
     function plusSlides(n) {
-        if (n > 0) {
-            slides[slideIndex].style.display = "none";
-        } else {
-            slides[(slideIndex + n + showSlidesCount) % slides.length].style.display = "none";
-        }
         showSlides(slideIndex += n);
     }
 
@@ -45,27 +35,50 @@
     }
 
     function showSlides(n) {
+        let slides = document.getElementsByClassName("carousel-items-card");
 
         if (n < 0) {
-            slideIndex = slides.length
-        } else {
-            slideIndex = n % slides.length;
+            slideIndex = 0;
+            return;
+        }
+        if (n >= slides.length) {
+            slideIndex = slides.length - 1;
+            return;
         }
         let i;
 
-
-        let startIndex = slideIndex;
-        for(i = 0; i < showSlidesCount; i++) {
-            slides[(startIndex + i) % slides.length].style.display = "block";
+        if (n + showSlidesCount > slides.length - 1) {
+            n = slides.length - showSlidesCount;
         }
+        if (n - 1 >= 0) {
+            slides[n - 1].style.display = "none";
+        }
+        for (i = 0; i < showSlidesCount; i++) {
+            slides[n + i].style.display = "block";
+        }
+        if (n + showSlidesCount < slides.length) {
+            slides[n + showSlidesCount].style.display = "none";
+        }
+
+
+        // let startIndex = slideIndex;
+        // for(i = 0; i < showSlidesCount; i++) {
+        //     slides[(startIndex + i) % slides.length].style.display = "block";
+        // }
     }
 
     function initCarousel() {
-        let y = document.getElementsByClassName('carousel-items-list');
-        // let sliderList = sliderList[0];
-        // TODO: надо улучшить карусель
-        // let sliderList.getElementsByClassName('carousel-items-card');
-
+        // let y = document.getElementsByClassName('carousel-items-list');
+        let slides = document.getElementsByClassName("carousel-items-card");
+        let i = slideIndex;
+        if (slides.length < showSlidesCount) showSlidesCount = slides.length;
+        for (let j = 0; j < slides.length; j++) {
+            slides[j].style.width = 100 / showSlidesCount + '%';
+            slides[j].style.display = 'none';
+        }
+        for (let j = 0; j < showSlidesCount; j++) {
+            slides[i + j].style.display = 'block';
+        }
     }
 
 
