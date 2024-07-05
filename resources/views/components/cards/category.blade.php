@@ -9,11 +9,11 @@
 @endphp
 
 <a href=""
-    {{ $attributes->class([
-    'm-2.5 w-full primary-gradient-border pb-20 transform overflow-hidden
-    background-color shadow-md duration-300 hover:scale-105 hover:shadow-lg'
-    ]) }}
-    style="height:{{ $cardHeight }};">
+   {{ $attributes->class([
+   'm-2.5 w-full primary-gradient-border pb-20 transform overflow-hidden
+   background-color shadow-md duration-300 hover:scale-105 hover:shadow-lg'
+   ]) }}
+   style="height:{{ $cardHeight }};">
     <div class="grid grid-cols-5 h-inherit">
         <div class="grid-group-1/4 overflow-hidden">
             <div>

@@ -3,14 +3,14 @@
 'categories'
 ])
 
-<div>
+<div class="text-center my-5">
     <x-widgets.block-title title="Выберите услугу"></x-widgets.block-title>
     @foreach($categories as $category)
 
         @if($loop->index % 3 == 0)
             <div class="flex mx-2.5">
                 @endif
-                <x-widgets.category-card height="318" :category="$category"></x-widgets.category-card>
+                <x-cards.category height="318" :category="$category"></x-cards.category>
                 @if($loop->index % 3 == 2)
             </div>
         @endif

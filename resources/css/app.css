@@ -14,7 +14,7 @@ html {
     font-size: 62.5%;
 }
 
-.font-height-6{
+.font-height-6 {
     line-height: 6rem;
 }
 
@@ -50,12 +50,12 @@ html {
     font-size: 20rem;
 }
 
-.primary-gradient-line{
-    height: 2px;
+.primary-gradient-line {
+    height: 3px;
     background-image: radial-gradient(hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 80%);
 }
 
-.primary-gradient-border{
+.primary-gradient-border {
     background: linear-gradient(to left, hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 40%);
 }
 
@@ -79,6 +79,9 @@ html {
     grid-column: 4 / 6;
 }
 
+/* Preview styles start */
+
+
 .preview-text-div {
     margin: 10% 0 20% 10%;
 }
@@ -91,6 +94,10 @@ html {
     font-weight: 200;
 }
 
+.font-weight-100 {
+    font-weight: 100;
+}
+
 .text-slogan {
     line-height: 11rem;
 }
@@ -99,3 +106,97 @@ html {
     margin: 14rem 0 9rem 0;
     line-height: 6.5rem;
 }
+
+/* Preview styles end */
+
+/* Deal styles start */
+
+.text-deal-percent-giant {
+    font-size: 20rem;
+    line-height: 25rem;
+}
+
+.text-deal-condition-giant {
+    font-size: 5rem;
+    line-height: 5rem;
+}
+
+.deal-position-top-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+}
+
+.deal-position-bottom-left {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    text-align: left;
+}
+
+/* Deal styles end */
+
+/* Carousel styles start */
+
+.carousel-button {
+    margin: auto 1rem;
+    border-top: 3.5rem solid transparent;
+    border-bottom: 3.5rem solid transparent;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.carousel-button.next {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-s);
+    --border-color-l: var(--primary-l);
+    border-left: 3.5rem solid hsl(var(--primary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.carousel-button.prev {
+    --tw-border-opacity: 1;
+    --border-color-s: var(--primary-s);
+    --border-color-l: var(--primary-l);
+    border-right: 3.5rem solid hsl(var(--primary-h) var(--border-color-s-h, var(--border-color-s-f, var(--border-color-s-c, var(--border-color-s)))) var(--border-color-l-h, var(--border-color-l-f, var(--border-color-l-c, var(--border-color-l)))) / var(--tw-border-opacity));
+}
+
+.carousel-items-card {
+    position: relative;
+    display: block;
+    float: left;
+    text-align: center;
+}
+
+.carousel-dots-item {
+    width: 1rem;
+    height: 1rem;
+    margin: 0.5rem;
+}
+
+.carousel-dots-item.disable {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--surface-s);
+    --bg-color-l: var(--surface-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: 80;
+    background-color: hsl(var(--surface-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+.carousel-dots-item.active {
+    --tw-bg-opacity: 1;
+    --bg-color-s: var(--primary-s);
+    --bg-color-l: var(--primary-l);
+    --bg-color-s-h: initial;
+    --bg-color-s-f: initial;
+    --bg-color-s-c: initial;
+    --bg-color-l-f: initial;
+    --bg-color-l-c: initial;
+    background-color: hsl(var(--primary-h) var(--bg-color-s-h, var(--bg-color-s-f, var(--bg-color-s-c, var(--bg-color-s)))) var(--bg-color-l-h, var(--bg-color-l-f, var(--bg-color-l-c, var(--bg-color-l)))) / var(--tw-bg-opacity));
+}
+
+/* Carousel styles end */
+

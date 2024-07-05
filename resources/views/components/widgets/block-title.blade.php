@@ -15,7 +15,7 @@
         {{$otherText}}
     </span>
         @if($line)
-            <div class="primary-gradient-line w-full"/>
+            <div class="primary-gradient-line w-full"></div>
         @endif
     </div>
 </div>

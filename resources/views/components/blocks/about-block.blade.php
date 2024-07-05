@@ -1,4 +1,4 @@
-<div class="m-5">
+<div class="text-center m-5">
     <x-widgets.block-title title="О нас"></x-widgets.block-title>
     <div class="w-full h-full grid grid-cols-2 relative bg-cover bg-center bg-no-repeat">
         <div class="grid-cols-1">
@@ -17,7 +17,7 @@
             </div>
         </div>
         <div class="grid-cols-1">
-            <div class="w-full bg-no-repeat m-5" style="aspect-ratio: 1/1; background-image: url({{ asset('images/salon/preview-about.png') }}"></div>
+            <div class="w-auto bg-no-repeat m-5" style="aspect-ratio: 1/1; background-image: url({{ asset('images/salon/preview-about.png') }}"></div>
         </div>
     </div>
 </div>

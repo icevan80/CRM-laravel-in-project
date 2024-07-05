@@ -1,13 +1,13 @@
-<div>
+<div class="text-center secondary-color py-5">
     <x-widgets.block-title title="Наши мастера"></x-widgets.block-title>
     <div class="m-1">
-        <x-widgets.carousel carouselId="master_carousel">
-            <div class="primary-color"><p>aboba1</p></div>
-            <div class="primary-variant-color"><p>aboba2</p></div>
-            <div class="secondary-color"><p>aboba3</p></div>
-            <div class="secondary-variant-color"><p>aboba4</p></div>
-            <div class="error-color"><p>aboba5</p></div>
-            <div class="success-color"><p>aboba6</p></div>
+        <x-widgets.carousel carouselId="master_carousel" showCount="4" margin="5rem 2rem">
+            <x-cards.master></x-cards.master>
+            <x-cards.master></x-cards.master>
+            <x-cards.master></x-cards.master>
+            <x-cards.master></x-cards.master>
+            <x-cards.master></x-cards.master>
+            <x-cards.master></x-cards.master>
         </x-widgets.carousel>
     </div>
 {{--    <livewire:components.carousel/>--}}
