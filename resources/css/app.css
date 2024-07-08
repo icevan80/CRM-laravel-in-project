@@ -10,12 +10,20 @@
     max-width: 80%;
 }
 
+.w-2\/3 {
+    width: 66%;
+}
+
 html {
     font-size: 62.5%;
 }
 
 .font-height-6 {
     line-height: 6rem;
+}
+
+.font-height-4 {
+    line-height: 4rem;
 }
 
 .font-text-small {
@@ -53,6 +61,12 @@ html {
 .primary-gradient-line {
     height: 3px;
     background-image: radial-gradient(hsl(var(--primary-h) var(--primary-s) var(--primary-l)), transparent 80%);
+}
+
+
+.grey-gradient-line {
+    height: 3px;
+    background-image: radial-gradient(darkgrey, transparent 80%);
 }
 
 .primary-gradient-border {
@@ -199,4 +213,25 @@ html {
 }
 
 /* Carousel styles end */
+
+.space-x-1>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right:calc(1rem * var(--tw-space-x-reverse));
+    margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))
+}
+.space-x-2>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right:calc(2rem * var(--tw-space-x-reverse));
+    margin-left:calc(2rem * calc(1 - var(--tw-space-x-reverse)))
+}
+.space-x-3>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right:calc(3rem * var(--tw-space-x-reverse));
+    margin-left:calc(3rem * calc(1 - var(--tw-space-x-reverse)))
+}
+.space-x-4>:not([hidden])~:not([hidden]) {
+    --tw-space-x-reverse: 0;
+    margin-right:calc(4rem * var(--tw-space-x-reverse));
+    margin-left:calc(4rem * calc(1 - var(--tw-space-x-reverse)))
+}
 
