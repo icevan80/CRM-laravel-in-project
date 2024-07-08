@@ -4,7 +4,7 @@
             <x-navlink.menu href="{{ route('settings.permissions') }}"
                             :active="request()->routeIs('settings.permissions')">
                 <span class="pr-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round"
                               stroke-linejoin="round"
@@ -20,7 +20,7 @@
         <li>
             <x-navlink.menu href="{{ route('settings.roles') }}" :active="request()->routeIs('settings.roles')">
                 <span class="pr-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round"
                               stroke-linejoin="round"
@@ -37,7 +37,7 @@
             <x-navlink.menu href="{{ route('settings.translation') }}"
                             :active="request()->routeIs('settings.translation')">
                 <span class="pr-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round"
                               stroke-linejoin="round"
@@ -54,7 +54,7 @@
             <x-navlink.menu href="{{ route('settings.salon') }}"
                             :active="request()->routeIs('settings.salon')">
                 <span class="pr-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                          xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round"
                               stroke-linejoin="round"

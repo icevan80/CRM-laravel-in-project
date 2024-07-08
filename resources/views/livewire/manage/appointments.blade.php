@@ -48,15 +48,15 @@
         </div>
     </div>
     <div class="w-full rounded-lg border border-gray-200 shadow-md my-4">
-        <table class="w-full border background-color text-left text-sm text-gray-500 min-w-screen">
+        <table class="w-full border background-color text-left font-text-small text-gray-500 min-w-screen">
             <thead class="table-header bg-gray-50">
             <tr>
-                <th scope="col" class="w-0 py-4 text-center font-medium text-gray-900 border p-2">
+                <th scope="col" class="w-0 py-2 text-center font-medium text-gray-900 border p-1">
                     <x-inputs.date wire:model="selectedDay"></x-inputs.date>
                 </th>
                 @foreach($tableCells as $cellDay)
                     <th scope="col"
-                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-4 text-center font-medium border p-2">{{
+                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-2 text-center font-medium border p-1">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                         <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
                         @if($cellDay['count_appointments'] != 0)
@@ -71,7 +71,7 @@
                 @if($loop->odd)
                     <tr>
                         <th scope="col" rowspan="2"
-                            class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-2">{{
+                            class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-1">{{
                                 \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
                         @endif
                         @foreach($tableCells as $cellDay)
@@ -321,7 +321,7 @@
                                     </x-inputs.select>
                                 @else
                                     <label for="implementer"
-                                           class="block text-sm font-medium text-gray-700">{{ __('Implementer') }}</label>
+                                           class="block font-text-small font-medium text-gray-700">{{ __('Implementer') }}</label>
                                     <x-inputs.default type="hidden" id="implementer" name="appointment_implementer_id"
                                                       value="{{auth()->user()->id}}"></x-inputs.default>
                                     <p>{{ auth()->user()->name }}</p>
@@ -626,7 +626,7 @@
     .table-header {
         position: sticky;
         z-index: 11;
-        top: 64px;
+        top: 96px;
     }
 
     .day-column {

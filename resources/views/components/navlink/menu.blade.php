@@ -2,7 +2,7 @@
 
 @php
     $baseClasses = 'relative flex flex-row items-center h-11 border-primary-color focus:outline-none
-                    background-color font-text-normal
+                    background-color font-text-small
                     hover:bg-darken-10 text-on-surface-color  hover:text-darken-15 border-l-4 px-1
                     hover:border-opacity-100';
     $classes = ($active ?? false)

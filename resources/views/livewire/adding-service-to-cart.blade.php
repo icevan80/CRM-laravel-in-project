@@ -9,7 +9,7 @@
             <div class="grid grid-cols-4 gap-4" x-data="{ selectedLocation : @entangle('selectedLocation') }">
                     @foreach($locations as $location)
                             <label
-                                class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
+                                class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 font-text-small font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
                                 x-bind:class="{
                                 'primary-color text-white ': selectedLocation === {{ $location->id }},
                                 'surface-color bg-lighter-50 bg-opacity-75  hover:bg-darken-35': selectedLocation !== {{ $location->id }}
@@ -45,7 +45,7 @@
 
 
         <div class="mt-5">
-            <h4 class="text-sm font-medium text-gray-900">Time Slots</h4>
+            <h4 class="font-text-small font-medium text-gray-900">Time Slots</h4>
             <fieldset class="mt-4" x-data="{ timeSlots: @entangle('timeSlots')}">
                 <legend class="sr-only">Select a time</legend>
 
@@ -54,7 +54,7 @@
 
                         @if($timeSlot->available == true)
                         <label
-                            class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
+                            class="group relative flex items-center text-gray-800 justify-center rounded-md border py-3 px-4 font-text-small font-medium uppercase focus:outline-none sm:flex-1 cursor-pointer shadow-sm"
                             x-bind:class="{
                                 'primary-color text-white ': selectedTimeSlot === {{ $timeSlot->id }},
                                 'surface-color bg-lighter-50 bg-opacity-75 hover:bg-darken-35': selectedTimeSlot !== {{ $timeSlot->id }},
@@ -76,7 +76,7 @@
                         @else
 
                         <label
-                            class="group relative flex items-center justify-center rounded-md border py-3 px-4 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 cursor-not-allowed bg-gray-50 text-gray-200">
+                            class="group relative flex items-center justify-center rounded-md border py-3 px-4 font-text-small font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 cursor-not-allowed bg-gray-50 text-gray-200">
                             <input type="radio" name="time-slot-choice"
                                    value="{{ $timeSlot->id }}" disabled class="sr-only"
                                    aria-labelledby="size-choice-7-label">

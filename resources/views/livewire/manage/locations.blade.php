@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <table class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
@@ -80,7 +80,7 @@
 
                     <div>
                         <x-inputs.textarea label="Address" name="location_address" id="address"
-                                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:text-sm">{{$this->selectLocation->address}}</x-inputs.textarea>
+                                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:font-text-small">{{$this->selectLocation->address}}</x-inputs.textarea>
                     </div>
 
                     <div>

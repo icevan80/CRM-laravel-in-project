@@ -67,19 +67,19 @@
 
                                 <div class="flex items-center ml-2">
                                     @if ($token->last_used_at)
-                                        <div class="text-sm text-gray-400">
+                                        <div class="font-text-small text-gray-400">
                                             {{ __('Last used') }} {{ $token->last_used_at->diffForHumans() }}
                                         </div>
                                     @endif
 
                                     @if (Laravel\Jetstream\Jetstream::hasPermissions())
-                                        <button class="cursor-pointer ml-6 text-sm text-gray-400 underline"
+                                        <button class="cursor-pointer ml-6 font-text-small text-gray-400 underline"
                                                 wire:click="manageApiTokenPermissions({{ $token->id }})">
                                             {{ __('Permissions') }}
                                         </button>
                                     @endif
 
-                                    <button class="cursor-pointer ml-6 text-sm text-red-500"
+                                    <button class="cursor-pointer ml-6 font-text-small text-red-500"
                                             wire:click="confirmApiTokenDeletion({{ $token->id }})">
                                         {{ __('Delete') }}
                                     </button>
@@ -104,7 +104,7 @@
             </div>
 
             <x-inputs.default x-ref="plaintextToken" type="text" readonly :value="$plainTextToken"
-                     class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono text-sm text-gray-500 w-full break-all"
+                     class="mt-4 bg-gray-100 px-4 py-2 rounded font-mono font-text-small text-gray-500 w-full break-all"
                      autofocus autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
                      @showing-token-modal.window="setTimeout(() => $refs.plaintextToken.select(), 250)">
             </x-inputs.default>

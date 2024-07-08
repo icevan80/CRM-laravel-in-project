@@ -78,11 +78,11 @@
         </x-slot>
 
         <x-slot name="content">
-            <x-inputs.label for="code" class="block text-sm font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }}
+            <x-inputs.label for="code" class="block font-text-small font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }}
                 en</x-inputs.label>
             <x-inputs.text id="code" wire:model.debounce.500ms="code">
             </x-inputs.text>
-            <label for="name" class="block text-sm font-medium text-gray-700">{{ __('Language name') }}
+            <label for="name" class="block font-text-small font-medium text-gray-700">{{ __('Language name') }}
                 - {{ __('Example') }} English</label>
             <x-inputs.text id="name" wire:model.debounce.500ms="name"></x-inputs.text>
         </x-slot>

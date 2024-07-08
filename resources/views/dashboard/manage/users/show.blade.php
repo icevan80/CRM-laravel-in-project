@@ -17,7 +17,7 @@
                         <livewire:components.user-settings :user-id="$user->id" />
                     @endif
                     <div class="text-gray-700">
-                        <div class="grid md:grid-cols-2 text-sm">
+                        <div class="grid md:grid-cols-2 font-text-small">
                             {{--                            <div class="grid grid-cols-2">--}}
                             {{--                                <div class="px-4 py-2 font-semibold">First Name</div>--}}
                             {{--                                <div class="px-4 py-2">Jane</div>--}}
@@ -61,10 +61,10 @@
                                 <span>Status</span>
                                 @if ($user->status == 1)
                                     <span class="ml-auto"><span
-                                            class="success-color py-1 px-2 rounded text-on-success-color text-sm">Active</span></span>
+                                            class="success-color py-1 px-2 rounded text-on-success-color font-text-small">Active</span></span>
                                 @else
                                     <span class="ml-auto"><span
-                                            class="error-color py-1 px-2 rounded text-on-error-color text-sm">Inactive</span></span>
+                                            class="error-color py-1 px-2 rounded text-on-error-color font-text-small">Inactive</span></span>
                                 @endif
                             </li>
                             <li class="flex items-center py-3">
@@ -137,7 +137,7 @@
                     </div>
                     <button
                         x-on:click="showFullInfo = !showFullInfo"
-                        class="block w-full text-blue-800 text-sm font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
+                        class="block w-full text-blue-800 font-text-small font-semibold rounded-lg hover:bg-gray-100 focus:outline-none focus:shadow-outline focus:bg-gray-100 hover:shadow-xs p-3 my-4">
                         Show
                         Full Information
                     </button>

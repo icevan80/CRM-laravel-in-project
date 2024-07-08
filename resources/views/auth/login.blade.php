@@ -8,14 +8,14 @@
         <x-validation-errors class="mb-4" />
 
         @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="mb-4 font-medium font-text-small text-green-600">
                 {{ session('status') }}
             </div>
         @endif
 
 
         @if (session('errormsg'))
-            <div class="mb-4 font-medium text-sm text-red-600">
+            <div class="mb-4 font-medium font-text-small text-red-600">
                 {{ session('errormsg') }}
             </div>
         @endif
@@ -37,7 +37,7 @@
 
             <div class="flex items-center justify-end mt-4">
                 @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none" href="{{ route('password.request') }}">
+                    <a class="underline font-text-small text-gray-600 hover:text-gray-900 rounded-md focus:outline-none" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
@@ -48,8 +48,8 @@
 
             </div>
             <div class="text-center pt-10">
-                <span class="text-sm text-gray-600">Don't have an account?</span>
-                <a href="{{ route('register') }}" class="text-sm text-primary-color hover:bg-darken-35">Create an Account</a>
+                <span class="font-text-small text-gray-600">Don't have an account?</span>
+                <a href="{{ route('register') }}" class="font-text-small text-primary-color hover:bg-darken-35">Create an Account</a>
             </div>
         </form>
     </x-authentication-card>

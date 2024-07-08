@@ -3,8 +3,8 @@
     <div x-show="dashboardMenuOpen">
         <ul>
             <li>
-                <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                <div class="flex flex-row items-center">
+                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Menu')}}
                     </div>
                 </div>
@@ -12,7 +12,7 @@
                     <li>
                         <x-navlink.menu href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             <span class="pr-2">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round"
@@ -28,8 +28,8 @@
             </li>
 
             <li>
-                <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                <div class="flex flex-row items-center">
+                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Manage')}}
                     </div>
                 </div>
@@ -37,8 +37,8 @@
             </li>
 
             <li>
-                <div class="flex flex-row items-center h-8">
-                    <div class="px-4 font-light tracking-wide text-on-surface-color text-darken-35">
+                <div class="flex flex-row items-center">
+                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Settings')}}
                     </div>
                 </div>

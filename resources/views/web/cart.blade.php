@@ -8,7 +8,7 @@
                 <div class="error-color bg-lighter-90 bg-opacity-75 border border-error-color text-error-color px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Oops!</strong>
                     <span class="block sm:inline">The following time slots are no longer available. Please remove them from your cart to continue.</span>
-                    <ul class="mt-2 list-disc list-inside text-sm text-red-600">
+                    <ul class="mt-2 list-disc list-inside font-text-small text-red-600">
 
 
                         @foreach(session('unavailable_time_slots') as $unavailable_time_slot)
@@ -113,7 +113,7 @@
                 <h2 class="text-xl font-semibold">Confirm Checkout</h2>
                 <p>Are you sure you want to checkout?</p>
                 <div class="mt-4 flex justify-end space-x-4">
-                    <button @click="showCheckoutConfirmation = false" class="px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none">
+                    <button @click="showCheckoutConfirmation = false" class="px-4 py-2 font-text-small font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none">
                         Cancel
                     </button>
                     <form action="{{route('cart.checkout')}}" method="post">

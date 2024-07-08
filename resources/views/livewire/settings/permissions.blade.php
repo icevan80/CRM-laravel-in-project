@@ -1,6 +1,6 @@
 <div>
     <table
-        class="w-full background-color text-left text-sm overflow-x-scroll min-w-screen">
+        class="w-full background-color text-left font-text-small  overflow-x-scroll min-w-screen">
         <tbody>
         @foreach($permissions as $permission)
             @if($loop->index % $this->elementsInRow == 0)

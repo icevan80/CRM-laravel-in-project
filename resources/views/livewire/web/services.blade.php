@@ -26,7 +26,7 @@
                         <h3 class="-my-3 flow-root">
                             <!-- Expand/collapse section button -->
                             <button type="button" x-on:click="showCategory=!showCategory"
-                                    class="flex w-full items-center justify-between background-color py-3 text-sm text-gray-400 hover:text-gray-500"
+                                    class="flex w-full items-center justify-between background-color py-3 font-text-small text-gray-400 hover:text-gray-500"
                                     aria-controls="filter-section-1" aria-expanded="false">
                                 <span class="font-medium text-gray-900">Category</span>
                                 <span class="ml-6 flex items-center">
@@ -51,7 +51,7 @@
                                            value="{{ $category->id }}" type="checkbox"
                                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                                     <label for="filter-category-{{ $category->id }}"
-                                           class="ml-3 text-sm text-gray-600">{{ $category->name }}</label>
+                                           class="ml-3 font-text-small text-gray-600">{{ $category->name }}</label>
                                 </div>
                             @endforeach
                         </div>

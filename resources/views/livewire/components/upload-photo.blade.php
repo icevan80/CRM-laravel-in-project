@@ -2,7 +2,7 @@
 
     <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
         <div class="col-span-2">
-            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+            <label for="image" class="block font-text-small font-medium text-gray-700">Image</label>
             <input type="file" name="{{$tag}}" wire:model.defer="image" id="image"
                    class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             @error('image') <span class="text-red-500">{{ $message }}</span>@enderror

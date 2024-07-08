@@ -1,6 +1,6 @@
 <div>
     <table
-        class="w-full background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen ">
+        class="w-full background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen ">
         <thead class="bg-gray-50">
 
         <tr>

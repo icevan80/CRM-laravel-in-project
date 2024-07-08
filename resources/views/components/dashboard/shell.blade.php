@@ -7,13 +7,13 @@
         <div class="w-full">
             {{-- TODO: Change notification message --}}
             @if (session('errormsg'))
-                <div class="mb-4 font-medium text-sm text-red-600">
+                <div class="mb-4 font-medium font-text-small text-red-600">
                     {{ session('errormsg') }}
                 </div>
             @endif
 
             @if (session('success'))
-                <div class="mb-4 font-medium text-sm text-green-600">
+                <div class="mb-4 font-medium font-text-small text-green-600">
                     {{ session('success') }}
                 </div>
             @endif

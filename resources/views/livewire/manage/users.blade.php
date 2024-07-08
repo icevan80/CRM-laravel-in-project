@@ -14,7 +14,7 @@
             <x-button.default type="submit" class="text-white absolute right-2.5 bottom-2.5 ">Search</x-button.default>
         </div>
     </div>
-    <table class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="w-0 px-4 py-4 font-medium text-gray-900">Id</th>

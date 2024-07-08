@@ -1,6 +1,6 @@
 <div>
     <div class="w-1/3 float-right m-4">
-        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
+        <label for="default-search" class="mb-2 font-text-small  font-medium text-gray-900 sr-only ">Search</label>
         <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -10,7 +10,7 @@
                 </svg>
             </div>
             <input type="search" wire:model="search" id="default-search" name="search"
-                   class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                   class="block w-full p-4 pl-10 font-text-small text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                    placeholder="Search Deals...">
             <x-button.default type="submit"
                     class="absolute right-2.5 bottom-2.5">
@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <table class="w-full border-collapse background-color text-left text-sm text-gray-500 overflow-x-scroll min-w-screen">
+    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
         <thead class="bg-gray-50">
         <tr>
             <th scope="col" class="pl-6 py-4 font-medium text-gray-900">Id</th>
