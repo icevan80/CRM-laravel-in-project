@@ -1,6 +1,6 @@
 <x-dashboard.shell>
-    <div class="flex justify-between mx-7 pt-6">
-        <h2 class="text-2xl font-bold">Service - {{$service->name}}</h2>
+    <div class="flex justify-between mx-2 pt-2">
+        <h2 class="font-text-normal font-bold">Service - {{$service->name}}</h2>
         <div x-data="{showEditService: false}">
             <x-button.default x-on:click="showEditService = true">
                 Edit
@@ -34,7 +34,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5 p-4">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-2 p-2">
         <div>
 
             {{ $service->name}}

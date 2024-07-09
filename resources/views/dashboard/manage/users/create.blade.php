@@ -1,5 +1,5 @@
 <x-dashboard.shell>
-    <div class="w-1/3 mx-auto background-color rounded-lg p-5">
+    <div class="w-1/3 mx-auto background-color rounded-lg p-2.5">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Create User') }}
         </h2>
@@ -9,8 +9,8 @@
         <!-- Name -->
             <x-forms.create.user :roles="$roles"></x-forms.create.user>
 
-            <div class="flex items-center justify-end mt-4">
-                <x-button.default class="ml-4">
+            <div class="flex items-center justify-end mt-2">
+                <x-button.default class="ml-2">
                     {{ __('Create User') }}
                 </x-button.default>
             </div>

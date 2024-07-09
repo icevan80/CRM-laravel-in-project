@@ -1,6 +1,6 @@
 <x-dashboard.shell>
-    <div class="flex justify-between mx-7 pt-6">
-        <h2 class="text-2xl font-bold">Deals</h2>
+    <div class="flex justify-between  mx-2 pt-2">
+        <h2 class="font-text-normal font-bold">Deals</h2>
         <div x-data="{showCreateDeals: false}">
             <x-button.default x-on:click="showCreateDeals = true">
                 Create

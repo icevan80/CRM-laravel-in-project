@@ -1,6 +1,6 @@
 <x-dashboard.shell>
-    <div class="flex justify-between mx-7 pt-6">
-        <h2 class="text-2xl font-bold">Подкатегории</h2>
+    <div class="flex justify-between mx-2 pt-2">
+        <h2 class="font-text-normal font-bold">Подкатегории</h2>
         <div x-data="{showCreateSubcategories: false}">
             <x-button.default x-on:click="showCreateSubcategories = true">
                 Create
@@ -35,7 +35,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-4">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-2">
         <livewire:manage.subcategories />
     </div>
 </x-dashboard.shell>

@@ -1,8 +1,8 @@
 <x-dashboard.shell>
-    <div class="flex justify-between mx-7 pt-6">
-        <h2 class="text-2xl font-bold">Manage Appointments</h2>
+    <div class="flex justify-between mx-2 pt-2">
+        <h2 class="font-text-normal font-bold">Manage Appointments</h2>
     </div>
-    <div class="m-4">
+    <div class="m-2">
         <livewire:manage.appointments :locations="$locations" :masters="$masters" :services="$services"/>
     </div>
 </x-dashboard.shell>

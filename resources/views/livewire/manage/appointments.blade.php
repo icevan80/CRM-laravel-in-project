@@ -1,6 +1,6 @@
 <div>
     <div class="mobile-filters">
-        <x-inputs.select wire:model="list" class="border text-gray-900  border-gray-300 rounded-lg">
+        <x-inputs.select wire:model="list" class="">
             <option
                 value="two_weeks">{{ __('Two weeks') }}</option>
             <option
