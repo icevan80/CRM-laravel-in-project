@@ -26,6 +26,18 @@ html {
     line-height: 4rem;
 }
 
+.font-text-nano {
+    font-size: 0.5rem;
+}
+
+.font-text-micro {
+    font-size: 1rem;
+}
+
+.font-text-mini {
+    font-size: 1.5rem;
+}
+
 .font-text-small {
     font-size: 2rem;
 }
@@ -106,6 +118,14 @@ html {
 
 .preview-photo-div {
     height: 100vh;
+}
+
+.font-weight-400 {
+    font-weight: 400;
+}
+
+.font-weight-300 {
+    font-weight: 300;
 }
 
 .font-weight-200 {

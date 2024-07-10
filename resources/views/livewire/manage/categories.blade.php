@@ -1,46 +1,43 @@
 <div>
-    <div class="w-1/3 float-right m-4">
+    <div class="w-1/3 float-right m-1">
         <x-widgets.search placeholder="Search Categories..."></x-widgets.search>
 
     </div>
 
-    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
-        <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Photo</th>
-            <th scope="col" class="px-4 py-4 w-full font-medium text-gray-900">Name</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Actions</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+    <x-table.default>
+        <x-slot name="thead">
+            <x-table.row>
+                <x-table.column scope="col" class="">Id</x-table.column>
+                <x-table.column scope="col" class="">Photo</x-table.column>
+                <x-table.column scope="col" class="w-full">Name</x-table.column>
+                <x-table.column scope="col" class="">Actions</x-table.column>
+            </x-table.row>
+        </x-slot>
+        <x-slot name="tbody">
+            @foreach ($categories as $category)
+                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40">
+                    <x-table.column class="max-w-0">{{ $category->id }}</x-table.column>
+                    <x-table.column class="">
+                        <div class="w-20 h-20">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="" class="w-20 h-20 object-cover">
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="">{{ $category->name}}</x-table.column>
 
-        @foreach ($categories as $category)
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-4  max-w-0">{{ $category->id }}</td>
-                <td class="px-4 py-4">
-                    <div class="w-20 h-20 font-medium text-gray-700">
-                        <img src="{{ asset('storage/' . $category->image) }}" alt="" class="w-20 h-20 object-cover">
-                    </div>
-                </td>
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $category->name}}</td>
+                    <x-table.column class="flex gap-4">
+                            <x-button.default wire:click="confirmCategoryEdit({{ $category }})">
+                                {{ __('Edit') }}
+                            </x-button.default>
+                            <x-button.danger wire:click="confirmCategoryDeletion({{ $category->id }})">
+                                {{ __('Delete') }}
+                            </x-button.danger>
+                    </x-table.column>
+                </x-table.row>
+            @endforeach
+        </x-slot>
+    </x-table.default>
 
-                <td  class="px-4 py-4 max-w-xs font-medium text-gray-700">
-                    <div class="flex gap-1">
-                        <x-button.default wire:click="confirmCategoryEdit({{ $category }})">
-                            {{ __('Edit') }}
-                        </x-button.default>
-                        <x-button.danger wire:click="confirmCategoryDeletion({{ $category->id }})">
-                            {{ __('Delete') }}
-                        </x-button.danger>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
-
-        </tbody>
-    </table>
-    <div class="pl-6 pt-4">
+    <div class="px-2 py-1">
         {{ $categories->links() }}
     </div>
 
@@ -53,8 +50,10 @@
             </x-slot>
             <x-slot name="content">
                 @if(isset($this->selectedCategory))
-                <x-inputs.text label="{{ __('Category name') }}"  id="category_name" name="category_name" value="{{ $this->selectedCategory['name'] }}"></x-inputs.text>
-                <livewire:components.upload-photo :tag="'category_image'" :source="$this->selectedCategory['image']"/>
+                    <x-inputs.text label="{{ __('Category name') }}" id="category_name" name="category_name"
+                                   value="{{ $this->selectedCategory['name'] }}"></x-inputs.text>
+                    <livewire:components.upload-photo :tag="'category_image'"
+                                                      :source="$this->selectedCategory['image']"/>
                 @endif
             </x-slot>
             <x-slot name="footer">
