@@ -1,108 +1,98 @@
 <div>
-    <div class="w-1/3 float-right m-4">
+    <div class="w-1/3 float-right m-1">
         <x-widgets.search placeholder="Search Services..."></x-widgets.search>
     </div>
 
-    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
-        <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Service</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Photo</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Notes</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Price</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Category</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Subcategory</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Duration</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Visibility</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Actions</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+    <x-table.default>
+        <x-slot name="thead">
+            <x-table.row>
+                <x-table.column scope="col" class="">Id</x-table.column>
+                <x-table.column scope="col" class="">Service</x-table.column>
+                <x-table.column scope="col" class="">Photo</x-table.column>
+                <x-table.column scope="col" class="w-full">Notes</x-table.column>
+                <x-table.column scope="col" class="">Price</x-table.column>
+                <x-table.column scope="col" class="">Category</x-table.column>
+                <x-table.column scope="col" class="">Subcategory</x-table.column>
+                <x-table.column scope="col" class="">Duration</x-table.column>
+                <x-table.column scope="col" class="">Visibility</x-table.column>
+                <x-table.column scope="col" class="">Actions</x-table.column>
+            </x-table.row>
+        </x-slot>
+        <x-slot name="tbody">
 
-        @foreach ($services as $service)
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-4">{{ $service->id }}</td>
-
-                <td class="gap-3 px-4 py-4 font-medium text-gray-700 text-gray-900">
-
-                    {{ $service->name}}
-
-                </td>
-                <td class="px-4 py-4">
-                    <div class="w-20 h-20 font-medium text-gray-700">
-                        <img src="{{ asset('storage/' . $service->image) }}" alt="" class="w-20 h-20 object-cover">
-                    </div>
-                </td>
-
-                <td class="px-4 py-4 w-full">{{ $service->notes }}</td>
-
-                <td class="px-4 py-4 ">
-                    <div
-                        class="font-medium text-center text-gray-700">{{ $service->price }} @if(isset($service->max_price))
-                            - {{ $service->max_price }}@endif</div>
-                </td>
-                <td class="px-4 py-4">
-                    <div class="font-medium text-gray-700">{{ $service->category?->name}}</div>
-                </td>
-                <td class="px-4 py-4">
-                    <div class="font-medium text-gray-700">
-                        @if($service->subcategory != null)
-                            {{ $service->subcategory->name}}
-                        @else
-                            {{__('No')}}
-                        @endif
-                    </div>
-                </td>
-                <td class="px-4 py-4">
-                    <div class="font-medium text-gray-700">{{ intdiv($service->duration_minutes , 60)}}
-                        h{{ $service->duration_minutes % 60}}m
-                    </div>
-                </td>
-                <td class="px-4 py-4 ">
-                    <div>
-                        @if($service->is_hidden == true)
-                            <span
-                                class="inline-flex items-center gap-1 rounded-full error-color bg-paler-50 bg-lighter-70 opacity-75 px-2 py-1 text-xs font-medium text-error-color"
-                            >
-                        <span class="h-1.5 w-1.5 rounded-full error-color"></span>
-                        Hidden
-                      </span>
-                        @else
-                            <span
-                                class="inline-flex items-center gap-1 rounded-full success-color bg-paler-50 bg-lighter-70 opacity-75 px-2 py-1 text-xs font-medium text-success-color"
-                            >
-                        <span class="h-1.5 w-1.5 rounded-full success-color"></span>
-                        Visible
-                        </span>
-                        @endif
-
-                    </div>
-                </td>
-                <td>
-                    <div class="mt-5 ">
-                        <a href="{{ route('manage.services.show', ['id' => $service->id ])  }}">
-                            <x-button.default class="m-2">
+            @foreach ($services as $service)
+                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40 font-text-mini">
+                    <x-table.column class="">{{ $service->id }}</x-table.column>
+                    <x-table.column class="">{{ $service->name}}</x-table.column>
+                    <x-table.column class="">
+                        <div class="">
+                            <img src="{{ asset('storage/' . $service->image) }}" alt="" class="w-20 h-20 object-cover">
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="">{{ $service->notes }}</x-table.column>
+                    <x-table.column class="">
+                        <div
+                            class="text-center">{{ $service->price }}
+                            @if(isset($service->max_price))
+                                - {{ $service->max_price }}
+                            @endif
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="">
+                        <div class="">{{ $service->category?->name}}</div>
+                    </x-table.column>
+                    <x-table.column class="">
+                        <div class="">
+                            @if($service->subcategory != null)
+                                {{ $service->subcategory->name}}
+                            @else
+                                {{__('No')}}
+                            @endif
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="">
+                        <div class="">{{ intdiv($service->duration_minutes , 60)}}
+                            h{{ $service->duration_minutes % 60}}m
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="">
+                        <div>
+                            @if($service->is_hidden == true)
+                                <span
+                                    class="inline-flex items-center gap-4 rounded-full error-color bg-darken-20 bg-paler-50 bg-lighter-90 bg-opacity-75  px-2 py-1 font-medium text-error-color text-darken-35">
+                                <span class="h-4 w-4 rounded-full error-color"></span>
+                            Hidden
+                            </span>
+                            @else
+                                <span
+                                    class="inline-flex items-center gap-4 rounded-full success-color bg-darken-20 bg-lighter-90 bg-opacity-75  px-2 py-1 font-medium text-success-color text-darken-35">
+                                <span class="h-4 w-4 rounded-full success-color"></span>
+                            Visible
+                            </span>
+                            @endif
+                        </div>
+                    </x-table.column>
+                    <x-table.column class="flex gap-4">
+                        <x-button.route href="{{ route('manage.services.show', ['id' => $service->id ])  }}">
+                            <x-button.default class="">
                                 {{ __('View') }}
                             </x-button.default>
-
-                        </a>
-                        <x-button.default class="m-2" wire:click="confirmingServiceEdition({{ $service->id }})">
+                        </x-button.route>
+                        <x-button.default class="" wire:click="confirmingServiceEdition({{ $service->id }})">
                             {{ __('Edit') }}
                         </x-button.default>
-                        <x-button.danger class="m-2" wire:click="confirmServiceDeletion({{ $service->id }})"
+                        <x-button.danger class="" wire:click="confirmServiceDeletion({{ $service->id }})"
                                          wire:loading.attr="disabled">
                             {{ __('Delete') }}
                         </x-button.danger>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+                    </x-table.column>
+                </x-table.row>
+            @endforeach
 
-        </tbody>
-    </table>
+        </x-slot>
+    </x-table.default>
 
-    <div class=" pl-6 pt-4">
+    <div class="px-2 py-1">
         {{ $services->links() }}
     </div>
 

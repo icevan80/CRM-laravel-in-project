@@ -1,7 +1,6 @@
 <div>
     <div class="w-1/3 float-right m-1">
         <x-widgets.search placeholder="Search Categories..."></x-widgets.search>
-
     </div>
 
     <x-table.default>
@@ -15,7 +14,7 @@
         </x-slot>
         <x-slot name="tbody">
             @foreach ($categories as $category)
-                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40">
+                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40 font-text-mini">
                     <x-table.column class="max-w-0">{{ $category->id }}</x-table.column>
                     <x-table.column class="">
                         <div class="w-20 h-20">
@@ -23,7 +22,6 @@
                         </div>
                     </x-table.column>
                     <x-table.column class="">{{ $category->name}}</x-table.column>
-
                     <x-table.column class="flex gap-4">
                             <x-button.default wire:click="confirmCategoryEdit({{ $category }})">
                                 {{ __('Edit') }}

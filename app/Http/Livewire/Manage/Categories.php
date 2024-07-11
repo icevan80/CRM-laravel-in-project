@@ -26,7 +26,7 @@ class Categories extends Component
         $categories = Category::when($this->search, function ($subQuery) {
             $subQuery->where('name', 'like', '%' . $this->search . '%');
         })->where('status', true)
-            ->paginate(5);
+            ->paginate(25);
 
         return view('livewire.manage.categories', compact('categories'));
     }

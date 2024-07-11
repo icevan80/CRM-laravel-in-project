@@ -12,7 +12,7 @@
         </x-inputs.select>
         {{-- TODO: добавить разрешение view_other_appointemnt --}}
         @if(auth()->user()->hasPermission('edit_other_appointment'))
-            <h2 class="text-2xl font-bold px-4">-</h2>
+            <h2 class="font-text-normal font-bold px-4">-</h2>
             <x-inputs.select wire:model="view">
                 <option value="salon">{{ __('Salon') }}</option>
                 <option value="master">{{ __('Current master') }}</option>
@@ -20,7 +20,7 @@
                 <option value="all">{{ __('Without filters') }}</option>
             </x-inputs.select>
             @if($view == 'salon' && $locations)
-                <h2 class="text-2xl font-bold px-4">-</h2>
+                <h2 class="font-text-normal font-bold px-4">-</h2>
                 <x-inputs.select wire:model="follow">
                     @foreach ($locations as $location)
                         <option
@@ -28,7 +28,7 @@
                     @endforeach
                 </x-inputs.select>
             @elseif($view == 'master' && $masters)
-                <h2 class="text-2xl font-bold px-4">-</h2>
+                <h2 class="font-text-normal font-bold px-4">-</h2>
                 <x-inputs.select wire:model="follow">
                     <option value="0">{{ __('All masters') }}</option>
                     @foreach ($masters as $master)
@@ -47,32 +47,32 @@
             </div>
         </div>
     </div>
-    <div class="w-full rounded-lg border border-gray-200 shadow-md my-4">
-        <table class="w-full border background-color text-left font-text-small text-gray-500 min-w-screen">
-            <thead class="table-header bg-gray-50">
-            <tr>
-                <th scope="col" class="w-0 py-2 text-center font-medium text-gray-900 border p-1">
-                    <x-inputs.date wire:model="selectedDay"></x-inputs.date>
-                </th>
-                @foreach($tableCells as $cellDay)
-                    <th scope="col"
-                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-2 text-center font-medium border p-1">{{
+    <div class="w-full rounded-lg border border-gray-200 shadow-md my-2">
+        <x-table.default>
+            <x-slot name="thead" class="table-header">
+                <x-table.row>
+                    <x-table.column scope="col" class="w-0">
+                        <x-inputs.date wire:model="selectedDay"></x-inputs.date>
+                    </x-table.column>
+                    @foreach($tableCells as $cellDay)
+                        <x-table.column scope="col"
+                            class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-2 text-center font-medium border p-1">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
-                        <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
-                        @if($cellDay['count_appointments'] != 0)
-                            <div class="appointment-notification">{{ $cellDay['count_appointments'] }}</div>
-                        @endif
-                    </th>
-                @endforeach
-            </tr>
-            </thead>
-            <tbody drag-root class="bg-gray-50">
+                            <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
+                            @if($cellDay['count_appointments'] != 0)
+                                <div class="appointment-notification font-text-mini">{{ $cellDay['count_appointments'] }}</div>
+                            @endif
+                        </x-table.column>
+                    @endforeach
+                </x-table.row>
+            </x-slot>
+            <x-slot name="tbody" drag-root>
             @foreach($tableCells[0]['schedule'] as $minutes)
                 @if($loop->odd)
-                    <tr>
-                        <th scope="col" rowspan="2"
-                            class="time-slot-mobile w-0 pl-6 font-medium text-gray-900 border p-1">{{
-                                \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</th>
+                    <tr class="font-text-mini">
+                        <x-table.column scope="col" rowspan="2"
+                            class="time-slot-mobile w-0 pl-6 border">{{
+                                \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</x-table.column>
                         @endif
                         @foreach($tableCells as $cellDay)
                             @foreach($cellDay['schedule'] as $cellMinute)
@@ -81,7 +81,7 @@
                                         <th x-data="{ appointHover: false }"
                                             x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
                                             scope="col"
-                                            class="time-slot text-center font-medium border py-2">
+                                            class="time-slot font-text-mini text-center font-medium border py-0.5">
                                             <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
                                             <div drag-item="{{ $cellMinute['id'] }}"
                                                  class="appointment-container">
@@ -105,7 +105,7 @@
                                     @else
                                         <th
                                             scope="col"
-                                            class="past-time-slot text-center font-medium border py-2">
+                                            class="past-time-slot font-text-mini text-center font-medium border py-0.5">
                                             @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
                                                 <timeline id="time-line" class="time-line"></timeline>
                                             @endif
@@ -132,8 +132,8 @@
                     </tr>
                 @endif
             @endforeach
-            </tbody>
-        </table>
+            </x-slot>
+        </x-table.default>
 
         <x-dialog.default wire:model="confirmSelectAppointment" onLeaveMethod="$wire.unsetSelectedAppointment()">
             <x-slot name="title">
@@ -635,8 +635,8 @@
 
     .appointment-notification {
         position: absolute;
-        width: 20px;
-        height: 20px;
+        width: 2rem;
+        height: 2rem;
         top: 10%;
         right: 5%;
         border-radius: 100%;
@@ -668,7 +668,7 @@
 
     .time-slot, .past-time-slot {
         position: relative;
-        height: 37px;
+        height: 4rem;
     }
 
     .time-slot-time {

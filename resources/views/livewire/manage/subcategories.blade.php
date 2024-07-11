@@ -1,46 +1,45 @@
 <div>
-    <div class="w-1/3 float-right m-4">
+    <div class="w-1/3 float-right m-1">
         <x-widgets.search placeholder="Search Subcategories..."></x-widgets.search>
     </div>
 
-    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
-        <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Main category</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Name</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Presentation name</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Full name</th>
-            <th scope="col" class="px-4 py-4 w-0 font-medium text-gray-900">Actions</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+    <x-table.default>
+        <x-slot name="thead">
+            <x-table.row>
+                <x-table.column scope="col" class="">Id</x-table.column>
+                <x-table.column scope="col" class="">Main category</x-table.column>
+                <x-table.column scope="col" class="">Name</x-table.column>
+                <x-table.column scope="col" class="">Presentation name</x-table.column>
+                <x-table.column scope="col" class="">Full name</x-table.column>
+                <x-table.column scope="col" class="w-0">Actions</x-table.column>
+            </x-table.row>
+        </x-slot>
+        <x-slot name="tbody">
 
-        @foreach ($subcategories as $subcategory)
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-4  max-w-0">{{ $subcategory->id }}</td>
+            @foreach ($subcategories as $subcategory)
+                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40 font-text-mini">
+                    <x-table.column class="max-w-0">{{ $subcategory->id }}</x-table.column>
 
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $subcategory->category->name}}</td>
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $subcategory->name}}</td>
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $subcategory->presentation_name}}</td>
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $subcategory->full_name}}</td>
+                    <x-table.column class="">{{ $subcategory->category->name}}</x-table.column>
+                    <x-table.column class="">{{ $subcategory->name}}</x-table.column>
+                    <x-table.column class="">{{ $subcategory->presentation_name}}</x-table.column>
+                    <x-table.column class="">{{ $subcategory->full_name}}</x-table.column>
 
-                <td  class="px-4 py-4 max-w-xs font-medium text-gray-700">
-                    <div class="flex gap-1">
+                    <x-table.column class="flex gap-4">
+
                         <x-button.default wire:click="confirmSubcategoryEdit({{ $subcategory->id }})">
                             {{ __('Edit') }}
                         </x-button.default>
                         <x-button.danger wire:click="confirmSubcategoryDeletion({{ $subcategory->id }})">
                             {{ __('Delete') }}
                         </x-button.danger>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+                    </x-table.column>
+                </x-table.row>
+            @endforeach
 
-        </tbody>
-    </table>
-    <div class="pl-6 pt-4">
+        </x-slot>
+    </x-table.default>
+    <div class="px-2 py-1">
         {{ $subcategories->links() }}
     </div>
 
@@ -52,7 +51,8 @@
                 Изменение категории
             </x-slot>
             <x-slot name="content">
-                <x-inputs.text label="{{ __('Subcategory name') }}"  id="subcategory_name" name="subcategory_name"></x-inputs.text>
+                <x-inputs.text label="{{ __('Subcategory name') }}" id="subcategory_name"
+                               name="subcategory_name"></x-inputs.text>
             </x-slot>
             <x-slot name="footer">
                 <div class="flex gap-3">

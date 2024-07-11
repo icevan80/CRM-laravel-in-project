@@ -1,36 +1,29 @@
 <div>
-    <div class="w-1/3 float-right m-4">
+    <div class="w-1/3 float-right m-1">
         <x-widgets.search placeholder="Search Locations..."></x-widgets.search>
     </div>
 
-    <table class="w-full border-collapse background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen">
-        <thead class="bg-gray-50">
-        <tr>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Id</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Name</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900 w-full">Address</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Telephone Number</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Is Operating</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900">Actions</th>
-        </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100 border-t border-gray-100">
+    <x-table.default>
+        <x-slot name="thead">
+            <x-table.row>
+                <x-table.column scope="col" class="">Id</x-table.column>
+                <x-table.column scope="col" class="">Name</x-table.column>
+                <x-table.column scope="col" class=" w-full">Address</x-table.column>
+                <x-table.column scope="col" class="">Telephone Number</x-table.column>
+                <x-table.column scope="col" class="">Is Operating</x-table.column>
+                <x-table.column scope="col" class="">Actions</x-table.column>
+            </x-table.row>
+        </x-slot>
+        <x-slot name="tbody">
 
-        @foreach ($locations as $location)
-            <tr class="hover:bg-gray-50">
-                <td class="px-4 py-4  max-w-0">{{ $location->id }}</td>
-
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->name}}</td>
-
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->address}}</td>
-
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->telephone_number}}</td>
-
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">{{ $location->operate ? 'Yes' : 'No'}}</td>
-
-
-                <td class="px-4 py-4 max-w-xs font-medium text-gray-700">
-                    <div class="flex gap-1">
+            @foreach ($locations as $location)
+                <x-table.row class="surface-color hover:bg-light-90 text-on-surface-color text-light-40 font-text-mini">
+                    <x-table.column class="max-w-0">{{ $location->id }}</x-table.column>
+                    <x-table.column class="">{{ $location->name}}</x-table.column>
+                    <x-table.column class="">{{ $location->address}}</x-table.column>
+                    <x-table.column class="">{{ $location->telephone_number}}</x-table.column>
+                    <x-table.column class="">{{ $location->operate ? 'Yes' : 'No'}}</x-table.column>
+                    <x-table.column class="flex gap-4">
                         <x-button.default wire:click="confirmLocationEdit({{ $location->id }}, {{ $location }})">
                             {{ __('Edit') }}
                         </x-button.default>
@@ -39,16 +32,14 @@
                         <x-button.danger wire:click="confirmLocationDeletion({{ $location->id }})">
                             {{ __('Delete') }}
                         </x-button.danger>
-                    </div>
-                </td>
-            </tr>
-        @endforeach
+                    </x-table.column>
+                </x-table.row>
+            @endforeach
 
-        </tbody>
-    </table>
+        </x-slot>
+    </x-table.default>
 
-    <div class=" pl-6 pt-4
-                        ">
+    <div class="px-2 py-1">
         {{ $locations->links() }}
     </div>
 
@@ -63,25 +54,27 @@
                 @isset($this->selectLocation)
                     <div>
                         <x-inputs.text label="{{ __('Name') }}" name="location_name" id="name" class="w-full"
-                                 value="{{$this->selectLocation->name}}"></x-inputs.text>
+                                       value="{{$this->selectLocation->name}}"></x-inputs.text>
                     </div>
 
                     <div>
                         <x-inputs.textarea label="Address" name="location_address" id="address"
-                                  class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:font-text-small">{{$this->selectLocation->address}}</x-inputs.textarea>
+                                           class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 sm:font-text-small">{{$this->selectLocation->address}}</x-inputs.textarea>
                     </div>
 
                     <div>
-                        <x-inputs.default label="Telephone Number" type="tel" name="location_telephone_number" minlength="10"
-                                 maxlength="10"
-                                 id="telephone_number"
-                                 value="{{$this->selectLocation->telephone_number}}"
-                                 class="w-full"></x-inputs.default>
+                        <x-inputs.default label="Telephone Number" type="tel" name="location_telephone_number"
+                                          minlength="10"
+                                          maxlength="10"
+                                          id="telephone_number"
+                                          value="{{$this->selectLocation->telephone_number}}"
+                                          class="w-full"></x-inputs.default>
                     </div>
 
                     <div class="my-2">
-                        <x-inputs.checkbox label="{{ __('Is Operating') }}" name="location_operate" id="location_operate"
-                                    checkIt="{{$this->selectLocation->operate ? 'true' : 'false'}}"></x-inputs.checkbox>
+                        <x-inputs.checkbox label="{{ __('Is Operating') }}" name="location_operate"
+                                           id="location_operate"
+                                           checkIt="{{$this->selectLocation->operate ? 'true' : 'false'}}"></x-inputs.checkbox>
                     </div>
                 @endisset
             </x-slot>
