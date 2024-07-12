@@ -18,9 +18,9 @@ class Permissions extends Component
 
     public int $elementsInRow = 4;
 
-    public function mount($permissions = null, $roleId = null, $userId = null)
+    public function mount($permissions = null, $roleId = null, $userId = null, $elementsInRow = 4)
     {
-
+        $this->elementsInRow = $elementsInRow;
         if ($permissions == null) {
             $permissions = Permission::all();
         }
@@ -32,7 +32,6 @@ class Permissions extends Component
             $this->role = Role::getRole($roleId);
             $this->fillRolePage($permissions, $this->role);
         } else if ($roleId == null && $userId != null) {
-            $this->elementsInRow = 3;
             $this->userId = $userId;
             $this->user = User::all()->where('id', $userId)->first();
             $this->fillUserPage($permissions, $this->user);

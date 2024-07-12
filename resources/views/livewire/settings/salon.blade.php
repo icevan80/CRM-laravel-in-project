@@ -1,4 +1,4 @@
-<div class="m-4">
+<div class="font-text-small">
     <div>
         <h1>Color scheme</h1>
         <div><p>Examples: yellow/#000000/rgb(255 255 255)</p></div>
@@ -26,7 +26,7 @@
         </form>
     </div>
     <div>
-        <h1 class="my-4">Fonts</h1>
+        <h1 class="my-2">Fonts</h1>
         <form action="{{route('settings.salon.updateFonts')}}" method="post">
             @csrf
             @method('PUT')
@@ -36,7 +36,7 @@
             <x-inputs.text label="{{ __('Secondary font name') }}" id="secondary_font_name" name="secondary_font_name" value="{{$this->fonts['secondary_font_name']}}"></x-inputs.text>
             <p class="secondary-font">Secondary font example</p>
             <x-inputs.text label="{{ __('Secondary font url') }}" class="w-1/2" id="secondary_font_url" name="secondary_font_url" value="{{$this->fonts['secondary_font_url']}}"></x-inputs.text>
-            <div class="my-4">
+            <div class="my-1">
             <x-button.default>Изменить</x-button.default>
             </div>
         </form>

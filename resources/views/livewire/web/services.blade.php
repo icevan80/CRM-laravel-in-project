@@ -62,7 +62,7 @@
                 <div class="lg:col-span-3 flex flex-col flex-wrap pt-6 md:flex-row h-max">
                     @foreach ($services as $service)
                         @if($service->is_hidden == false)
-                            <x-service-card :service="$service"/>
+                            <x-cards.service :service="$service"/>
                         @endif
                     @endforeach
                     <div class="w-full">

@@ -48,7 +48,7 @@
                     </x-button.secondary>
                 @endif
 
-                <x-input-error for="photo" class="mt-2" />
+                <x-inputs.error for="photo" class="mt-2" />
             </div>
         @endif
 

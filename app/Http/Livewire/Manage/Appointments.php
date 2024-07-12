@@ -97,7 +97,8 @@ class Appointments extends Component
         }
 
         if ($userId != null) {
-            $user = User::findOrFail('id', $userId);
+//            $user = User::findOrFail('id', $userId);
+            $user = User::all()->where('id', $userId)->first();
         } else {
             $user = auth()->user();
         }

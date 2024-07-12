@@ -1,6 +1,6 @@
 <x-dashboard.shell>
-    <div class="flex justify-between mx-7 pt-6">
-        <h2 class="text-2xl font-bold">Менеджер прав</h2>
+    <div class="flex justify-between mx-2 pt-2">
+        <h2 class="font-text-normal font-bold">Менеджер прав</h2>
         <div x-data="{showCreatePermission: false}">
             <x-button.default x-on:click="showCreatePermission = true">
                 Create
@@ -29,7 +29,7 @@
             </form>
         </div>
     </div>
-    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-4 p-4">
+    <div class="overflow-auto rounded-lg border border-gray-200 shadow-md m-1 p-1">
         <livewire:settings.permissions :permissions="$permissions"/>
     </div>
 </x-dashboard.shell>

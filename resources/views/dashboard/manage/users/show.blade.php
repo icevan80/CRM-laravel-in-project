@@ -146,7 +146,7 @@
             </div>
             <div class="w-full">
 
-                <livewire:manage-appointments :user-id="$user->id" :select-filter="'upcoming'"/>
+                <livewire:manage.appointments :user-id="$user->id" :select-filter="'upcoming'"/>
 
 
             </div>

@@ -1,53 +1,55 @@
-<div>
+<div class="font-text-small">
     <h1>{{ __('Choose translate') }}</h1>
-    <div id="set_translation" style="display: flex">
+    <div id="set_translation" class="flex gap-4">
         @foreach($translations as $translate)
-            <label>
-                <input type="radio" wire:model="temp_lang" value="{{ $translate }}"/>
-                {{ __($translate) }}
-            </label>
+            <x-inputs.radio
+                wire:model="temp_lang"
+                value="{{ $translate }}"
+                label="{{ __($translate) }}"
+                font-size="font-text-mini"></x-inputs.radio>
         @endforeach
         <x-button.default wire:click="changeTranslation('{{$this->temp_lang}}')" wire:loading.attr="disabled">
-            <p>{{ __('Choose') }}</p>
+            {{ __('Choose') }}
         </x-button.default>
         <x-button.default wire:click="$set('createNewTranslation', true)"
-                  wire:loading.attr="disabled">
+                          wire:loading.attr="disabled">
             {{ __('Create') }}
         </x-button.default>
     </div>
-    <x-button.default wire:click="saveTranslationConfig">
-        <p>{{ __('Save changes') }}</p>
-    </x-button.default>
-    <x-button.default wire:click="syncTranslationKeys">
-        <p>{{ __('Sync keys') }}</p>
-    </x-button.default>
-        <table class="overflow-auto rounded-lg border border-gray-200 shadow-md m-5 p-4">
-            <thead class="bg-gray-50">
-            <tr>
-                <th scope="col" class="w-auto py-4 text-left font-medium text-gray-900 border p-2">
+    <div class="my-2">
+        <x-button.default wire:click="saveTranslationConfig">
+            <p>{{ __('Save changes') }}</p>
+        </x-button.default>
+        <x-button.default wire:click="syncTranslationKeys">
+            <p>{{ __('Sync keys') }}</p>
+        </x-button.default>
+    </div>
+    <x-table.default>
+        <x-slot name="thead">
+            <x-table.row>
+                <x-table.column scope="col" class="w-2/3">
                     <p>{{ __('Key name') }}</p>
-                </th>
-                <th scope="col" class="w-auto py-4 text-left font-medium text-gray-900 border p-2">
+                </x-table.column>
+                <x-table.column scope="col" class="w-1/3">
                     <p>{{ __('Translate') }}</p>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+                </x-table.column>
+            </x-table.row>
+        </x-slot>
+        <x-slot name="tbody">
             @foreach($parsedTranslation as $translationValue)
-                <tr>
-                    <td class="font-medium border p-2 w-full">
+                <x-table.row>
+                    <x-table.column class="border">
                         <p>{{ $translationValue['key'] }}</p>
-                    </td>
-                    <td class="font-medium border p-2 w-full">
+                    </x-table.column>
+                    <x-table.column class="border">
                         <x-inputs.text
-                                 wire:model.debounce.500ms="parsedTranslation.{{ $translationValue['key'] }}.value">
-
+                            wire:model.debounce.500ms="parsedTranslation.{{ $translationValue['key'] }}.value" class="w-full">
                         </x-inputs.text>
-                    </td>
-                </tr>
+                    </x-table.column>
+                </x-table.row>
             @endforeach
-            </tbody>
-        </table>
+        </x-slot>
+    </x-table.default>
 
     <x-dialog.default wire:model="notificationChangesComplete">
         <x-slot name="title">
@@ -78,8 +80,10 @@
         </x-slot>
 
         <x-slot name="content">
-            <x-inputs.label for="code" class="block font-text-small font-medium text-gray-700">{{ __('Code') }} - {{ __('Example') }}
-                en</x-inputs.label>
+            <x-inputs.label for="code" class="block font-text-small font-medium text-gray-700">{{ __('Code') }}
+                - {{ __('Example') }}
+                en
+            </x-inputs.label>
             <x-inputs.text id="code" wire:model.debounce.500ms="code">
             </x-inputs.text>
             <label for="name" class="block font-text-small font-medium text-gray-700">{{ __('Language name') }}
@@ -109,7 +113,6 @@
 
 <style>
     #set_translation * {
-        padding: 4px 6px;
-        margin: 0 8px;
+        margin: auto 0;
     }
 </style>

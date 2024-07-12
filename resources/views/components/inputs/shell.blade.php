@@ -3,10 +3,15 @@
     if($attributes['label']){
         $label = $attributes['label'];
     }
+
+    $fontSize = 'font-text-small';
+    if ($attributes['font-size']) {
+        $fontSize = $attributes['font-size'];
+    }
 @endphp
 
 @if($label)
-    <x-inputs.label for="{{ $attributes['for'] }}">{{ $label }}</x-inputs.label>
+    <x-inputs.label for="{{ $attributes['for'] }}" font-size="{{ $fontSize }}">{{ $label }}</x-inputs.label>
 @endif
 
 <style>
