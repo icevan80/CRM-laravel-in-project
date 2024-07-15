@@ -259,3 +259,25 @@ html {
     margin-left:calc(4rem * calc(1 - var(--tw-space-x-reverse)))
 }
 
+/* sm styles start */
+
+@media (min-width: 640px) {
+    .c-sm\:max-w-2xl {
+        max-width:96rem
+    }
+    .c-sm\:max-w-lg {
+        max-width:72rem
+    }
+    .c-sm\:max-w-md {
+        max-width:60rem
+    }
+    .c-sm\:max-w-sm {
+        max-width:48rem
+    }
+    .c-sm\:max-w-xl {
+        max-width:84rem
+    }
+}
+
+/* sm styles end */
+

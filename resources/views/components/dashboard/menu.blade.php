@@ -4,14 +4,14 @@
         <ul>
             <li>
                 <div class="flex flex-row items-center">
-                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
+                    <div class="px-1.5 font-weight-400 font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Menu')}}
                     </div>
                 </div>
                 <ul>
                     <li>
                         <x-navlink.menu href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            <span class="pr-2">
+                            <span class="pr-1">
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
@@ -29,7 +29,7 @@
 
             <li>
                 <div class="flex flex-row items-center">
-                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
+                    <div class="px-1.5 font-weight-400 font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Manage')}}
                     </div>
                 </div>
@@ -38,7 +38,7 @@
 
             <li>
                 <div class="flex flex-row items-center">
-                    <div class="px-4 font-light font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
+                    <div class="px-1.5 font-weight-400 font-text-small-plus tracking-wide text-on-surface-color text-darken-35">
                         {{__('Settings')}}
                     </div>
                 </div>

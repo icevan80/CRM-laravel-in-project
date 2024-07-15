@@ -1,6 +1,6 @@
 <div x-data="{ editPermissions: false }">
     <div class="flex text-left">
-        <div class="px-6">
+        <div class="px-2">
             <x-button.default x-on:click="editPermissions = !editPermissions">
                 <p>Edit permissions</p>
             </x-button.default>
@@ -9,12 +9,12 @@
             @csrf
             @method('PUT')
             <div class="flex">
-            <div class="px-6">
+            <div class="px-2">
                 <x-button.default type="submit">
                     Изменить роль
                 </x-button.default>
             </div>
-            <div class="px-6">
+            <div class="px-2">
                 <select class="border text-gray-900  border-gray-300 rounded-lg"
                         wire:model="roleId" name="roleId">
                     @foreach ($this->roles as $role)
@@ -26,7 +26,7 @@
         </form>
     </div>
 
-    <div x-show="editPermissions">
-        <livewire:settings.permissions :user-id="$user->id"/>
+    <div x-show="editPermissions" class="py-2">
+        <livewire:settings.permissions :user-id="$user->id" :elements-in-row="2"/>
     </div>
 </div>

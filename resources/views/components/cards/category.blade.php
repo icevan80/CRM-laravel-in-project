@@ -5,7 +5,6 @@
 
 @php
     $cardHeight = $attributes['height'].'px';
-    $paddingTop = (($attributes['height'] - 40) / 2).'px';
 @endphp
 
 <a href=""
@@ -21,7 +20,7 @@
             </div>
         </div>
         <div class="background-color border-margin grid-group-4/6 overflow-hidden">
-            <div style="padding-top: {{ $paddingTop }}">
+            <div style="height: 100%; align-content: center;">
                 <p style="" class="font-text-normal">
                     {{ $category->name }}
                 </p>

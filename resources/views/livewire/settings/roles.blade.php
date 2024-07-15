@@ -1,29 +1,28 @@
 <div>
-    <table
-        class="w-full background-color text-left font-text-small text-gray-500 overflow-x-scroll min-w-screen ">
-        <thead class="bg-gray-50">
+    <x-table.default>
+        <x-slot name="thead">
 
-        <tr>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900 border">Имя роли</th>
-            <th scope="col" colspan="4" class="w-full px-4 py-4 font-medium text-gray-900 border">
+        <x-table.row>
+            <x-table.column scope="col" class="border">Имя роли</x-table.column>
+            <x-table.column scope="col" colspan="4" class="w-full border">
                 Кол-во привелегий
-            </th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900 border">Статус</th>
-            <th scope="col" class="px-4 py-4 font-medium text-gray-900 border">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
+            </x-table.column>
+            <x-table.column scope="col" class="border">Статус</x-table.column>
+            <x-table.column scope="col" class="border">Действия</x-table.column>
+        </x-table.row>
+        </x-slot>
+        <x-slot name="tbody" class="font-text-mini">
         @foreach($roles as $role)
-            <tr x-data="{showPermissions{{$role->id}}: false}">
-                <th scope="col"
-                    class="px-4 py-4 font-medium text-gray-900 border">
+            <x-table.row x-data="{showPermissions{{$role->id}}: false}">
+                <x-table.column scope="col"
+                    class="border">
                     <p>
                         {{$role->name}}
                     </p>
-                </th>
-                <th scope="col"
+                </x-table.column>
+                <x-table.column scope="col"
                     colspan="4"
-                    class="px-4 py-4 font-medium text-gray-900 border">
+                    class="border">
                     <p x-show="!showPermissions{{$role->id}}">
                         {{count($role->permissions())}}
                     </p>
@@ -31,24 +30,24 @@
                         <livewire:settings.permissions :permissions="$permissions" :role-id="$role->id"
                                                        :wire:key="$role->id"/>
                     </div>
-                </th>
-                <th scope="col"
-                    class="px-4 py-4 font-medium text-gray-900 border">
+                </x-table.column>
+                <x-table.column scope="col"
+                    class="border">
                     <p>
                         {{$role->status == 1 ? 'Активна' : 'Неактивна'}}
                     </p>
-                </th>
-                <th scope="col"
-                    class="px-4 py-4 font-medium text-gray-900 border">
+                </x-table.column>
+                <x-table.column scope="col"
+                    class="border">
                     <x-button.default
                         x-on:click="showPermissions{{$role->id}} = !showPermissions{{$role->id}}"
                         wire:click="buttonHidePermissions({{$role}})">
                         <p x-show="!showPermissions{{$role->id}}">Показать привелегии</p>
                         <p x-show="showPermissions{{$role->id}}">Скрыть привелегии</p>
                     </x-button.default>
-                </th>
-            </tr>
+                </x-table.column>
+            </x-table.row>
         @endforeach
-        </tbody>
-    </table>
+        </x-slot>
+    </x-table.default>
 </div>

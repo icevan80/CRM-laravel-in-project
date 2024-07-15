@@ -418,7 +418,7 @@
                         </div>
                         @foreach ($services as $service)
                             @if($service->is_hidden == false)
-                                <x-service-card :service="$service"/>
+                                <x-cards.service :service="$service"/>
                             @endif
                         @endforeach
                         <div class="w-full">

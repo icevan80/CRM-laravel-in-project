@@ -22,7 +22,7 @@
             </div>
         </div>
         <div>
-            <p class="font-text-normal-plus font-normal">I.N. PROJECT</p>
+            <img src="{{ asset('images/salon/logo.png') }}" alt="" class="" style="height: 3rem">
             <div>
                 <p>Салон красоты I.N. Project</p>
                 <p>ИП</p>

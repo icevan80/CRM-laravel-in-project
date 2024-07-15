@@ -1,7 +1,7 @@
 <x-guest-layout>
     <x-authentication-card>
         <x-slot name="logo">
-            <x-authentication-card-logo />
+            <x-widgets.salon-logo/>
         </x-slot>
 
         <div class="mb-4 font-text-small text-gray-600">

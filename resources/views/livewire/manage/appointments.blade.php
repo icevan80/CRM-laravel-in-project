@@ -110,7 +110,7 @@
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                             <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
                             @if($cellDay['count_appointments'] != 0)
-                                <div class="appointment-notification font-text-mini">{{ $cellDay['count_appointments'] }}</div>
+                                <div class="appointment-notification primary-variant-color text-on-primary-color absolute rounded-full font-text-mini">{{ $cellDay['count_appointments'] }}</div>
                             @endif
                         </x-table.column>
                     @endforeach
@@ -413,7 +413,7 @@
                                                  class="w-full"
                                                  label="{{ __('Location') }}">
                                     @foreach ($locations as $location)
-                                        <option value={{$location->id}}>{{$location->name}}
+                                        <option value="{{$location->id}}">{{$location->name}}
                                             - {{$location->address}}</option>
                                     @endforeach
                                 </x-inputs.select>
@@ -684,22 +684,10 @@
     }
 
     .appointment-notification {
-        position: absolute;
         width: 2rem;
         height: 2rem;
         top: 10%;
         right: 5%;
-        border-radius: 100%;
-
-        --tw-bg-opacity: 1;
-        --bg-color-s: var(--secondary-variant-s);
-        --bg-color-l: var(--secondary-variant-l);
-        background-color: hsl(var(--secondary-variant-h) var(--bg-color-s) var(--bg-color-l) / var(--tw-bg-opacity));
-
-        --tw-text-opacity: 1;
-        --text-color-s: var(--text-on-secondary-s);
-        --text-color-l: var(--text-on-secondary-l);
-        color: hsl(var(--text-on-secondary-h) var(--text-color-s) var(--text-color-l) / var(--tw-text-opacity));
     }
 
     .time-line {

@@ -1,4 +1,4 @@
-<div class="text-center w-full h-full grid grid-cols-2 relative bg-cover bg-center bg-no-repeat"
+<div class="w-full h-full grid grid-cols-2 relative bg-cover bg-center bg-no-repeat"
      style="background-image: url({{ asset('images/salon/preview-desktop.png') }}">
     <div class="grid-cols-1">
         <div class="preview-text-div h-full">
