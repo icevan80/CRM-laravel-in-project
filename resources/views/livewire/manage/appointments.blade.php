@@ -10,6 +10,56 @@
             <option
                 value="rows">{{ __('Rows') }}</option>
         </x-inputs.select>
+        {{--<x-button.icon
+            active="{{$confirmSelectAppointment->progress == 'waiting' ? 'true' : 'false'}}"
+            wire:click="changeProgress('waiting')"
+            active-color="primary-color bg-darken-50 text-on-primary-color"
+            not-active-color="surface-color text-on-surface-color">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round" stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+        </x-button.icon>
+        <x-button.icon
+            active="{{$confirmSelectAppointment->progress == 'arrive' ? 'true' : 'false'}}"
+            wire:click="changeProgress('arrive')"
+            active-color="secondary-color text-on-secondary-color"
+            not-active-color="surface-color text-on-surface-color"
+            class="">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round" stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+        </x-button.icon>
+        <x-button.icon
+            active="{{$confirmSelectAppointment->progress == 'not_arrive' ? 'true' : 'false'}}"
+            wire:click="changeProgress('not_arrive')"
+            active-color="error-color text-on-error-color"
+            not-active-color="surface-color"
+            class="text-on-surface-color text-on-surface-color">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round" stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+        </x-button.icon>
+        <x-button.icon
+            active="{{$confirmSelectAppointment->progress == 'complete' ? 'true' : 'false'}}"
+            wire:click="changeProgress('complete')"
+            active-color="primary-color text-on-primary-color"
+            not-active-color="surface-color text-on-surface-color">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round"
+                      stroke-linejoin="round" stroke-width="2"
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+        </x-button.icon>--}}
         {{-- TODO: добавить разрешение view_other_appointemnt --}}
         @if(auth()->user()->hasPermission('edit_other_appointment'))
             <h2 class="font-text-normal font-bold px-4">-</h2>
