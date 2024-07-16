@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="flex flex-row justify-end px-2 py-1 background-color bg-darken-5 text-right">
+    <div class="flex flex-row justify-end px-2 py-1 background-color bg-darken-10 text-right">
         {{ $footer }}
     </div>
 </x-dialog.modal>

@@ -30,6 +30,7 @@ class Appointments extends Component
     public $follow;
     public $filter;
     public $select;
+    public $status = 'all';
 
     protected $queryString = [
         'search' => ['except' => ''],
@@ -37,6 +38,7 @@ class Appointments extends Component
         'view' => ['except' => ''],
         'filter' => ['except' => ''],
         'select' => ['except' => ''],
+        'status' => ['except' => 'all'],
     ];
 
     public $appointment = false;
@@ -48,6 +50,7 @@ class Appointments extends Component
     public $confirmingAppointmentCreate = false;
     public bool $notificationAppointmentSwapped = false;
     public bool $notificationAppointmentSwappedError = false;
+    public bool $showFilterDialog = false;
 
 
     public bool $allowOthers = false;
@@ -171,6 +174,10 @@ class Appointments extends Component
             $query->where('implementer_id', $this->follow);
         } elseif ($this->view == 'self') {
             $query->where('creator_id', auth()->user()->id);
+        }
+
+        if ($this->status != 'all') {
+            $query->where('progress', $this->status);
         }
 
         $this->appointments = $query
@@ -299,6 +306,9 @@ class Appointments extends Component
         return $arrayByNeedle;
     }
 
+    public function setAppointmentStatusFilter($status) {
+        $this->status = $status;
+    }
 
     private function generateDateRange(string $date): bool
     {
@@ -456,5 +466,14 @@ class Appointments extends Component
     public function changeProgress($status) {
         $this->confirmSelectAppointment->progress = $status;
         $this->confirmSelectAppointment->update();
+    }
+
+    public function resetFilters() {
+        $this->view = 'salon';
+        $this->follow = '';
+        $this->filter = '';
+        $this->select = '';
+        $this->status = 'all';
+        $this->showFilterDialog = false;
     }
 }

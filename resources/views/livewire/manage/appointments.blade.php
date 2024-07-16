@@ -1,93 +1,16 @@
 <div>
     <div class="mobile-filters">
-        <x-inputs.select wire:model="list" class="">
-            <option
-                value="two_weeks">{{ __('Two weeks') }}</option>
-            <option
-                value="one_week">{{ __('Week') }}</option>
-            <option
-                value="today_tomorrow">{{ __('Today - tomorrow') }}</option>
-            <option
-                value="rows">{{ __('Rows') }}</option>
-        </x-inputs.select>
-        {{--<x-button.icon
-            active="{{$confirmSelectAppointment->progress == 'waiting' ? 'true' : 'false'}}"
-            wire:click="changeProgress('waiting')"
-            active-color="primary-color bg-darken-50 text-on-primary-color"
-            not-active-color="surface-color text-on-surface-color">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-        </x-button.icon>
-        <x-button.icon
-            active="{{$confirmSelectAppointment->progress == 'arrive' ? 'true' : 'false'}}"
-            wire:click="changeProgress('arrive')"
-            active-color="secondary-color text-on-secondary-color"
-            not-active-color="surface-color text-on-surface-color"
-            class="">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-        </x-button.icon>
-        <x-button.icon
-            active="{{$confirmSelectAppointment->progress == 'not_arrive' ? 'true' : 'false'}}"
-            wire:click="changeProgress('not_arrive')"
-            active-color="error-color text-on-error-color"
-            not-active-color="surface-color"
-            class="text-on-surface-color text-on-surface-color">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-        </x-button.icon>
-        <x-button.icon
-            active="{{$confirmSelectAppointment->progress == 'complete' ? 'true' : 'false'}}"
-            wire:click="changeProgress('complete')"
-            active-color="primary-color text-on-primary-color"
-            not-active-color="surface-color text-on-surface-color">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round"
-                      stroke-linejoin="round" stroke-width="2"
-                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
-            </svg>
-        </x-button.icon>--}}
-        {{-- TODO: добавить разрешение view_other_appointemnt --}}
-        @if(auth()->user()->hasPermission('edit_other_appointment'))
-            <h2 class="font-text-normal font-bold px-4">-</h2>
-            <x-inputs.select wire:model="view">
-                <option value="salon">{{ __('Salon') }}</option>
-                <option value="master">{{ __('Current master') }}</option>
-                <option value="self">{{ __('My appointments') }}</option>
-                <option value="all">{{ __('Without filters') }}</option>
-            </x-inputs.select>
-            @if($view == 'salon' && $locations)
-                <h2 class="font-text-normal font-bold px-4">-</h2>
-                <x-inputs.select wire:model="follow">
-                    @foreach ($locations as $location)
-                        <option
-                            value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
-                    @endforeach
-                </x-inputs.select>
-            @elseif($view == 'master' && $masters)
-                <h2 class="font-text-normal font-bold px-4">-</h2>
-                <x-inputs.select wire:model="follow">
-                    <option value="0">{{ __('All masters') }}</option>
-                    @foreach ($masters as $master)
-                        <option
-                            value="{{$master->id}}">{{$master->user->name}}</option>
-                    @endforeach
-                </x-inputs.select>
-            @endif
-        @endif
+        <div class="space-x-2 w-full">
+        <x-button.secondary wire:click="$set('showFilterDialog', true)"
+                            wire:loading.attr="disabled">
+            <p>
+                Фильтры
+            </p>
+        </x-button.secondary>
+        <x-button.default wire:click="resetFilters">
+            {{ __('Reset') }}
+        </x-button.default>
+        </div>
         <div class="w-full" x-data="{appDataFalse: false}">
             <div style="float:right;">
                 <x-button.default
@@ -96,6 +19,7 @@
                 </x-button.default>
             </div>
         </div>
+
     </div>
     <div class="w-full rounded-lg border border-gray-200 shadow-md my-2">
         <x-table.default>
@@ -106,84 +30,209 @@
                     </x-table.column>
                     @foreach($tableCells as $cellDay)
                         <x-table.column scope="col"
-                            class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-2 text-center font-medium border p-1">{{
+                                        class="{{$cellDay['day'] == $this->dateRange['now']->toDateString() ? 'primary-color text-white' : 'text-gray-900'}} day-column py-2 text-center font-medium border p-1">{{
                                 \Carbon\Carbon::parse($cellDay['day'])->isoFormat('MMM. D') }}
                             <br/>{{ \Carbon\Carbon::parse($cellDay['day'])->isoFormat('ddd') }}
                             @if($cellDay['count_appointments'] != 0)
-                                <div class="appointment-notification primary-variant-color text-on-primary-color absolute rounded-full font-text-mini">{{ $cellDay['count_appointments'] }}</div>
+                                <div
+                                    class="appointment-notification primary-variant-color text-on-primary-color absolute rounded-full font-text-mini">{{ $cellDay['count_appointments'] }}</div>
                             @endif
                         </x-table.column>
                     @endforeach
                 </x-table.row>
             </x-slot>
             <x-slot name="tbody" drag-root>
-            @foreach($tableCells[0]['schedule'] as $minutes)
-                @if($loop->odd)
-                    <tr class="font-text-mini">
-                        <x-table.column scope="col" rowspan="2"
-                            class="time-slot-mobile w-0 pl-6 border">{{
+                @foreach($tableCells[0]['schedule'] as $minutes)
+                    @if($loop->odd)
+                        <tr class="font-text-mini">
+                            <x-table.column scope="col" rowspan="2"
+                                            class="time-slot-mobile w-0 pl-6 border">{{
                                 \Carbon\Carbon::parse($minutes['minutes'])->isoFormat('HH : mm') }}</x-table.column>
-                        @endif
-                        @foreach($tableCells as $cellDay)
-                            @foreach($cellDay['schedule'] as $cellMinute)
-                                @if($cellMinute['minutes'] == $minutes['minutes'])
-                                    @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
-                                        <th x-data="{ appointHover: false }"
-                                            x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
-                                            scope="col"
-                                            class="time-slot font-text-mini text-center font-medium border py-0.5">
-                                            <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
-                                            <div drag-item="{{ $cellMinute['id'] }}"
-                                                 class="appointment-container">
-                                                @foreach($cellMinute['appointments'] as $appointmentData)
-                                                    <div
-                                                        x-on:mouseover="appointHover = true"
-                                                        x-on:mouseout="appointHover = false"
-                                                        drag-item="{{ $appointmentData['data']['appointment_code'] }}"
-                                                        draggable="{{ $appointmentData['available'] ? 'true' : 'false' }}"
-                                                        x-on:click="$wire.setSelectedAppointment({{ $appointmentData['data'] }})"
-                                                        class="appointment-slot text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
-                                                        style="height: calc(102% * {{$appointmentData['range']}})">
-                                                        <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
-                                                        <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
-                                                        <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
-                                                        <p class="appointment-slot-info last">{{\Carbon\Carbon::parse($appointmentData['data']->end_time)->isoFormat('HH:mm') }}</p>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </th>
-                                    @else
-                                        <th
-                                            scope="col"
-                                            class="past-time-slot font-text-mini text-center font-medium border py-0.5">
-                                            @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
-                                                <timeline id="time-line" class="time-line"></timeline>
-                                            @endif
-                                            <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
-                                            <div class="appointment-container">
-                                                @foreach($cellMinute['appointments'] as $appointmentData)
-                                                    <div
-                                                        wire:click="setSelectedAppointment({{ $appointmentData['data'] }})"
-                                                        class="appointment-slot past text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
-                                                        style="height: calc(102% * {{$appointmentData['range']}})">
-                                                        <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
-                                                        <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
-                                                        <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
-                                                        <p class="appointment-slot-info last">{{\Carbon\Carbon::parse($appointmentData['data']->end_time)->isoFormat('HH:mm') }}</p>
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </th>
+                            @endif
+                            @foreach($tableCells as $cellDay)
+                                @foreach($cellDay['schedule'] as $cellMinute)
+                                    @if($cellMinute['minutes'] == $minutes['minutes'])
+                                        @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->greaterThan(now()))
+                                            <th x-data="{ appointHover: false }"
+                                                x-on:click="$wire.confirmAppointmentCreate('{{ \Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes']) }}', appointHover)"
+                                                scope="col"
+                                                class="time-slot font-text-mini text-center font-medium border py-0.5">
+                                                <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
+                                                <div drag-item="{{ $cellMinute['id'] }}"
+                                                     class="appointment-container">
+                                                    @foreach($cellMinute['appointments'] as $appointmentData)
+                                                        <div
+                                                            x-on:mouseover="appointHover = true"
+                                                            x-on:mouseout="appointHover = false"
+                                                            drag-item="{{ $appointmentData['data']['appointment_code'] }}"
+                                                            draggable="{{ $appointmentData['available'] ? 'true' : 'false' }}"
+                                                            x-on:click="$wire.setSelectedAppointment({{ $appointmentData['data'] }})"
+                                                            class="appointment-slot text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
+                                                            style="height: calc(102% * {{$appointmentData['range']}})">
+                                                            <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
+                                                            <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
+                                                            <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
+                                                            <p class="appointment-slot-info last">{{\Carbon\Carbon::parse($appointmentData['data']->end_time)->isoFormat('HH:mm') }}</p>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </th>
+                                        @else
+                                            <th
+                                                scope="col"
+                                                class="past-time-slot font-text-mini text-center font-medium border py-0.5">
+                                                @if(\Carbon\Carbon::parse($cellDay['day'])->setTimeFrom($cellMinute['minutes'])->addMinutes(15)->greaterThan(now()))
+                                                    <timeline id="time-line" class="time-line"></timeline>
+                                                @endif
+                                                <p class="time-slot-time">{{ \Carbon\Carbon::parse($cellMinute['minutes'])->isoFormat('HH : mm') }}</p>
+                                                <div class="appointment-container">
+                                                    @foreach($cellMinute['appointments'] as $appointmentData)
+                                                        <div
+                                                            wire:click="setSelectedAppointment({{ $appointmentData['data'] }})"
+                                                            class="appointment-slot past text-white {{ $appointmentData['data']['complete'] ? 'success-color' : 'primary-color' }}  font-medium border"
+                                                            style="height: calc(102% * {{$appointmentData['range']}})">
+                                                            <p class="appointment-slot-info">{{\Carbon\Carbon::parse($appointmentData['data']->start_time)->isoFormat('HH:mm') }}</p>
+                                                            <p class="appointment-slot-info">{{ $appointmentData['data']['appointment_code'] }}</p>
+                                                            <p class="appointment-slot-info">{{ $appointmentData['data']['receiving_name'] }}</p>
+                                                            <p class="appointment-slot-info last">{{\Carbon\Carbon::parse($appointmentData['data']->end_time)->isoFormat('HH:mm') }}</p>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </th>
+                                        @endif
                                     @endif
-                                @endif
+                                @endforeach
                             @endforeach
-                        @endforeach
-                        @if($loop->odd)
-                    </tr>
-                @endif
-            @endforeach
+                            @if($loop->odd)
+                        </tr>
+                    @endif
+                @endforeach
             </x-slot>
         </x-table.default>
+
+        <x-dialog.default wire:model="showFilterDialog" maxWidth="lg">
+            <x-slot name="title">
+                <h1>{{ __('Filters') }}</h1>
+            </x-slot>
+            <x-slot name="content">
+                <div class="">
+                    <x-inputs.select wire:model="list" class="block my-1">
+                        <option
+                            value="two_weeks">{{ __('Two weeks') }}</option>
+                        <option
+                            value="one_week">{{ __('Week') }}</option>
+                        <option
+                            value="today_tomorrow">{{ __('Today - tomorrow') }}</option>
+                        <option
+                            value="rows">{{ __('Rows') }}</option>
+                    </x-inputs.select>
+                    @if(auth()->user()->hasPermission('edit_other_appointment'))
+                        {{--                    <h2 class="font-text-normal font-bold px-4">-</h2>--}}
+                        <x-inputs.select wire:model="view" class="block my-1">
+                            <option value="salon">{{ __('Salon') }}</option>
+                            <option value="master">{{ __('Current master') }}</option>
+                            <option value="self">{{ __('My appointments') }}</option>
+                            <option value="all">{{ __('Without filters') }}</option>
+                        </x-inputs.select>
+                        @if($view == 'salon' && $locations)
+                            {{--                        <h2 class="font-text-normal font-bold px-4">-</h2>--}}
+                            <x-inputs.select wire:model="follow" class="block my-1">
+                                @foreach ($locations as $location)
+                                    <option
+                                        value={{$location->id}}>{{$location->name}} - {{$location->address}}</option>
+                                @endforeach
+                            </x-inputs.select>
+                        @elseif($view == 'master' && $masters)
+                            {{--                        <h2 class="font-text-normal font-bold px-4">-</h2>--}}
+                            <x-inputs.select wire:model="follow" class="block my-1">
+                                <option value="0">{{ __('All masters') }}</option>
+                                @foreach ($masters as $master)
+                                    <option
+                                        value="{{$master->id}}">{{$master->user->name}}</option>
+                                @endforeach
+                            </x-inputs.select>
+                        @endif
+                    @endif
+                    <div class="inline-flex my-1 space-x-2">
+                        <x-button.icon
+                            active="{{$status == 'all' ? 'true' : 'false'}}"
+                            wire:click="setAppointmentStatusFilter('all')"
+                            active-color="success-color text-on-success-color"
+                            not-active-color="surface-color text-on-surface-color bg-darken-15"
+                            class="">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </x-button.icon>
+                        <x-button.icon
+                            active="{{$status == 'waiting' ? 'true' : 'false'}}"
+                            wire:click="setAppointmentStatusFilter('waiting')"
+                            active-color="primary-color bg-darken-50 text-on-primary-color"
+                            not-active-color="surface-color text-on-surface-color bg-darken-15">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </x-button.icon>
+                        <x-button.icon
+                            active="{{$status == 'arrive' ? 'true' : 'false'}}"
+                            wire:click="setAppointmentStatusFilter('arrive')"
+                            active-color="secondary-variant-color text-on-secondary-variant-color"
+                            not-active-color="surface-color text-on-surface-color bg-darken-15"
+                            class="">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </x-button.icon>
+                        <x-button.icon
+                            active="{{$status == 'not_arrive' ? 'true' : 'false'}}"
+                            wire:click="setAppointmentStatusFilter('not_arrive')"
+                            active-color="error-color text-on-error-color"
+                            not-active-color="surface-color text-on-surface-color bg-darken-15"
+                            class="text-on-surface-color text-on-surface-color">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </x-button.icon>
+                        <x-button.icon
+                            active="{{$status == 'complete' ? 'true' : 'false'}}"
+                            wire:click="setAppointmentStatusFilter('complete')"
+                            active-color="primary-color text-on-primary-color"
+                            not-active-color="surface-color text-on-surface-color bg-darken-15">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round"
+                                      stroke-linejoin="round" stroke-width="2"
+                                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                            </svg>
+                        </x-button.icon>
+                    </div>
+                </div>
+            </x-slot>
+            <x-slot name="footer">
+                <div class="flex gap-3">
+                    <x-button.default wire:click="resetFilters">
+                        {{ __('Reset') }}
+                    </x-button.default>
+                    <x-button.secondary wire:click="$set('showFilterDialog', false)"
+                                        wire:loading.attr="disabled">
+                        {{ __('Back') }}
+                    </x-button.secondary>
+                </div>
+
+            </x-slot>
+        </x-dialog.default>
 
         <x-dialog.default wire:model="confirmSelectAppointment" onLeaveMethod="$wire.unsetSelectedAppointment()">
             <x-slot name="title">
@@ -205,7 +254,7 @@
                                 @method('PUT')
                                 <label>
                                     <x-inputs.select label="{{__('Implementer')}}"
-                                            name="implementer_id">
+                                                     name="implementer_id">
                                         @foreach ($masters as $master)
                                             <option
                                                 @if($confirmSelectAppointment->implementer_id == $master->user->id)
@@ -239,7 +288,7 @@
                                 wire:click="changeProgress('waiting')"
                                 active-color="primary-color bg-darken-50 text-on-primary-color"
                                 not-active-color="surface-color text-on-surface-color">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round" stroke-width="2"
@@ -252,7 +301,7 @@
                                 active-color="secondary-color text-on-secondary-color"
                                 not-active-color="surface-color text-on-surface-color"
                                 class="">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round" stroke-width="2"
@@ -265,7 +314,7 @@
                                 active-color="error-color text-on-error-color"
                                 not-active-color="surface-color"
                                 class="text-on-surface-color text-on-surface-color">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round" stroke-width="2"
@@ -277,7 +326,7 @@
                                 wire:click="changeProgress('complete')"
                                 active-color="primary-color text-on-primary-color"
                                 not-active-color="surface-color text-on-surface-color">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path stroke-linecap="round"
                                           stroke-linejoin="round" stroke-width="2"
@@ -676,7 +725,7 @@
     .table-header {
         position: sticky;
         z-index: 11;
-        top: 96px;
+        top: 108px;
     }
 
     .day-column {
