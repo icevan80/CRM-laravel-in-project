@@ -83,6 +83,9 @@ Route::middleware([
                     Route::get('/salon', 'index')->name('settings.salon');
                     Route::put('/salon/update_scheme', 'updateScheme')->name('settings.salon.updateScheme');
                     Route::put('/salon/update_fonts', 'updateFonts')->name('settings.salon.updateFonts');
+                    Route::put('/salon/update_logo', 'updateLogo')->name('settings.salon.updateLogo');
+                    Route::put('/salon/update_about', 'updateAbout')->name('settings.salon.updateAbout');
+                    Route::put('/salon/update_information', 'updateInformation')->name('settings.salon.updateInformation');
                 });
             });
 

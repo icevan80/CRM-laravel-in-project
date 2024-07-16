@@ -16,6 +16,9 @@ return new class extends Migration
             $table->uuid('uuid')->unique();
             $table->json('color_scheme')->default('[]');
             $table->json('font_theme')->default('[]');
+            $table->string('about')->default('');
+            $table->string('logo_url')->default('');
+            $table->json('information')->default('[]');
             $table->string('default_lang');
             $table->timestamps();
         });

@@ -30,13 +30,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="{{ $fonts['secondary_font_url'] }}" rel="stylesheet">
 
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap"
-          rel="stylesheet">
-
-
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/css/background.css', 'resources/css/text.css', 'resources/css/border.css', 'resources/css/ring.css', 'resources/css/paddings-margins.css', 'resources/js/app.js'])
 

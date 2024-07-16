@@ -14,9 +14,19 @@ class UploadPhoto extends Component
     public $image = false;
     public $image_value = null;
     public string $tag_name = '';
+    public $nameOutput;
+    public $storageOutput = 'images';
 
-    public function mount($tag = 'image', $source = null)
+    public function mount($tag = 'image', $source = null, $nameOutput = null, $storageOutput = null)
     {
+
+        $this->nameOutput = $nameOutput;
+
+        $this->storageOutput = 'images';
+        if ($storageOutput != null) {
+            $this->storageOutput = $this->storageOutput.'/'.$storageOutput;
+        }
+
         if ($source != null) {
             $this->fill(['image' => $source]);
         }
@@ -40,7 +50,11 @@ class UploadPhoto extends Component
 
             Storage::delete('public/' . $this->image_value);
         }
-        $this->image_value = $this->image->store('images', 'public');
+        if ($this->nameOutput != null) {
+            $this->image_value = $this->image->storeAs($this->storageOutput, $this->nameOutput, 'public');
+        } else {
+            $this->image_value = $this->image->store($this->storageOutput, 'public');
+        }
     }
 
 

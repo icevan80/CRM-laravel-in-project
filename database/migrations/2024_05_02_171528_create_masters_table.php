@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('masters', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('name');
-            $table->string('lastname');
-            $table->date('birth_day');
-            $table->string('language');
-            $table->string('city');
-            $table->string('about_me');
+            $table->string('name')->nullable();
+            $table->string('lastname')->nullable();
+            $table->date('birth_day')->nullable();
+            $table->string('language')->nullable();
+            $table->string('city')->nullable();
+            $table->string('about')->nullable();
             $table->timestamps();
         });
     }

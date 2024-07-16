@@ -95,6 +95,30 @@ class SalonController extends Controller
         return redirect()->back();
     }
 
+    public function updateLogo(Request $request) {
+        $settings = getStore();
+        $settings->logo_url = $request['logo_url'];
+        $settings->save();
+        return redirect()->back();
+    }
+
+    public function updateAbout(Request $request) {
+        $settings = getStore();
+        $settings->about = $request['about_salon'];
+        $settings->save();
+        return redirect()->back();
+    }
+
+    public function updateInformation(Request $request) {
+        $information = $request->all();
+        unset($information['_token']);
+        unset($information['_method']);
+        $settings = getStore();
+        $settings->information = json_encode($information);
+        $settings->save();
+        return redirect()->back();
+    }
+
     /**
      * Remove the specified resource from storage.
      */
